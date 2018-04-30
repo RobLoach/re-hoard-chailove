@@ -1,0 +1,76 @@
+/*
+re-hoard
+copyright tinglar 2017-2018
+license gplv3 (gnu.org/licenses/gpl-3.0.en.html)
+revision 0
+
+title music by 0xabad1dea
+gameplay music based on song by tanner helland
+*/
+
+
+
+/*parameters*/
+
+//constants
+//title screen: 64 * 16 starting from 0, 16
+
+var WALL_CELL = true
+var FLOOR_CELL = false
+var int INITIAL_DUNGEON_SIZE = 15
+
+//variables
+var musicPlaying = false
+var titlePhase = true
+var intermissionPhase = false
+var setupPhase = false
+var normalPhase = false
+var panicPhase = false
+var startup = true
+var int currentLevel = 0
+var int previousLevel = 0
+var int tries = 3
+var int incrementor = (currentLevel / 2) * 2
+var int currentDungeonSize = INITIAL_DUNGEON_SIZE + incrementor
+var dungeon = []
+var allFloorLocations = []
+var opponentSetupFloorLocations = []
+var safeFloorLocations = []
+var dragonLocation = []
+var treasureLocation = []
+var gotTreasure = false
+var isFireballThere = false
+var int fearCount = 0
+var int arrowCount = 0
+var int surpriseCount = 0
+var int dynamiteCount = 0
+var int highestRound = 0
+
+
+
+//push_back()
+//pop_back()
+
+/* data structures */
+
+
+
+
+/* algorithms */
+
+
+
+
+/* basic ChaiLove stuff */
+
+def load() {
+
+}
+
+def draw() {
+
+}
+
+def update(dt) {
+
+}
