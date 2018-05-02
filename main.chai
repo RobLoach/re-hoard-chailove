@@ -15,36 +15,36 @@ gameplay music based on song by tanner helland
 //constants
 //title screen: 64 * 16 starting from 0, 16
 
-var WALL_CELL = true
-var FLOOR_CELL = false
-var int INITIAL_DUNGEON_SIZE = 15
+global WALL_CELL = true
+global FLOOR_CELL = false
+global int INITIAL_DUNGEON_SIZE = 15
 
 //variables
-var musicPlaying = false
-var titlePhase = true
-var intermissionPhase = false
-var setupPhase = false
-var normalPhase = false
-var panicPhase = false
-var startup = true
-var int currentLevel = 0
-var int previousLevel = 0
-var int tries = 3
-var int incrementor = (currentLevel / 2) * 2
-var int currentDungeonSize = INITIAL_DUNGEON_SIZE + incrementor
-var dungeon = []
-var allFloorLocations = []
-var opponentSetupFloorLocations = []
-var safeFloorLocations = []
-var dragonLocation = []
-var treasureLocation = []
-var gotTreasure = false
-var isFireballThere = false
-var int fearCount = 0
-var int arrowCount = 0
-var int surpriseCount = 0
-var int dynamiteCount = 0
-var int highestRound = 0
+global musicPlaying = false
+global titlePhase = true
+global intermissionPhase = false
+global setupPhase = false
+global normalPhase = false
+global panicPhase = false
+global startup = true
+global int currentLevel = 0
+global int previousLevel = 0
+global int tries = 3
+global int incrementor = (currentLevel / 2) * 2
+global int currentDungeonSize = INITIAL_DUNGEON_SIZE + incrementor
+global dungeon = []
+global allFloorLocations = []
+global opponentSetupFloorLocations = []
+global safeFloorLocations = []
+global dragonLocation = []
+global treasureLocation = []
+global gotTreasure = false
+global isFireballThere = false
+global int fearCount = 0
+global int arrowCount = 0
+global int surpriseCount = 0
+global int dynamiteCount = 0
+global int highestRound = 0
 
 
 
