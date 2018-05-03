@@ -87,6 +87,92 @@ def dungeon_structure()
 }
 
 
+def recursive_backtracker()
+{
+	var int roll
+	var currentCell = []
+	var previousCell = []
+	var visitedCells = []
+	var cellChoices = []
+
+	currentCell = [1,1]
+	dungeon[1][1] = FLOOR_CELL
+	visitedCells.push_back(currentCell)
+	
+	previousCell = [1,1]
+	roll = love.math.random(0, 1)
+	//How do you make sure that this picks between integers?
+	if (roll == 0)
+	{
+		currentCell = [1,2]
+		dungeon[1][2] = FLOOR_CELL
+	}
+	else
+	{
+		currentCell = [2,1]
+		dungeon[2][1] = FLOOR_CELL
+	}
+	visitedCells.push_back(currentCell)
+
+	while ( !visitedCells.empty() )
+	{
+		//Maybe you should collect the values of the current cell here?
+		if (dungeon[ currentCell[0] - 1 ][ currentcell[1] ] == VOID_CELL)
+		{
+			cellChoices.push_back( [ currentCell[0] - 1, currentcell[1] ] )
+		}
+		if (dungeon[ currentCell[0] + 1 ][ currentcell[1] ] == VOID_CELL)
+		{
+			cellChoices.push_back( [ currentCell[0] + 1, currentcell[1] ] )
+		}
+		if (dungeon[ currentCell[0] ][ currentcell[1] - 1 ] == VOID_CELL)
+		{
+			cellChoices.push_back( [ currentCell[0], currentcell[1] - 1 ] )
+		}
+		if (dungeon[ currentCell[0] ][ currentcell[1] + 1 ] == VOID_CELL)
+		{
+			cellChoices.push_back( [ currentCell[0], currentcell[1] + 1 ] )
+		}
+		
+		if ( cellChoices.empty() )
+		{
+			currentCell = visitedCells.pop_back()
+		}
+		else
+		{
+			previousCell = currentCell
+			roll = love.math.random( 0, cellChoices.size() )
+			currentCell = cellChoices[roll]
+			dungeon[ currentCell[0] ][ currentCell[1] ] = FLOOR_CELL
+			if ( currentCell[0] != previousCell[0] ) //If I moved vertically...
+			{
+				if (dungeon[ currentCell[0] ][ currentCell[1] - 1 ] == VOID_CELL)
+				{
+					dungeon[ currentCell[0] ][ currentCell[1] - 1 ] = WALL_CELL
+				}
+				if (dungeon[ currentCell[0] ][ currentCell[1] + 1 ] == VOID_CELL)
+				{
+					dungeon[ currentCell[0] ][ currentCell[1] + 1 ] = WALL_CELL
+				}
+			}
+			else
+			{
+
+				if (dungeon[ currentCell[0] - 1 ][ currentCell[1] ] == VOID_CELL)
+				{
+					dungeon[ currentCell[0] - 1 ][ currentCell[1] ] = WALL_CELL
+				}
+				if (dungeon[ currentCell[0] + 1 ][ currentCell[1] ] == VOID_CELL)
+				{
+					dungeon[ currentCell[0] + 1][ currentCell[1] ] = WALL_CELL
+				}
+			}
+			cellChoices = [] //Resets the current cell choices
+		}
+	}
+}
+
+
 
 
 
