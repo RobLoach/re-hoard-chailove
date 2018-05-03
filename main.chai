@@ -173,7 +173,63 @@ def recursive_backtracker()
 }
 
 
+def breadthFirst(startCell, endCell)
+{
+	var frontier = [startCell]
+	var checkingCell = []
+	var visitedCells = []
+	
 
+	while ( !frontier.empty() )
+	{
+		checkingCell = frontier.pop_back()
+
+		if ( checkingCell == endCell )
+		{
+			return visitedCells
+		}
+
+		if ( dungeon[ checkingCell[0] - 1 ][ checkingCell[1] ] == FLOOR_CELL 
+			&& alreadyChecked( checkingCell[0] - 1, checkingCell[1] ) == false )
+		{
+			frontier.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
+			visitedCells.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
+		}
+		if ( dungeon[ checkingCell[0] + 0 ][ checkingCell[1] ] == FLOOR_CELL 
+			&& alreadyChecked( checkingCell[0] + 0, checkingCell[1] ) == false )
+		{
+			frontier.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
+			visitedCells.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
+		}
+		if ( dungeon[ checkingCell[0] ][ checkingCell[1] - 1 ] == FLOOR_CELL 
+			&& alreadyChecked( checkingCell[0], checkingCell[1] - 1 ) == false )
+		{
+			frontier.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
+			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
+		}
+		if ( dungeon[ checkingCell[0] ][ checkingCell[1] + 1 ] == FLOOR_CELL 
+			&& alreadyChecked( checkingCell[0], checkingCell[1] + 1 ) == false )
+		{
+			frontier.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
+			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
+		}
+	}
+
+	return visitedCells
+}
+
+
+def alreadyChecked( vertical, horizontal )
+{
+	for (frontier)
+	{
+		if ( [vertical, horizontal] )
+		{
+			return true
+		}
+	}
+	return false
+}
 
 
 
