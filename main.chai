@@ -235,14 +235,17 @@ def alreadyChecked( vertical, horizontal )
 
 /* basic ChaiLove stuff */
 
-def load() {
+def load()
+{
 
 }
 
-def draw() {
+def draw()
+{
 
 }
 
-def update(dt) {
+def update(dt)
+{
 
 }
