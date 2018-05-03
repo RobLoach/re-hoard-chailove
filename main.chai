@@ -15,8 +15,9 @@ gameplay music based on song by tanner helland
 //constants
 //title screen: 64 * 16 starting from 0, 16
 
-global WALL_CELL = true
-global FLOOR_CELL = false
+global FLOOR_CELL = 0
+global WALL_CELL = 1
+global VOID_CELL = 2
 global int INITIAL_DUNGEON_SIZE = 15
 
 //variables
@@ -57,6 +58,35 @@ global int highestRound = 0
 
 
 /* algorithms */
+def dungeon_structure()
+{
+	for (var vertical = 0; vertical = currentDungeonSize - 1; ++vertical)
+	{
+		if (vertical == 0 || vertical == currentDungeonSize - 1)
+		{
+			for (var horizontal = 0; horizontal = currentDungeonSize - 1; ++horizontal)
+			{
+				dungeon[vertical][horizontal] = WALL_CELL
+			}
+		}
+		else
+		{
+			for (var horizontal = 0; horizontal = currentDungeonSize - 1; ++horizontal)
+			{
+				if (horizontal == 0 || horizontal == currentDungeonSize - 1)
+				{
+					dungeon[vertical][horizontal] = WALL_CELL
+				}
+				else
+				{
+					dungeon[vertical][horizontal] = VOID_CELL
+				}
+			}
+		}
+	}
+}
+
+
 
 
 
