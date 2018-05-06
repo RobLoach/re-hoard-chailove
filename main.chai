@@ -18,7 +18,7 @@ gameplay music based on song by tanner helland
 global FLOOR_CELL = 0
 global WALL_CELL = 1
 global VOID_CELL = 2
-global int INITIAL_DUNGEON_SIZE = 15
+global INITIAL_DUNGEON_SIZE = 15
 
 //variables
 global musicPlaying = false
@@ -28,11 +28,11 @@ global setupPhase = false
 global normalPhase = false
 global panicPhase = false
 global startup = true
-global int currentLevel = 0
-global int previousLevel = 0
-global int tries = 3
-global int incrementor = (currentLevel / 2) * 2
-global int currentDungeonSize = INITIAL_DUNGEON_SIZE + incrementor
+global currentLevel = 0
+global previousLevel = 0
+global tries = 3
+global incrementor = (currentLevel / 2) * 2
+global currentDungeonSize = INITIAL_DUNGEON_SIZE + incrementor
 global dungeon = []
 global allFloorLocations = []
 global opponentSetupFloorLocations = []
@@ -41,11 +41,11 @@ global dragonLocation = []
 global treasureLocation = []
 global gotTreasure = false
 global isFireballThere = false
-global int fearCount = 0
-global int arrowCount = 0
-global int surpriseCount = 0
-global int dynamiteCount = 0
-global int highestRound = 0
+global fearCount = 0
+global arrowCount = 0
+global surpriseCount = 0
+global dynamiteCount = 0
+global highestRound = 0
 
 
 
@@ -89,7 +89,7 @@ def dungeon_structure()
 
 def recursive_backtracker()
 {
-	var int roll
+	var roll
 	var currentCell = []
 	var previousCell = []
 	var visitedCells = []
@@ -189,27 +189,19 @@ def breadthFirst(startCell, endCell)
 			return visitedCells
 		}
 
-		if ( dungeon[ checkingCell[0] - 1 ][ checkingCell[1] ] == FLOOR_CELL 
-			&& alreadyChecked( checkingCell[0] - 1, checkingCell[1] ) == false )
-		{
+		if ( dungeon[ checkingCell[0] - 1 ][ checkingCell[1] ] == FLOOR_CELL && alreadyChecked( checkingCell[0] - 1, checkingCell[1] ) == false ) {
 			frontier.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
 			visitedCells.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
 		}
-		if ( dungeon[ checkingCell[0] + 0 ][ checkingCell[1] ] == FLOOR_CELL 
-			&& alreadyChecked( checkingCell[0] + 0, checkingCell[1] ) == false )
-		{
+		if ( dungeon[ checkingCell[0] + 0 ][ checkingCell[1] ] == FLOOR_CELL && alreadyChecked( checkingCell[0] + 0, checkingCell[1] ) == false ) {
 			frontier.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
 			visitedCells.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
 		}
-		if ( dungeon[ checkingCell[0] ][ checkingCell[1] - 1 ] == FLOOR_CELL 
-			&& alreadyChecked( checkingCell[0], checkingCell[1] - 1 ) == false )
-		{
+		if ( dungeon[ checkingCell[0] ][ checkingCell[1] - 1 ] == FLOOR_CELL && alreadyChecked( checkingCell[0], checkingCell[1] - 1 ) == false ) {
 			frontier.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
 			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
 		}
-		if ( dungeon[ checkingCell[0] ][ checkingCell[1] + 1 ] == FLOOR_CELL 
-			&& alreadyChecked( checkingCell[0], checkingCell[1] + 1 ) == false )
-		{
+		if ( dungeon[ checkingCell[0] ][ checkingCell[1] + 1 ] == FLOOR_CELL && alreadyChecked( checkingCell[0], checkingCell[1] + 1 ) == false ) {
 			frontier.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
 			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
 		}
@@ -219,12 +211,10 @@ def breadthFirst(startCell, endCell)
 }
 
 
-def alreadyChecked( vertical, horizontal )
-{
-	for (frontier)
-	{
-		if ( [vertical, horizontal] )
-		{
+def alreadyChecked( vertical, horizontal ) {
+	for (item : frontier ) {
+		// TODO: Do something with item.
+		if ( [vertical, horizontal] ) {
 			return true
 		}
 	}
@@ -235,17 +225,14 @@ def alreadyChecked( vertical, horizontal )
 
 /* basic ChaiLove stuff */
 
-def load()
-{
+def load() {
 
 }
 
-def draw()
-{
-
+def draw() {
+	love.graphics.print("Hello, World!", 100, 100)
 }
 
-def update(dt)
-{
+def update(dt) {
 
 }
