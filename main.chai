@@ -58,27 +58,19 @@ global highestRound = 0
 
 
 /* algorithms */
-def dungeon_structure()
-{
-	for (var vertical = 0; vertical = currentDungeonSize - 1; ++vertical)
-	{
-		if (vertical == 0 || vertical == currentDungeonSize - 1)
-		{
-			for (var horizontal = 0; horizontal = currentDungeonSize - 1; ++horizontal)
-			{
+def dungeon_structure() {
+	for (var vertical = 0; vertical = currentDungeonSize - 1; ++vertical) {
+		if (vertical == 0 || vertical == currentDungeonSize - 1) {
+			for (var horizontal = 0; horizontal = currentDungeonSize - 1; ++horizontal) {
 				dungeon[vertical][horizontal] = WALL_CELL
 			}
 		}
-		else
-		{
-			for (var horizontal = 0; horizontal = currentDungeonSize - 1; ++horizontal)
-			{
-				if (horizontal == 0 || horizontal == currentDungeonSize - 1)
-				{
+		else {
+			for (var horizontal = 0; horizontal = currentDungeonSize - 1; ++horizontal) {
+				if (horizontal == 0 || horizontal == currentDungeonSize - 1) {
 					dungeon[vertical][horizontal] = WALL_CELL
 				}
-				else
-				{
+				else {
 					dungeon[vertical][horizontal] = VOID_CELL
 				}
 			}
@@ -87,8 +79,7 @@ def dungeon_structure()
 }
 
 
-def recursive_backtracker()
-{
+def recursive_backtracker() {
 	var roll
 	var currentCell = []
 	var previousCell = []
@@ -102,68 +93,52 @@ def recursive_backtracker()
 	previousCell = [1,1]
 	roll = love.math.random(0, 1)
 	//How do you make sure that this picks between integers?
-	if (roll == 0)
-	{
+	if (roll == 0) {
 		currentCell = [1,2]
 		dungeon[1][2] = FLOOR_CELL
 	}
-	else
-	{
+	else {
 		currentCell = [2,1]
 		dungeon[2][1] = FLOOR_CELL
 	}
 	visitedCells.push_back(currentCell)
 
-	while ( !visitedCells.empty() )
-	{
+	while ( !visitedCells.empty() ) {
 		//Maybe you should collect the values of the current cell here?
-		if (dungeon[ currentCell[0] - 1 ][ currentcell[1] ] == VOID_CELL)
-		{
+		if (dungeon[ currentCell[0] - 1 ][ currentcell[1] ] == VOID_CELL) {
 			cellChoices.push_back( [ currentCell[0] - 1, currentcell[1] ] )
 		}
-		if (dungeon[ currentCell[0] + 1 ][ currentcell[1] ] == VOID_CELL)
-		{
+		if (dungeon[ currentCell[0] + 1 ][ currentcell[1] ] == VOID_CELL) {
 			cellChoices.push_back( [ currentCell[0] + 1, currentcell[1] ] )
 		}
-		if (dungeon[ currentCell[0] ][ currentcell[1] - 1 ] == VOID_CELL)
-		{
+		if (dungeon[ currentCell[0] ][ currentcell[1] - 1 ] == VOID_CELL) {
 			cellChoices.push_back( [ currentCell[0], currentcell[1] - 1 ] )
 		}
-		if (dungeon[ currentCell[0] ][ currentcell[1] + 1 ] == VOID_CELL)
-		{
+		if (dungeon[ currentCell[0] ][ currentcell[1] + 1 ] == VOID_CELL) {
 			cellChoices.push_back( [ currentCell[0], currentcell[1] + 1 ] )
 		}
 		
-		if ( cellChoices.empty() )
-		{
+		if ( cellChoices.empty() ) {
 			currentCell = visitedCells.pop_back()
 		}
-		else
-		{
+		else {
 			previousCell = currentCell
 			roll = love.math.random( 0, cellChoices.size() )
 			currentCell = cellChoices[roll]
 			dungeon[ currentCell[0] ][ currentCell[1] ] = FLOOR_CELL
-			if ( currentCell[0] != previousCell[0] ) //If I moved vertically...
-			{
-				if (dungeon[ currentCell[0] ][ currentCell[1] - 1 ] == VOID_CELL)
-				{
+			if ( currentCell[0] != previousCell[0] ) { //If I moved vertically...
+				if (dungeon[ currentCell[0] ][ currentCell[1] - 1 ] == VOID_CELL) {
 					dungeon[ currentCell[0] ][ currentCell[1] - 1 ] = WALL_CELL
 				}
-				if (dungeon[ currentCell[0] ][ currentCell[1] + 1 ] == VOID_CELL)
-				{
+				if (dungeon[ currentCell[0] ][ currentCell[1] + 1 ] == VOID_CELL) {
 					dungeon[ currentCell[0] ][ currentCell[1] + 1 ] = WALL_CELL
 				}
 			}
-			else
-			{
-
-				if (dungeon[ currentCell[0] - 1 ][ currentCell[1] ] == VOID_CELL)
-				{
+			else {
+				if (dungeon[ currentCell[0] - 1 ][ currentCell[1] ] == VOID_CELL) {
 					dungeon[ currentCell[0] - 1 ][ currentCell[1] ] = WALL_CELL
 				}
-				if (dungeon[ currentCell[0] + 1 ][ currentCell[1] ] == VOID_CELL)
-				{
+				if (dungeon[ currentCell[0] + 1 ][ currentCell[1] ] == VOID_CELL) {
 					dungeon[ currentCell[0] + 1][ currentCell[1] ] = WALL_CELL
 				}
 			}
@@ -173,35 +148,32 @@ def recursive_backtracker()
 }
 
 
-def breadthFirst(startCell, endCell)
-{
+def breadthFirst(startCell, endCell) {
 	var frontier = [startCell]
 	var checkingCell = []
 	var visitedCells = []
 	
 
-	while ( !frontier.empty() )
-	{
+	while ( !frontier.empty() ) {
 		checkingCell = frontier.pop_back()
 
-		if ( checkingCell == endCell )
-		{
+		if (checkingCell == endCell) {
 			return visitedCells
 		}
 
-		if ( dungeon[ checkingCell[0] - 1 ][ checkingCell[1] ] == FLOOR_CELL && alreadyChecked( checkingCell[0] - 1, checkingCell[1] ) == false ) {
+		if ( dungeon[ checkingCell[0] - 1 ][ checkingCell[1] ] == FLOOR_CELL && alreadyChecked( checkingCell[0] - 1, checkingCell[1] ) == false) {
 			frontier.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
 			visitedCells.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
 		}
-		if ( dungeon[ checkingCell[0] + 0 ][ checkingCell[1] ] == FLOOR_CELL && alreadyChecked( checkingCell[0] + 0, checkingCell[1] ) == false ) {
+		if ( dungeon[ checkingCell[0] + 0 ][ checkingCell[1] ] == FLOOR_CELL && alreadyChecked( checkingCell[0] + 0, checkingCell[1] ) == false) {
 			frontier.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
 			visitedCells.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
 		}
-		if ( dungeon[ checkingCell[0] ][ checkingCell[1] - 1 ] == FLOOR_CELL && alreadyChecked( checkingCell[0], checkingCell[1] - 1 ) == false ) {
+		if ( dungeon[ checkingCell[0] ][ checkingCell[1] - 1 ] == FLOOR_CELL && alreadyChecked( checkingCell[0], checkingCell[1] - 1 ) == false) {
 			frontier.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
 			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
 		}
-		if ( dungeon[ checkingCell[0] ][ checkingCell[1] + 1 ] == FLOOR_CELL && alreadyChecked( checkingCell[0], checkingCell[1] + 1 ) == false ) {
+		if ( dungeon[ checkingCell[0] ][ checkingCell[1] + 1 ] == FLOOR_CELL && alreadyChecked( checkingCell[0], checkingCell[1] + 1 ) == false) {
 			frontier.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
 			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
 		}
@@ -212,7 +184,7 @@ def breadthFirst(startCell, endCell)
 
 
 def alreadyChecked( vertical, horizontal ) {
-	for (item : frontier ) {
+	for (item : frontier) {
 		// TODO: Do something with item.
 		if ( [vertical, horizontal] ) {
 			return true
@@ -230,7 +202,7 @@ def load() {
 }
 
 def draw() {
-	love.graphics.print("Hello, World!", 100, 100)
+	love.graphics.print("The code still works!", 100, 100)
 }
 
 def update(dt) {
