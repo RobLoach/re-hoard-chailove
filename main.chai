@@ -178,7 +178,7 @@ global message_finalRound
 
 
 /* algorithms */
-def titleScreen() {
+def TitleScreen() {
 	love.graphics.clear()
 	love.graphics.draw(sprite_titleScreen, 32, 32)
 	love.graphics.print(message_copyright, 40, 64)
@@ -187,24 +187,24 @@ def titleScreen() {
 }
 
 
-def titleRun() {
+def TitleRun() {
 	currentMusic = love.sound.newSoundData(music_title)
 	currentMusic.play()
 	
 	if ( love.joystick[0].isDown("A") ) {
 		title_phase = false
 		intermission_phase = true
-		intermissionScreen()
+		IntermissionScreen()
 	}
 }
 
 
-def intermissionScreen() {
+def IntermissionScreen() {
 
 }
 
 
-def dungeonStructure() {
+def DungeonStructure() {
 	for (var vertical = 0; vertical = currentDungeonSize - 1; ++vertical) {
 		if (vertical == 0 || vertical == currentDungeonSize - 1) {
 			for (var horizontal = 0; horizontal = currentDungeonSize - 1; ++horizontal) {
@@ -225,7 +225,7 @@ def dungeonStructure() {
 }
 
 
-def recursiveBacktracker() {
+def RecursiveBacktracker() {
 	var roll
 	var currentCell = []
 	var previousCell = []
@@ -294,7 +294,7 @@ def recursiveBacktracker() {
 }
 
 
-def breadthFirst(startCell, endCell) {
+def BreadthFirst(startCell, endCell) {
 	var frontier = [startCell]
 	var checkingCell = []
 	var visitedCells = []
@@ -307,19 +307,19 @@ def breadthFirst(startCell, endCell) {
 			return visitedCells
 		}
 
-		if ( dungeon[ checkingCell[0] - 1 ][ checkingCell[1] ] == FLOOR_CELL && alreadyChecked( checkingCell[0] - 1, checkingCell[1] ) == false) {
+		if ( dungeon[ checkingCell[0] - 1 ][ checkingCell[1] ] == FLOOR_CELL && AlreadyChecked( checkingCell[0] - 1, checkingCell[1] ) == false) {
 			frontier.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
 			visitedCells.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
 		}
-		if ( dungeon[ checkingCell[0] + 0 ][ checkingCell[1] ] == FLOOR_CELL && alreadyChecked( checkingCell[0] + 0, checkingCell[1] ) == false) {
+		if ( dungeon[ checkingCell[0] + 0 ][ checkingCell[1] ] == FLOOR_CELL && AlreadyChecked( checkingCell[0] + 0, checkingCell[1] ) == false) {
 			frontier.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
 			visitedCells.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
 		}
-		if ( dungeon[ checkingCell[0] ][ checkingCell[1] - 1 ] == FLOOR_CELL && alreadyChecked( checkingCell[0], checkingCell[1] - 1 ) == false) {
+		if ( dungeon[ checkingCell[0] ][ checkingCell[1] - 1 ] == FLOOR_CELL && AlreadyChecked( checkingCell[0], checkingCell[1] - 1 ) == false) {
 			frontier.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
 			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
 		}
-		if ( dungeon[ checkingCell[0] ][ checkingCell[1] + 1 ] == FLOOR_CELL && alreadyChecked( checkingCell[0], checkingCell[1] + 1 ) == false) {
+		if ( dungeon[ checkingCell[0] ][ checkingCell[1] + 1 ] == FLOOR_CELL && AlreadyChecked( checkingCell[0], checkingCell[1] + 1 ) == false) {
 			frontier.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
 			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
 		}
@@ -329,7 +329,7 @@ def breadthFirst(startCell, endCell) {
 }
 
 
-def alreadyChecked( vertical, horizontal ) {
+def AlreadyChecked( vertical, horizontal ) {
 	for (item : frontier) {
 		// TODO: Do something with item.
 		if ( [vertical, horizontal] ) {
