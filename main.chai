@@ -232,15 +232,33 @@ def TitleRun() {
 	currentMusic.play()
 	
 	if ( love.joystick[0].isDown("A") ) {
-		title_phase = false
-		intermission_phase = true
+		titlePhase = false
+		intermissionPhase = true
 		IntermissionScreen()
 	}
 }
 
 
 def IntermissionScreen() {
+	love.graphics.clear()
+	love.graphics.print(message_currentLevel, 50, 56)
+	love.graphics.print(message_tries, 31, 70)
+}
 
+
+def IntermissionRun() {
+	currentMusic = false
+	currentMusic.play()
+	
+	if ( love.joystick[0].isDown("A") ) {
+		intermissionPhase = false
+		setupPhase = true
+		GameSetup()
+	}
+}
+
+
+def gameSetup {
 }
 
 
