@@ -26,6 +26,11 @@ global CORNERS = [
 
 
 //asset constants
+global SPRITE_FLAG_ENG = love.graphics.newImage("sprites/flag_unitedstatesofamerica.png")
+global SPRITE_FLAG_SPA = love.graphics.newImage("sprites/flag_puertorico.png")
+global SPRITE_FLAG_EPO = love.graphics.newImage("sprites/flag_esperanto.png")
+global SPRITE_SELECT = love.graphics.newImage("sprites/select.png")
+
 global SPRITE_WALL = love.graphics.newImage("sprites/wall.png")
 global SPRITE_FLOOR = love.graphics.newImage("sprites/floor.png")
 global SPRITE_DOOR_CLOSED = love.graphics.newImage("sprites/door_closed.png")
@@ -158,6 +163,7 @@ global highestRound = 0
 
 
 //translatable variables
+global language
 global sprite_titleScreen
 global message_copyright = "Tinglar 2017‒2018"
 global message_pressA
@@ -178,6 +184,40 @@ global message_finalRound
 
 
 /* algorithms */
+def Translate() {
+	if (language == "eng") {
+	sprite_titleScreen = love.graphics.newImage("sprites/title.png")
+	message_pressA = "Press A."
+	message_highestRound = "Highest Round: " + (highestRound + 1)
+	message_currentRound = "Round " + (currentLevel + 1)
+	message_tries = "Tries: " + tries
+	message_gameOver = "Game Over"
+	message_finalRound = "Final Round: " + (currentLevel + 1)
+	}
+	
+	else if (language == "spa") {
+	sprite_titleScreen = love.graphics.newImage("sprites/title.png")
+	message_pressA = "Oprima A."
+	message_highestRound = "Ronda Más Alta: " + (highestRound + 1)
+	message_currentRound = "Ronda " + (currentLevel + 1)
+	message_tries = "Intentos: " + tries
+	message_gameOver = "Acabó el Juego"
+	message_finalRound = "Última Rona: " + (currentLevel + 1)
+	}
+	
+	else if (language == "epo") {
+	sprite_titleScreen = love.graphics.newImage("sprites/title.png")
+	message_pressA = "Premu A."
+	message_highestRound = "Plej Alta Raŭndo: " + (highestRound + 1)
+	message_currentRound = "Raŭndo " + (currentLevel + 1)
+	message_tries = "Provoj: " + tries
+	message_gameOver = "Finis la Ludo"
+	message_finalRound = "Fina Raŭndo: " + (currentLevel + 1)
+	}
+	
+}
+
+
 def TitleScreen() {
 	love.graphics.clear()
 	love.graphics.draw(sprite_titleScreen, 32, 32)
