@@ -409,7 +409,7 @@ class Opponent {
 	
 }
 
-def GenerateEmotion {
+def GenerateEmotion() {
 	var roll = love.math.random(0, 5)
 	
 	if (roll == 0) {
@@ -440,7 +440,7 @@ def PlaceKnight() {
 }
 
 
-def PlaceSubordinate {
+def PlaceSubordinate() {
 	var roll = love.math.random(0, opponentSetupFloorLocations.length - 1)
 	
 	var basin = opponentSetupFloorLocations[roll]
