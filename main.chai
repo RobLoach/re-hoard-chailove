@@ -147,6 +147,7 @@ global previousLevel = 0
 global tries = 3
 global incrementor = (currentLevel / 2) * 2
 global currentDungeonSize = INITIAL_DUNGEON_SIZE + incrementor
+global world = []
 global dungeon = []
 global allFloorLocations = []
 global opponentSetupFloorLocations = []
@@ -374,7 +375,43 @@ def CollectOpponentSetupCells() {
 }
 
 
+class Player {
+	var activeSprite
+	var location[]
+	var orientation
+	var isHurt
+	var horizontalMovement
+	var verticalMovement
+	var hasCollided
+	var touchedWho
+	
+	
+}
 
+
+class Opponent {
+	var emotion
+	var activeSprite
+	var location[]
+	var orientation
+	var crossOfSight[]
+	var target[]
+	var isPatrolling
+	var isHunting
+	var isHurt
+	var horizontalMovement
+	var verticalMovement
+	var hasCollided
+	var touchedWho
+	
+	
+}
+
+
+def Populate() {
+	var dragon = Player()
+	world[0] = dragon
+}
 
 
 def RecursiveBacktracker() {
