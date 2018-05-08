@@ -407,6 +407,40 @@ class Opponent {
 	
 }
 
+def generateEmotion {
+	var roll = love.math.random(0, 5)
+	
+	if (roll == 0) {
+		return "joy"
+	}
+	else if (roll == 0) {
+		return "sadness"
+	}
+	else if (roll == 0) {
+		fearCount = fearCount + 1
+		return "fear"
+	}
+	else if (roll == 0) {
+		return "disgust"
+	}
+	else if (roll == 0) {
+		return "anger"
+	}
+	else {
+		surpriseCount = surpriseCount + 1
+		return "surprise"
+	}
+}
+
+
+def placeKnight() {
+
+}
+
+def placeSubordinate {
+
+}
+
 
 def Populate() {
 	var dragon = Player()
