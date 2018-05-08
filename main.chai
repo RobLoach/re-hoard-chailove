@@ -306,7 +306,9 @@ def PlanDungeon() {
 def Shuffle(queue) {
 	for (var index = 0; index < (queue.length() - 1); ++index) {
 		var random = love.math.random(0, index)
-		queue[index], queue[random] = queue[random], queue[index]
+		var basin = queue[index]
+		queue[index] = queue[random]
+		queue[random] = basin
 	}
 }
 
