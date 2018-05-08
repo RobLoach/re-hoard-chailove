@@ -438,7 +438,13 @@ def placeKnight() {
 }
 
 def placeSubordinate {
-
+	var roll = love.math.random(0, opponentSetupFloorLocations.length - 1)
+	
+	var basin = opponentSetupFloorLocations[roll]
+	opponentSetupFloorLocations[roll] = opponentSetupFloorLocations[opponentSetupFloorLocations.length - 1]
+	opponentSetupFloorLocations[opponentSetupFloorLocations.length - 1] = basin
+	
+	return opponentSetupFloorLocations.pop_back()
 }
 
 
