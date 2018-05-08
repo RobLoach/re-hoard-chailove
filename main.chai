@@ -434,7 +434,7 @@ def generateEmotion {
 
 
 def placeKnight() {
-
+	return opponentSetupFloorLocations.pop_back()
 }
 
 def placeSubordinate {
