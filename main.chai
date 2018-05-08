@@ -303,7 +303,7 @@ def PlanDungeon() {
 
 // fisher-yates shuffle from http://santos.nfshost.com/shuffling.html
 def Shuffle(queue) {
-	for (index = 0; index < (queue.length() - 1); ++index) {
+	for (var index = 0; index < (queue.length() - 1); ++index) {
 		var random = love.math.random(0, index)
 		queue[index], queue[random] = queue[random], queue[index]
 	}
@@ -327,8 +327,8 @@ def WalkDungeonWalk(width, height) {
 def DemolishDungeon(width, height) {
 	var demolitionForce = 0
 	
-	for (vertical = 1; vertical < height - 2; ++vertical) {
-		for (horizontal = 1; horizontal < width - 2; ++horizontal) {
+	for (var vertical = 1; vertical < height - 2; ++vertical) {
+		for (var horizontal = 1; horizontal < width - 2; ++horizontal) {
 			demolitionForce = love.math.random(0.0, 1.0)
 			if demolitionForce >= WALL_STRENGTH {
 				dungeon[vertical][horizontal] = FLOOR_CELL
@@ -336,6 +336,45 @@ def DemolishDungeon(width, height) {
 		}
 	}		
 }
+
+
+def DrawDungeon() {
+	for (var vertical = 0; vertical < currentDungeonSize - 1; ++vertical) {
+		for (var horizontal = 0; horizontal < currentDungeonSize - 1; ++horizontal) {
+			if (dungeon[vertical][horizontal] == WALL_CELL) {
+				love.graphics.draw(sprite_wall, (horizontal - 1) * 8 + 1, (vertical - 1) * 8 + 1)
+			}
+			else {
+				love.graphics.draw(sprite_floor, (horizontal - 1) * 8 + 1, (vertical - 1) * 8 + 1)
+			}
+		}
+	}
+}
+
+
+def CollectFloorCells() {
+	for (var vertical = 0; vertical < currentDungeonSize - 1; ++vertical) {
+		for (var horizontal = 0; horizontal < currentDungeonSize - 1; ++horizontal) {
+			if (dungeon[vertical][horizontal] == FLOOR_CELL) {
+				allFloorLocations.push_back( [horizontal, vertical] )
+			}
+		}
+	}
+}
+
+
+def CollectOpponentSetupCells() {
+	var topHalfOfDungeon = currentDungeonSize / 2
+	
+	for (var index = 0; index < totalFloorLocations - 2; ++index) {
+		if (allFloorLocations[index][1] > topHalfOfDungeon || allFloorLocations[index][2] > topHalfOfDungeon) {
+			opponentSetupFloorLocations.push_back( totalFloorLocations[index] )
+		}
+	}
+}
+
+
+
 
 
 def RecursiveBacktracker() {
