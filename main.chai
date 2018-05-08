@@ -451,7 +451,26 @@ def PlaceSubordinate() {
 }
 
 
-
+def InitializeSubordinateSprite() {
+	if this.emotion == "joy" {
+		this.activeSprite = SPRITE_JOY_WALK1
+	}
+	else if this.emotion == "sadness" {
+		this.activeSprite = SPRITE_SADNESS_WALK1
+	}
+	else if this.emotion == "fear" {
+		this.activeSprite = SPRITE_FEAR_WALK1
+	}
+	else if this.emotion == "disgust" {
+		this.activeSprite = SPRITE_DISGUST_WALK1
+	}
+	else if this.emotion == "anger" {
+		this.activeSprite = SPRITE_ANGER_WALK1
+	}
+	else if this.emotion == "surprise" {
+		this.activeSprite = SPRITE_SURPRISE_WALK1
+	}
+}
 
 
 def Populate() {
