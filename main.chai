@@ -428,24 +428,24 @@ def GenerateEmotion() {
 }
 
 
-def InitializeSubordinateSprite() {
-	if this.emotion == "joy" {
-		this.activeSprite = SPRITE_JOY_WALK1
+def InitializeSubordinateSprite(opponent) {
+	if opponent.emotion == "joy" {
+		opponent.activeSprite = SPRITE_JOY_WALK1
 	}
-	else if this.emotion == "sadness" {
-		this.activeSprite = SPRITE_SADNESS_WALK1
+	else if opponent.emotion == "sadness" {
+		opponent.activeSprite = SPRITE_SADNESS_WALK1
 	}
-	else if this.emotion == "fear" {
-		this.activeSprite = SPRITE_FEAR_WALK1
+	else if opponent.emotion == "fear" {
+		opponent.activeSprite = SPRITE_FEAR_WALK1
 	}
-	else if this.emotion == "disgust" {
-		this.activeSprite = SPRITE_DISGUST_WALK1
+	else if opponent.emotion == "disgust" {
+		opponent.activeSprite = SPRITE_DISGUST_WALK1
 	}
-	else if this.emotion == "anger" {
-		this.activeSprite = SPRITE_ANGER_WALK1
+	else if opponent.emotion == "anger" {
+		opponent.activeSprite = SPRITE_ANGER_WALK1
 	}
-	else if this.emotion == "surprise" {
-		this.activeSprite = SPRITE_SURPRISE_WALK1
+	else if opponent.emotion == "surprise" {
+		opponent.activeSprite = SPRITE_SURPRISE_WALK1
 	}
 }
 
@@ -472,10 +472,15 @@ def Populate() {
 	for (iterator = 1; iterator < currentDungeonSize / 3 + 1; ++iterator) {
 		opponentList[iterator] = Opponent()
 		opponentList[iterator].emotion = GenerateEmotion()
-		opponentList[iterator].activeSprite = InitializeSubordinateSprite()
+		InitializeSubordinateSprite( opponentList[iterator] )
 		opponentList[iterator].location = PlaceSubordinate()
 		opponentList[iterator].orientation = "north"
 	}
+}
+
+
+def SetOrientation() {
+	
 }
 
 
