@@ -277,12 +277,12 @@ class Player {
 	var horizontalMovement
 	var verticalMovement
 	def Player() {
-		activeSprite = SPRITE_DRAGON_FLY1_DOWN
-		location  = [1, 1]
-		orientation = "south"
-		isHurt = false
-		horizontalMovement = 0
-		verticalMovement = 0
+		this.activeSprite = SPRITE_DRAGON_FLY1_DOWN
+		this.location = [1, 1]
+		this.orientation = "south"
+		this.isHurt = false
+		this.horizontalMovement = 0
+		this.verticalMovement = 0
 	}
 }
 
@@ -301,9 +301,9 @@ class Opponent {
 	var verticalMovement
 
 	def Opponent() {
-		isPatrolling = false
-		isHunting = false
-		isHurt = false
+		this.isPatrolling = false
+		this.isHunting = false
+		this.isHurt = false
 	}
 }
 
