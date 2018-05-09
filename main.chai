@@ -147,12 +147,13 @@ global previousLevel = 0
 global tries = 3
 global incrementor = (currentLevel / 2) * 2
 global currentDungeonSize = INITIAL_DUNGEON_SIZE + incrementor
-global world = []
 global dungeon = []
 global allFloorLocations = []
 global opponentSetupFloorLocations = []
 global safeFloorLocations = []
-global dragonLocation = []
+global collisionWorld = []
+global opponentList = []
+global hazardList = []
 global treasureLocation = []
 global gotTreasure = false
 global isFireballThere = false
@@ -378,16 +379,12 @@ def CollectOpponentSetupCells() {
 
 
 class Player {
-	var activeSprite
-	var location[]
-	var orientation
-	var isHurt
-	var horizontalMovement
-	var verticalMovement
-	var hasCollided
-	var touchedWho
-	
-	
+	var activeSprite = SPRITE_DRAGON_FLY1_DOWN
+	var location[] = [1, 1]
+	var orientation = "south"
+	var isHurt = false
+	var horizontalMovement = 0
+	var verticalMovement = 0
 }
 
 
@@ -398,15 +395,11 @@ class Opponent {
 	var orientation
 	var crossOfSight[]
 	var target[]
-	var isPatrolling
-	var isHunting
-	var isHurt
+	var isPatrolling = false
+	var isHunting = false
+	var isHurt = false
 	var horizontalMovement
 	var verticalMovement
-	var hasCollided
-	var touchedWho
-	
-	
 }
 
 def GenerateEmotion() {
@@ -435,22 +428,6 @@ def GenerateEmotion() {
 }
 
 
-def PlaceKnight() {
-	return opponentSetupFloorLocations.pop_back()
-}
-
-
-def PlaceSubordinate() {
-	var roll = love.math.random(0, opponentSetupFloorLocations.length - 1)
-	
-	var basin = opponentSetupFloorLocations[roll]
-	opponentSetupFloorLocations[roll] = opponentSetupFloorLocations[opponentSetupFloorLocations.length - 1]
-	opponentSetupFloorLocations[opponentSetupFloorLocations.length - 1] = basin
-	
-	return opponentSetupFloorLocations.pop_back()
-}
-
-
 def InitializeSubordinateSprite() {
 	if this.emotion == "joy" {
 		this.activeSprite = SPRITE_JOY_WALK1
@@ -473,9 +450,32 @@ def InitializeSubordinateSprite() {
 }
 
 
+def PlaceSubordinate() {
+	var roll = love.math.random(0, opponentSetupFloorLocations.length - 1)
+	
+	var basin = opponentSetupFloorLocations[roll]
+	opponentSetupFloorLocations[roll] = opponentSetupFloorLocations[opponentSetupFloorLocations.length - 1]
+	opponentSetupFloorLocations[opponentSetupFloorLocations.length - 1] = basin
+	
+	return opponentSetupFloorLocations.pop_back()
+}
+
+
 def Populate() {
-	var dragon = Player()
-	world[0] = dragon
+	global dragon = Player()
+	opponentList[0] = Opponent()
+	opponentList[0].emotion = "knight"
+	opponentList[0].activeSprite = SPRITE_KNIGHT_WALK1
+	opponentList[0].location = opponentSetupFloorLocations.pop_back()
+	opponentList[0].orientation = "north"
+	
+	for (iterator = 1; iterator < currentDungeonSize / 3 + 1; ++iterator) {
+		opponentList[iterator] = Opponent()
+		opponentList[iterator].emotion = GenerateEmotion()
+		opponentList[iterator].activeSprite = InitializeSubordinateSprite()
+		opponentList[iterator].location = PlaceSubordinate()
+		opponentList[iterator].orientation = "north"
+	}
 }
 
 
