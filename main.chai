@@ -382,7 +382,7 @@ def CollectOpponentSetupCells() {
 
 class Player {
 	var activeSprite = SPRITE_DRAGON_FLY1_DOWN
-	var location[] = [1, 1]
+	var location = [1, 1]
 	var orientation = "south"
 	var isHurt = false
 	var horizontalMovement = 0
@@ -393,10 +393,10 @@ class Player {
 class Opponent {
 	var emotion
 	var activeSprite
-	var location[]
+	var location = []
 	var orientation
-	var crossOfSight[]
-	var target[]
+	var crossOfSight = []
+	var target = []
 	var isPatrolling = false
 	var isHunting = false
 	var isHurt = false
