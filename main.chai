@@ -620,6 +620,17 @@ def Motion(character) {
 }
 
 
+
+def InitializeSafeCells() {
+	for (iterator : totalFloorLocations) {
+		safeFloorLocations[iterator] = allFloorLocations[iterator]
+	}
+}
+
+
+
+
+
 def BreadthFirst(startCell, endCell) {
 	var frontier = [startCell]
 	var checkingCell = []
