@@ -635,7 +635,7 @@ def SetCurrentDragonSprite() {
 				dragon.currentSprite == SPRITE_DRAGON_FLY2_LEFT
 			}
 			else {
-				dragon.currentSprite == SPRITE_DRAGON_FLY2_LEFT
+				dragon.currentSprite == SPRITE_DRAGON_FLY1_LEFT
 			}
 		}
 		else if (dragon.horizontalMovement > 0) {
@@ -643,7 +643,7 @@ def SetCurrentDragonSprite() {
 				dragon.currentSprite == SPRITE_DRAGON_FLY2_RIGHT
 			}
 			else {
-				dragon.currentSprite == SPRITE_DRAGON_FLY2_RIGHT
+				dragon.currentSprite == SPRITE_DRAGON_FLY1_RIGHT
 			}
 		}
 		if (dragon.verticalMovement < 0) {
@@ -651,7 +651,7 @@ def SetCurrentDragonSprite() {
 				dragon.currentSprite == SPRITE_DRAGON_FLY2_UP
 			}
 			else {
-				dragon.currentSprite == SPRITE_DRAGON_FLY2_UP
+				dragon.currentSprite == SPRITE_DRAGON_FLY1_UP
 			}
 		}
 		else if (dragon.verticalMovement > 0) {
@@ -659,7 +659,7 @@ def SetCurrentDragonSprite() {
 				dragon.currentSprite == SPRITE_DRAGON_FLY2_DOWN
 			}
 			else {
-				dragon.currentSprite == SPRITE_DRAGON_FLY2_DOWN
+				dragon.currentSprite == SPRITE_DRAGON_FLY1_DOWN
 			}
 		}
 	}
