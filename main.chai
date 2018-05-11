@@ -17,6 +17,8 @@ global FLOOR_CELL = false
 global WALL_CELL = true
 global WALL_STRENGTH = 0.8
 global INITIAL_DUNGEON_SIZE = 15
+global VERTICAL_POSITION = location[0]
+global HORIZONTAL_POSTION = location[1]
 global CORNERS = [ 
 	[0, -2],	//north
 	[2, 0],		//east
@@ -570,6 +572,16 @@ def SetCrossOfSight() {
 				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.location[1], currentOpponent.location[2] + look )
 			}
 		}
+	}
+}
+
+
+/* collision-detection code translated from Mozilla
+https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection  */
+
+def DidICollide(me, you) {
+	if ( (me.HORIZONTAL_LOCATION < you.HORIZONTAL_LOCATION + 8) && (me.HORIZONTAL_LOCATION + 8 > you.HORIZONTAL_LOCATION) && (me.VERTICAL_LOCATION < you.VERTICAL_LOCATION + 8) && (8 + me.VERTICAL_LOCATION > you.VERTICAL_LOCATION) ) {
+		return true
 	}
 }
 
