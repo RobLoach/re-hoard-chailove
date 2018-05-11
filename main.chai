@@ -529,47 +529,47 @@ def SetCrossOfSight() {
 		currentOpponent.crossOfSight = []
 		
 		if (currentOpponent.orientation == "north") {
-			if (collisionWorld[ currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 )
+			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 )
 			}
-			if (collisionWorld[ currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 )
+			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.location[1] - look, currentOpponent.location[2] ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.location[1] - look, currentOpponent.location[2] )
+			for (look = 0; collisionWorld[ currentOpponent.VERTICAL_LOCATION - look, currentOpponent.HORIZONTAL_LOCATION ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.VERTICAL_LOCATION - look, currentOpponent.HORIZONTAL_LOCATION )
 			}
 			
 		else if (currentOpponent.orientation == "south") {
-			if (collisionWorld[ currentOpponent.location[1] + 1, currentOpponent.location[2] - 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 )
+			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION + 1, currentOpponent.HORIZONTAL_LOCATION - 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 )
 			}
-			if (collisionWorld[ currentOpponent.location[1] + 1, currentOpponent.location[2] + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 )
+			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION + 1, currentOpponent.HORIZONTAL_LOCATION + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.location[1] + look, currentOpponent.location[2] ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.location[1] + look, currentOpponent.location[2] )
+			for (look = 0; collisionWorld[ currentOpponent.VERTICAL_LOCATION + look, currentOpponent.HORIZONTAL_LOCATION ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.VERTICAL_LOCATION + look, currentOpponent.HORIZONTAL_LOCATION )
 			}
 			
 		else if (currentOpponent.orientation == "west") {
-			if (collisionWorld[ currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 )
+			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 )
 			}
-			if (collisionWorld[ currentOpponent.location[1] + 1, currentOpponent.location[2] + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 )
+			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION + 1, currentOpponent.HORIZONTAL_LOCATION + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.location[1], currentOpponent.location[2] - look ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.location[1], currentOpponent.location[2] - look )
+			for (look = 0; collisionWorld[ currentOpponent.VERTICAL_LOCATION, currentOpponent.HORIZONTAL_LOCATION - look ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.VERTICAL_LOCATION, currentOpponent.HORIZONTAL_LOCATION - look )
 			}
 			
 		else if (currentOpponent.orientation == "east") {
-			if (collisionWorld[ currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 )
+			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 )
 			}
-			if (collisionWorld[ currentOpponent.location[1] + 1, currentOpponent.location[2] + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 )
+			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION + 1, currentOpponent.HORIZONTAL_LOCATION + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.location[1], currentOpponent.location[2] + look ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.location[1], currentOpponent.location[2] + look )
+			for (look = 0; collisionWorld[ currentOpponent.VERTICAL_LOCATION, currentOpponent.HORIZONTAL_LOCATION + look ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.VERTICAL_LOCATION, currentOpponent.HORIZONTAL_LOCATION + look )
 			}
 		}
 	}
