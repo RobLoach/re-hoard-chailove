@@ -479,8 +479,27 @@ def Populate() {
 }
 
 
-def SetOrientation() {
+def RunGameplay() {
 	
+}
+
+
+def SetOrientation() {
+	for (currentOpponent : opponentList) {
+		if (currentOpponent.horizontalMovement < 0) {
+			currentOpponent.orientation = "west"
+		}
+		else if (currentOpponent.horizontalMovement > 0) {
+			currentOpponent.orientation = "east"
+		}
+		
+		if (currentOpponent.verticalMovement < 0) {
+			currentOpponent.orientation = "north"
+		}
+		else if (currentOpponent.verticalMovement > 0) {
+			currentOpponent.orientation = "south"
+		}
+	}
 }
 
 
