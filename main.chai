@@ -207,7 +207,7 @@ def Translate() {
 	message_currentRound = "Ronda " + (currentLevel + 1)
 	message_tries = "Intentos: " + tries
 	message_gameOver = "Acabó el Juego"
-	message_finalRound = "Última Rona: " + (currentLevel + 1)
+	message_finalRound = "Última Ronda: " + (currentLevel + 1)
 	}
 	
 	else if (language == "epo") {
