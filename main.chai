@@ -380,6 +380,13 @@ def CollectOpponentSetupCells() {
 }
 
 
+/* The characters are not supposed to be locked to a grid!
+The collision cells are supposed to tell the characters
+ what areas are impassable!
+The actual positions of the cells are:
+x1y1 = cell * grid
+x2y2 = cell * grid + 7
+*/
 class Player {
 	var activeSprite = SPRITE_DRAGON_FLY1_DOWN
 	var location = [1, 1]
@@ -452,6 +459,13 @@ def InitializeSubordinateSprite(opponent) {
 }
 
 
+/* The characters are not supposed to be locked to a grid!
+The collision cells are supposed to tell the characters
+ what areas are impassable!
+The actual positions of the cells are:
+x1y1 = cell * grid
+x2y2 = cell * grid + 7
+*/
 def PlaceSubordinate() {
 	var roll = love.math.random(0, opponentSetupFloorLocations.length - 1)
 	
@@ -524,6 +538,13 @@ def SetOrientation() {
 }
 
 
+/* The characters are not supposed to be locked to a grid!
+The collision cells are supposed to tell the characters
+ what areas are impassable!
+The actual positions of the cells are:
+x1y1 = cell * grid
+x2y2 = cell * grid + 7
+*/
 def SetCrossOfSight() {
 	for (currentOpponent : opponentList) {
 		currentOpponent.crossOfSight = []
@@ -583,6 +604,18 @@ def DidICollide(me, you) {
 	if ( (me.HORIZONTAL_LOCATION < you.HORIZONTAL_LOCATION + 8) && (me.HORIZONTAL_LOCATION + 8 > you.HORIZONTAL_LOCATION) && (me.VERTICAL_LOCATION < you.VERTICAL_LOCATION + 8) && (8 + me.VERTICAL_LOCATION > you.VERTICAL_LOCATION) ) {
 		return true
 	}
+}
+
+/* The characters are not supposed to be locked to a grid!
+The collision cells are supposed to tell the characters
+ what areas are impassable!
+The actual positions of the cells are:
+x1y1 = cell * grid
+x2y2 = cell * grid + 7
+*/
+def Motion(character) {
+	character.HORIZONTAL_LOCATION = character.HORIZONTAL_LOCATION + character.horizontalMovement
+	character.VERTICAL_LOCATION = character.VERTICAL_LOCATION + character.horizontalMovement
 }
 
 
