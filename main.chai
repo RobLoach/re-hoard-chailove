@@ -233,7 +233,7 @@ def TitleScreen() {
 
 
 def TitleRun() {
-	currentMusic = love.sound.newSoundData(music_title)
+	currentMusic = love.sound.newSoundData(MUSIC_TITLE)
 	currentMusic.play()
 	
 	if ( love.joystick[0].isDown("A") ) {
