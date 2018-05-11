@@ -628,7 +628,57 @@ def InitializeSafeCells() {
 }
 
 
-
+def SetCurrentDragonSprite() {
+	if (dragon.horizontalMovement != 0 && dragon.verticalMovement != 0) {
+		if (dragon.horizontalMovement < 0) {
+			if (dragon.currentSprite == SPRITE_DRAGON_FLY1_LEFT) {
+				dragon.currentSprite == SPRITE_DRAGON_FLY2_LEFT
+			}
+			else {
+				dragon.currentSprite == SPRITE_DRAGON_FLY2_LEFT
+			}
+		}
+		else if (dragon.horizontalMovement > 0) {
+			if (dragon.currentSprite == SPRITE_DRAGON_FLY1_RIGHT) {
+				dragon.currentSprite == SPRITE_DRAGON_FLY2_RIGHT
+			}
+			else {
+				dragon.currentSprite == SPRITE_DRAGON_FLY2_RIGHT
+			}
+		}
+		if (dragon.verticalMovement < 0) {
+			if (dragon.currentSprite == SPRITE_DRAGON_FLY1_UP) {
+				dragon.currentSprite == SPRITE_DRAGON_FLY2_UP
+			}
+			else {
+				dragon.currentSprite == SPRITE_DRAGON_FLY2_UP
+			}
+		}
+		else if (dragon.verticalMovement > 0) {
+			if (dragon.currentSprite == SPRITE_DRAGON_FLY1_DOWN) {
+				dragon.currentSprite == SPRITE_DRAGON_FLY2_DOWN
+			}
+			else {
+				dragon.currentSprite == SPRITE_DRAGON_FLY2_DOWN
+			}
+		}
+	}
+	
+	if ( love.joystick[0].isDown("A") ) {
+		if (dragon.currentSprite == SPRITE_DRAGON_FLY1_LEFT || dragon.currentSprite == SPRITE_DRAGON_FLY2_LEFT) {
+			dragon.currentSprite == SPRITE_DRAGON_FIRE_LEFT
+		}
+		else if (dragon.currentSprite == SPRITE_DRAGON_FLY1_RIGHT || dragon.currentSprite == SPRITE_DRAGON_FLY2_RIGHT) {
+			dragon.currentSprite == SPRITE_DRAGON_FIRE_RIGHT
+		}
+		else if (dragon.currentSprite == SPRITE_DRAGON_FLY1_UP || dragon.currentSprite == SPRITE_DRAGON_FLY2_UP) {
+			dragon.currentSprite == SPRITE_DRAGON_FIRE_UP
+		}
+		else if (dragon.currentSprite == SPRITE_DRAGON_FLY1_DOWN || dragon.currentSprite == SPRITE_DRAGON_FLY2_DOWN) {
+			dragon.currentSprite == SPRITE_DRAGON_FIRE_DOWN
+		}
+	}
+}
 
 
 def BreadthFirst(startCell, endCell) {
