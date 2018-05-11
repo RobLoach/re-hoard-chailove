@@ -1205,6 +1205,23 @@ def AlreadyChecked( vertical, horizontal ) {
 }
 
 
+def LostGame() {
+	normal_phase = false
+	panic_phase = false
+	love.graphics.clear()
+	love.graphics.print(message_gameOver, 50, 42)
+	love.graphics.print(message_finalRound, 48, 84)
+	love.graphics.print(message_pressA, 50, 96)
+	currentMusic = love.sound.newSoundData(MUSIC_GAMEOVER)
+	currentMusic.play()
+	
+	if ( love.joystick[0].isDown("A") ) {
+		love.graphics.clear()
+		title_phase = true
+		TitleRun()
+	}
+}
+
 
 /* basic ChaiLove stuff */
 
