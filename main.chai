@@ -503,6 +503,58 @@ def SetOrientation() {
 }
 
 
+def SetCrossOfSight() {
+	for (currentOpponent : opponentList) {
+		currentOpponent.crossOfSight = []
+		
+		if (currentOpponent.orientation == "north") {
+			if (collisionWorld[ currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 )
+			}
+			if (collisionWorld[ currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 )
+			}
+			for (look = 0; collisionWorld[ currentOpponent.location[1] - look, currentOpponent.location[2] ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.location[1] - look, currentOpponent.location[2] )
+			}
+			
+		else if (currentOpponent.orientation == "south") {
+			if (collisionWorld[ currentOpponent.location[1] + 1, currentOpponent.location[2] - 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 )
+			}
+			if (collisionWorld[ currentOpponent.location[1] + 1, currentOpponent.location[2] + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 )
+			}
+			for (look = 0; collisionWorld[ currentOpponent.location[1] + look, currentOpponent.location[2] ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.location[1] + look, currentOpponent.location[2] )
+			}
+			
+		else if (currentOpponent.orientation == "west") {
+			if (collisionWorld[ currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 )
+			}
+			if (collisionWorld[ currentOpponent.location[1] + 1, currentOpponent.location[2] + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 )
+			}
+			for (look = 0; collisionWorld[ currentOpponent.location[1], currentOpponent.location[2] - look ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.location[1], currentOpponent.location[2] - look )
+			}
+			
+		else if (currentOpponent.orientation == "east") {
+			if (collisionWorld[ currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] - 1 )
+			}
+			if (collisionWorld[ currentOpponent.location[1] + 1, currentOpponent.location[2] + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.location[1] - 1, currentOpponent.location[2] + 1 )
+			}
+			for (look = 0; collisionWorld[ currentOpponent.location[1], currentOpponent.location[2] + look ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.location[1], currentOpponent.location[2] + look )
+			}
+		}
+	}
+}
+
+
 def BreadthFirst(startCell, endCell) {
 	var frontier = [startCell]
 	var checkingCell = []
