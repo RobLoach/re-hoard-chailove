@@ -484,6 +484,25 @@ def RunGameplay() {
 }
 
 
+det SetCollisionWorld () {
+	collisionWorld = []
+
+	for (var iterator = 0; iterator < dungeon.length; ++iterator) {
+		collisionWorld[iterator] = dungeon[iterator]
+	}
+	
+	for (var vertical = 0; vertical < collisionWorld.length; ++vertical) {
+		for (var horizontal = 0; horizontal < collisionWorld[vertical].length; ++horizontal) {
+			for (currentOpponent : opponentList) {
+				if ( currrentOpponent.location == collisionWorld[vertical][horizontal] ) {
+					collisionWorld[vertical][horizontal] = WALL_CELL
+				}
+			}
+		}
+	}
+}
+
+
 def SetOrientation() {
 	for (currentOpponent : opponentList) {
 		if (currentOpponent.horizontalMovement < 0) {
