@@ -13,6 +13,7 @@ gameplay music based on song by tanner helland
 /*parameters*/
 
 //internal constants
+global SQUARE_SIZE = 8
 global FLOOR_CELL = false
 global WALL_CELL = true
 global WALL_STRENGTH = 0.8
@@ -601,7 +602,7 @@ def SetCrossOfSight() {
 https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection  */
 
 def DidICollide(me, you) {
-	if ( (me.HORIZONTAL_LOCATION < you.HORIZONTAL_LOCATION + 8) && (me.HORIZONTAL_LOCATION + 8 > you.HORIZONTAL_LOCATION) && (me.VERTICAL_LOCATION < you.VERTICAL_LOCATION + 8) && (8 + me.VERTICAL_LOCATION > you.VERTICAL_LOCATION) ) {
+	if ( (me.HORIZONTAL_LOCATION < you.HORIZONTAL_LOCATION + SQUARE_SIZE) && (me.HORIZONTAL_LOCATION + SQUARE_SIZE > you.HORIZONTAL_LOCATION) && (me.VERTICAL_LOCATION < you.VERTICAL_LOCATION + SQUARE_SIZE) && (SQUARE_SIZE + me.VERTICAL_LOCATION > you.VERTICAL_LOCATION) ) {
 		return true
 	}
 }
