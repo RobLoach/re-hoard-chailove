@@ -603,7 +603,7 @@ def BreadthFirst(startCell, endCell) {
 			frontier.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
 			visitedCells.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
 		}
-		if ( dungeon[ checkingCell[0] + 0 ][ checkingCell[1] ] == FLOOR_CELL && AlreadyChecked( checkingCell[0] + 0, checkingCell[1] ) == false) {
+		if ( dungeon[ checkingCell[0] + 1 ][ checkingCell[1] ] == FLOOR_CELL && AlreadyChecked( checkingCell[0] + 1, checkingCell[1] ) == false) {
 			frontier.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
 			visitedCells.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
 		}
