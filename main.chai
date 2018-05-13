@@ -18,8 +18,12 @@ global FLOOR_CELL = false
 global WALL_CELL = true
 global WALL_STRENGTH = 0.8
 global INITIAL_DUNGEON_SIZE = 15
-global VERTICAL_POSITION = location[0]
-global HORIZONTAL_POSTION = location[1]
+global VERTICAL_DIMENSION = 0
+global HORIZONTAL_DIMENSION = 1
+global TILE_VERTICAL = currentTile[VERTICAL_DIMENSION]
+global TILE_HORIZONTAL = currentTile[VERTICAL_DIMENSION]
+global POSITION_VERTICAL = position[VERTICAL_DIMENSION]
+global POSITION_HORIZONTAL = position[HORIZONTAL_DIMENSION]
 global CORNERS = [ 
 	[0, -2],	//north
 	[2, 0],		//east
@@ -390,7 +394,8 @@ x2y2 = cell * grid + 7
 */
 class Player {
 	var activeSprite = SPRITE_DRAGON_FLY1_DOWN
-	var location = [1, 1]
+	var position = [9, 9]
+	var currentTile = [1, 1]
 	var orientation = "south"
 	var isHurt = false
 	var horizontalMovement = 0
@@ -401,7 +406,8 @@ class Player {
 class Opponent {
 	var emotion
 	var activeSprite
-	var location = []
+	var position = []
+	var currentTile = []
 	var orientation
 	var crossOfSight = []
 	var target = []
@@ -467,6 +473,14 @@ The actual positions of the cells are:
 x1y1 = cell * grid
 x2y2 = cell * grid + 7
 */
+def PlaceKnight() {
+	var position = opponentSetupFloorLocations.pop_back()
+	position[HORIZONTAL_DIMENSION] = position[HORIZONTAL_DIMENSION] * 8
+	position[VERTICAL_DIMENSION] = position[VERTICAL_DIMENSION] * 8
+	return position
+}
+
+
 def PlaceSubordinate() {
 	var roll = love.math.random(0, opponentSetupFloorLocations.length - 1)
 	
@@ -474,7 +488,10 @@ def PlaceSubordinate() {
 	opponentSetupFloorLocations[roll] = opponentSetupFloorLocations[opponentSetupFloorLocations.length - 1]
 	opponentSetupFloorLocations[opponentSetupFloorLocations.length - 1] = basin
 	
-	return opponentSetupFloorLocations.pop_back()
+	var position = opponentSetupFloorLocations.pop_back()
+	position[HORIZONTAL_DIMENSION] = position[HORIZONTAL_DIMENSION] * 8
+	position[VERTICAL_DIMENSION] = position[VERTICAL_DIMENSION] * 8
+	return position
 }
 
 
@@ -483,14 +500,14 @@ def Populate() {
 	opponentList[0] = Opponent()
 	opponentList[0].emotion = "knight"
 	opponentList[0].activeSprite = SPRITE_KNIGHT_WALK1
-	opponentList[0].location = opponentSetupFloorLocations.pop_back()
+	opponentList[0].position = PlaceKnight()
 	opponentList[0].orientation = "north"
 	
 	for (iterator = 1; iterator < currentDungeonSize / 3 + 1; ++iterator) {
 		opponentList[iterator] = Opponent()
 		opponentList[iterator].emotion = GenerateEmotion()
 		InitializeSubordinateSprite( opponentList[iterator] )
-		opponentList[iterator].location = PlaceSubordinate()
+		opponentList[iterator].position = PlaceSubordinate()
 		opponentList[iterator].orientation = "north"
 	}
 }
@@ -501,7 +518,15 @@ def RunGameplay() {
 }
 
 
-det SetCollisionWorld () {
+def SetCurrentTile(actor) {
+	var tile = []
+	tile[VERTICAL_DIMENSION] = actor.position[VERTICAL_DIMENSION] / 8
+	tile[HORIZONTAL_DIMENSION] = actor.position[HORIZONTAL_DIMENSION] / 8
+	return tile
+}
+
+
+def SetCollisionWorld () {
 	collisionWorld = []
 
 	for (var iterator = 0; iterator < dungeon.length; ++iterator) {
@@ -545,53 +570,55 @@ The collision cells are supposed to tell the characters
 The actual positions of the cells are:
 x1y1 = cell * grid
 x2y2 = cell * grid + 7
+
+Use of _LOCATION constants is depreciated!
 */
 def SetCrossOfSight() {
 	for (currentOpponent : opponentList) {
 		currentOpponent.crossOfSight = []
 		
 		if (currentOpponent.orientation == "north") {
-			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 )
+			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
 			}
-			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 )
+			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.VERTICAL_LOCATION - look, currentOpponent.HORIZONTAL_LOCATION ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.VERTICAL_LOCATION - look, currentOpponent.HORIZONTAL_LOCATION )
+			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL - look, currentOpponent.TILE_HORIZONTAL ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL - look, currentOpponent.TILE_HORIZONTAL )
 			}
 			
 		else if (currentOpponent.orientation == "south") {
-			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION + 1, currentOpponent.HORIZONTAL_LOCATION - 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 )
+			if (collisionWorld[ currentOpponent.TILE_VERTICAL + 1, currentOpponent.TILE_HORIZONTAL - 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
 			}
-			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION + 1, currentOpponent.HORIZONTAL_LOCATION + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 )
+			if (collisionWorld[ currentOpponent.TILE_VERTICAL + 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.VERTICAL_LOCATION + look, currentOpponent.HORIZONTAL_LOCATION ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.VERTICAL_LOCATION + look, currentOpponent.HORIZONTAL_LOCATION )
+			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL + look, currentOpponent.TILE_HORIZONTAL ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL + look, currentOpponent.TILE_HORIZONTAL )
 			}
 			
 		else if (currentOpponent.orientation == "west") {
-			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 )
+			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
 			}
-			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION + 1, currentOpponent.HORIZONTAL_LOCATION + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 )
+			if (collisionWorld[ currentOpponent.TILE_VERTICAL + 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.VERTICAL_LOCATION, currentOpponent.HORIZONTAL_LOCATION - look ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.VERTICAL_LOCATION, currentOpponent.HORIZONTAL_LOCATION - look )
+			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL - look ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL - look )
 			}
 			
 		else if (currentOpponent.orientation == "east") {
-			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION - 1 )
+			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
 			}
-			if (collisionWorld[ currentOpponent.VERTICAL_LOCATION + 1, currentOpponent.HORIZONTAL_LOCATION + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.VERTICAL_LOCATION - 1, currentOpponent.HORIZONTAL_LOCATION + 1 )
+			if (collisionWorld[ currentOpponent.TILE_VERTICAL + 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.VERTICAL_LOCATION, currentOpponent.HORIZONTAL_LOCATION + look ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.VERTICAL_LOCATION, currentOpponent.HORIZONTAL_LOCATION + look )
+			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL + look ] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL + look )
 			}
 		}
 	}
@@ -602,7 +629,7 @@ def SetCrossOfSight() {
 https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection  */
 
 def DidICollide(me, you) {
-	if ( (me.HORIZONTAL_LOCATION < you.HORIZONTAL_LOCATION + SQUARE_SIZE) && (me.HORIZONTAL_LOCATION + SQUARE_SIZE > you.HORIZONTAL_LOCATION) && (me.VERTICAL_LOCATION < you.VERTICAL_LOCATION + SQUARE_SIZE) && (SQUARE_SIZE + me.VERTICAL_LOCATION > you.VERTICAL_LOCATION) ) {
+	if ( (me.POSITION_HORIZONTAL < you.POSITION_HORIZONTAL + SQUARE_SIZE) && (me.POSITION_HORIZONTAL + SQUARE_SIZE > you.POSITION_HORIZONTAL) && (me.POSITION_VERTICAL < you.POSITION_VERTICAL + SQUARE_SIZE) && (SQUARE_SIZE + me.POSITION_VERTICAL > you.POSITION_VERTICAL) ) {
 		return true
 	}
 }
@@ -613,10 +640,12 @@ The collision cells are supposed to tell the characters
 The actual positions of the cells are:
 x1y1 = cell * grid
 x2y2 = cell * grid + 7
+
+Use of _LOCATION constants is depreciated!
 */
 def Motion(character) {
-	character.HORIZONTAL_LOCATION = character.HORIZONTAL_LOCATION + character.horizontalMovement
-	character.VERTICAL_LOCATION = character.VERTICAL_LOCATION + character.horizontalMovement
+	character.POSITION_HORIZONTAL = character.POSITION_HORIZONTAL + character.horizontalMovement
+	character.POSITION_VERTICAL = character.POSITION_VERTICAL + character.horizontalMovement
 }
 
 
