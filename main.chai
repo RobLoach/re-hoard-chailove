@@ -608,6 +608,13 @@ def SetCrossOfSight() {
 }
 
 
+def InitializeSafeCells() {
+	for (iterator : totalFloorLocations) {
+		safeFloorLocations[iterator] = allFloorLocations[iterator]
+	}
+}
+
+
 /* collision-detection code translated from Mozilla
 https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection  */
 
@@ -618,17 +625,9 @@ def DidICollide(me, you) {
 }
 
 
-def Motion(character) {
+def MoveActor(character) {
 	character.POSITION_HORIZONTAL = character.POSITION_HORIZONTAL + character.horizontalMovement
 	character.POSITION_VERTICAL = character.POSITION_VERTICAL + character.horizontalMovement
-}
-
-
-
-def InitializeSafeCells() {
-	for (iterator : totalFloorLocations) {
-		safeFloorLocations[iterator] = allFloorLocations[iterator]
-	}
 }
 
 
@@ -1230,7 +1229,7 @@ def BreadthFirst(startCell, endCell) {
 	var visitedCells = []
 	
 
-	while ( !frontier.empty() ) {
+	while ( frontier.empty() == false ) {
 		checkingCell = frontier.pop_back()
 
 		if (checkingCell == endCell) {
