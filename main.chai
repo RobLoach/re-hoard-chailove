@@ -654,7 +654,40 @@ def ControlDragon() {
 		}
 		
 		if ( love.joystick[0].isDown("A") ) {
-			
+			if (isFireballThere == false) {
+				isFireballThere = true
+				
+				var fire = Hazard()
+				fire.type = "fire"
+				fire.orientation = dragon.orientation
+				
+				if (fire.orientation == "west") {
+					fire.activeSprite = SPRITE_FIREBALL_LEFT
+					fire.position = [ (dragon.POSITION_HORIZONTAL - 8), (dragon.POSITION_VERTICAL) ]
+					fire.horizontalMovement = -0.4
+					fire.verticalMovement = 0
+				}
+				else if (fire.orientation == "east") {
+					fire.activeSprite = SPRITE_FIREBALL_LEFT
+					fire.position = [ (dragon.POSITION_HORIZONTAL + 8), (dragon.POSITION_VERTICAL) ]
+					fire.horizontalMovement = 0.4
+					fire.verticalMovement = 0
+				}
+				else if (fire.orientation == "north") {
+					fire.activeSprite = SPRITE_FIREBALL_LEFT
+					fire.position = [ (dragon.POSITION_HORIZONTAL), (dragon.POSITION_VERTICAL - 8) ]
+					fire.horizontalMovement = 0
+					fire.verticalMovement = -0.4
+				}
+				else if (fire.orientation == "south") {
+					fire.activeSprite = SPRITE_FIREBALL_LEFT
+					fire.position = [ (dragon.POSITION_HORIZONTAL), (dragon.POSITION_VERTICAL + 8) ]
+					fire.horizontalMovement = 0
+					fire.verticalMovement = 0.4
+				}
+				
+				hazardList.push_back(fire)
+			}
 		}
 	}
 }
