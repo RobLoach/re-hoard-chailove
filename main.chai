@@ -1,11 +1,11 @@
 /*
-re-hoard
-copyright tinglar 2017-2018
-license gplv3 (gnu.org/licenses/gpl-3.0.en.html)
-revision 0
+Re-Hoard
+Copyright Tinglar 2017-2018
+License gplv3 (gnu.org/licenses/gpl-3.0.en.html)
+Revision 0
 
-title music by 0xabad1dea
-gameplay music based on song by tanner helland
+Title music by 0xabad1dea
+Gameplay music based on song by Tanner Helland
 */
 
 
@@ -183,9 +183,6 @@ global message_gameOver
 global message_finalRound
 
 
-
-//push_back()
-//pop_back()
 
 /* data structures */
 
@@ -385,13 +382,6 @@ def CollectOpponentSetupCells() {
 }
 
 
-/* The characters are not supposed to be locked to a grid!
-The collision cells are supposed to tell the characters
- what areas are impassable!
-The actual positions of the cells are:
-x1y1 = cell * grid
-x2y2 = cell * grid + 7
-*/
 class Player {
 	var activeSprite = SPRITE_DRAGON_FLY1_DOWN
 	var position = [9, 9]
@@ -466,13 +456,6 @@ def InitializeSubordinateSprite(opponent) {
 }
 
 
-/* The characters are not supposed to be locked to a grid!
-The collision cells are supposed to tell the characters
- what areas are impassable!
-The actual positions of the cells are:
-x1y1 = cell * grid
-x2y2 = cell * grid + 7
-*/
 def PlaceKnight() {
 	var position = opponentSetupFloorLocations.pop_back()
 	position[HORIZONTAL_DIMENSION] = position[HORIZONTAL_DIMENSION] * 8
@@ -564,15 +547,6 @@ def SetOrientation() {
 }
 
 
-/* The characters are not supposed to be locked to a grid!
-The collision cells are supposed to tell the characters
- what areas are impassable!
-The actual positions of the cells are:
-x1y1 = cell * grid
-x2y2 = cell * grid + 7
-
-Use of _LOCATION constants is depreciated!
-*/
 def SetCrossOfSight() {
 	for (currentOpponent : opponentList) {
 		currentOpponent.crossOfSight = []
@@ -634,15 +608,7 @@ def DidICollide(me, you) {
 	}
 }
 
-/* The characters are not supposed to be locked to a grid!
-The collision cells are supposed to tell the characters
- what areas are impassable!
-The actual positions of the cells are:
-x1y1 = cell * grid
-x2y2 = cell * grid + 7
 
-Use of _LOCATION constants is depreciated!
-*/
 def Motion(character) {
 	character.POSITION_HORIZONTAL = character.POSITION_HORIZONTAL + character.horizontalMovement
 	character.POSITION_VERTICAL = character.POSITION_VERTICAL + character.horizontalMovement
