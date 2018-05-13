@@ -186,6 +186,41 @@ global message_finalRound
 
 /* data structures */
 
+//classes
+class Player {
+	var activeSprite = SPRITE_DRAGON_FLY1_DOWN
+	var position = [9, 9]
+	var currentTile = [1, 1]
+	var orientation = "south"
+	var isHurt = false
+	var horizontalMovement = 0
+	var verticalMovement = 0
+}
+
+class Opponent {
+	var emotion
+	var activeSprite
+	var position = []
+	var currentTile = []
+	var orientation
+	var crossOfSight = []
+	var target = []
+	var isPatrolling = false
+	var isHunting = false
+	var isHurt = false
+	var horizontalMovement
+	var verticalMovement
+}
+
+class Hazard {
+	var type
+	var activeSprite
+	var position = []
+	var currentTile = []
+	var orientation
+	var horizontalMovement
+	var verticalMovement
+}
 
 
 
@@ -381,32 +416,6 @@ def CollectOpponentSetupCells() {
 	}
 }
 
-
-class Player {
-	var activeSprite = SPRITE_DRAGON_FLY1_DOWN
-	var position = [9, 9]
-	var currentTile = [1, 1]
-	var orientation = "south"
-	var isHurt = false
-	var horizontalMovement = 0
-	var verticalMovement = 0
-}
-
-
-class Opponent {
-	var emotion
-	var activeSprite
-	var position = []
-	var currentTile = []
-	var orientation
-	var crossOfSight = []
-	var target = []
-	var isPatrolling = false
-	var isHunting = false
-	var isHurt = false
-	var horizontalMovement
-	var verticalMovement
-}
 
 def GenerateEmotion() {
 	var roll = love.math.random(0, 5)
@@ -619,6 +628,34 @@ def Motion(character) {
 def InitializeSafeCells() {
 	for (iterator : totalFloorLocations) {
 		safeFloorLocations[iterator] = allFloorLocations[iterator]
+	}
+}
+
+
+def ControlDragon() {
+	if (dragon.isHurt == false) {
+		if ( love.joystick[0].isDown("left") ) {
+			dragon.horizontalMovement = -0.2
+		}
+		if ( love.joystick[0].isDown("right") ) {
+			dragon.horizontalMovement = 0.2
+		}
+		if ( love.joystick[0].isDown("left") == false && love.joystick[0].isDown("right") == false ) {
+			dragon.horizontalMovement = 0
+		}
+		if ( love.joystick[0].isDown("up") ) {
+			dragon.horizontalMovement = -0.2
+		}
+		if ( love.joystick[0].isDown("down") ) {
+			dragon.horizontalMovement = 0.2
+		}
+		if ( love.joystick[0].isDown("up") == false && love.joystick[0].isDown("down") == false ) {
+			dragon.horizontalMovement = 0
+		}
+		
+		if ( love.joystick[0].isDown("A") ) {
+			
+		}
 	}
 }
 
@@ -1216,6 +1253,7 @@ def LostGame() {
 		TitleRun()
 	}
 }
+
 
 
 /* basic ChaiLove stuff */
