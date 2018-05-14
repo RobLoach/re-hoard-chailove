@@ -212,7 +212,7 @@ class Opponent {
 	var verticalMovement
 }
 
-class Hazard {
+class ArrowFire {
 	var type
 	var activeSprite
 	var position = []
@@ -220,6 +220,14 @@ class Hazard {
 	var orientation
 	var horizontalMovement
 	var verticalMovement
+}
+
+class Dynamite {
+	var type = "dynamite"
+	var activeSprite = SPRITE_DYNAMITE_OFF
+	var position = []
+	var currentTile = []
+	var explosionCount = love.math.random(4, 20)
 }
 
 
@@ -556,6 +564,13 @@ def SetOrientation() {
 }
 
 
+def InitializeSafeCells() {
+	for (iterator : totalFloorLocations) {
+		safeFloorLocations[iterator] = allFloorLocations[iterator]
+	}
+}
+
+
 def SetCrossOfSight() {
 	for (currentOpponent : opponentList) {
 		currentOpponent.crossOfSight = []
@@ -604,13 +619,6 @@ def SetCrossOfSight() {
 				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL + look )
 			}
 		}
-	}
-}
-
-
-def InitializeSafeCells() {
-	for (iterator : totalFloorLocations) {
-		safeFloorLocations[iterator] = allFloorLocations[iterator]
 	}
 }
 
@@ -689,6 +697,113 @@ def ControlDragon() {
 			}
 		}
 	}
+}
+
+
+def CollideMobileWithWall() {
+	/*
+	Check the four tiles that border the actor.
+	If a tile collides with the actor,
+	the movement of the contact direction becomes 0.
+	If the actor is an opponent,
+	the opponent no longer has a target.
+	*/
+}
+
+
+def CollideOpponentWithDragon() {
+	/*
+	Iterate over opponentList.
+	Check if the dragon 
+	 collides with an opponent.
+	If so, change the opponent's sprite,
+	 then trigger the loss algorithm.
+	*/
+}
+
+
+def CollideOpponentWithOpponent() {
+	/*
+	Copy opponentList.
+	Make a for loop 
+	that iterates over the permanent list
+	 and goes backwards until the index is 0.
+	Pop from the copy,
+	 then iterate over the temporary list.
+	If a collision occurs,
+	the permanent opponent stops moving
+	 and no longer has a target.
+	*/
+}
+
+
+def CollideArrowFireWithWall() {
+	/*
+	Check the four tiles that border the actor.
+	If a tile collides with the actor,
+	destroy the hazard.
+	*/
+}
+
+
+def CollideArrowFireWithHazard() {
+	/*
+	Pop the current hazard off the queue.
+	Check if the hazard collided with another hazard.
+	If the current hazard collided
+	 with another arrow or fireball,
+	destroy the other hazard.
+	If the current hazard collided with
+	 some dynamite,
+	activate the dynamite.
+	In either of these collisions, 
+	 destroy the current hazard.
+	*/
+}
+
+
+def CollideArrowFireWithActor() {
+	/*
+	Check the dragon,
+	 then go through the queue.
+	In both cases, if the hazard collided,
+	 destroy the hazard,
+	 then hurt the actor.
+	*/
+}
+
+
+def CollideDynamiteWithWorld() {
+	/*
+	Check the explosionCount.
+	An explosionCount of 0 to -4
+	 hurts any actor on contact.
+	An explosionCount of -5
+	 destroys the hazard.
+	*/
+}
+
+
+def CollideDragonWithTreasure(dragon) {
+	/*
+	Check if the dragon collides with the treasure.
+	Also, check if the treasure is closed.
+	If so, then the treasure and the door open.
+	Also, a sound plays.
+	*/
+}
+
+def CollideDragonWithDoor(dragon) {
+	/*
+	Check if the dragon collides with the door.
+	Also, check if the door is open.
+	If so:
+	1. Stop everybody.
+	2. Play the victory song.
+	3. Have the dragon travel upwards.
+	4. Run cleanup.
+	5. Switch to intermission mode.
+	*/
 }
 
 
