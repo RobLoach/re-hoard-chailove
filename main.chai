@@ -740,8 +740,8 @@ def CollideOpponentWithWall() {
 	and the opponent no longer has a target.
 	*/
 	
-	var actorHorizontal
-	var actorVertical
+	var opponentHorizontal
+	var opponentVertical
 	
 	for [opponent : opponentList] {
 		opponentVertical = opponent.TILE_VERTICAL
@@ -855,7 +855,30 @@ def CollideArrowFireWithWall() {
 	destroy the hazard.
 	*/
 	
+	var hazardHorizontal
+	var hazardVertical
 	
+	for [hazard : hazardList] {
+		hazardVertical = hazard.TILE_VERTICAL
+		hazardHorizontal = hazard.TILE_HORIZONTAL
+		
+		if (dungeon[hazardVertical][hazardHorizontal - 1] == WALL_CELL && didIHitAWall(hazard, dungeon[hazardVertical][hazardHorizontal - 1]) == true && hazard.horizontalMovement < 0) {
+			hazardList[hazard] = hazardList[hazardList.length]
+			hazardList.pop_back()
+		}	
+		if (dungeon[hazardVertical][hazardHorizontal + 1] == WALL_CELL && didIHitAWall(hazard, dungeon[hazardVertical][hazardHorizontal + 1]) == true && hazard.horizontalMovement > 0) {
+			hazardList[hazard] = hazardList[hazardList.length]
+			hazardList.pop_back()
+		}	
+		if (dungeon[hazardVertical - 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazard, dungeon[hazardVertical - 1][hazardHorizontal]) == true && hazard.verticalMovement < 0) {
+			hazardList[hazard] = hazardList[hazardList.length]
+			hazardList.pop_back()
+		}	
+		if (dungeon[hazardVertical + 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazard, dungeon[hazardVertical + 1][hazardHorizontal]) == true && hazard.verticalMovement > 0) {
+			hazardList[hazard] = hazardList[hazardList.length]
+			hazardList.pop_back()
+		}
+	}
 }
 
 
