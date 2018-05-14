@@ -717,8 +717,17 @@ def CollideDragonWithWall() {
 	var dragonVertical = dragon.TILE_VERTICAL
 	var dragonHorizontal = dragon.TILE_HORIZONTAL
 	
-	if (dungeon[dragonVertical][dragonHorizontal - 1] == WALL_CELL) {
-		var  currentTile = Tile()
+	if (dungeon[dragonVertical][dragonHorizontal - 1] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical][dragonHorizontal - 1]) == true && dragon.horizontalMovement < 0) {
+		dragon.horizontalMovement = 0
+	}	
+	if (dungeon[dragonVertical][dragonHorizontal + 1] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical][dragonHorizontal + 1]) == true && dragon.horizontalMovement > 0) {
+		dragon.horizontalMovement = 0
+	}	
+	if (dungeon[dragonVertical - 1][dragonHorizontal] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical - 1][dragonHorizontal]) == true && dragon.verticalMovement < 0) {
+		dragon.verticalMovement = 0
+	}	
+	if (dungeon[dragonVertical + 1][dragonHorizontal] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical + 1][dragonHorizontal]) == true && dragon.verticalMovement > 0) {
+		dragon.verticalMovement = 0
 	}
 }
 
