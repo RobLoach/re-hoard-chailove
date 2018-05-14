@@ -740,7 +740,34 @@ def CollideOpponentWithWall() {
 	and the opponent no longer has a target.
 	*/
 	
+	var actorHorizontal
+	var actorVertical
 	
+	for [opponent : opponentList] {
+		opponentVertical = opponent.TILE_VERTICAL
+		opponentHorizontal = opponent.TILE_HORIZONTAL
+		
+		if (dungeon[opponentVertical][opponentHorizontal - 1] == WALL_CELL && didIHitAWall(opponent, dungeon[opponentVertical][opponentHorizontal - 1]) == true && opponent.horizontalMovement < 0) {
+			opponent.horizontalMovement = 0
+			opponent.verticalMovement = 0
+			target = []
+		}	
+		if (dungeon[opponentVertical][opponentHorizontal + 1] == WALL_CELL && didIHitAWall(opponent, dungeon[opponentVertical][opponentHorizontal + 1]) == true && opponent.horizontalMovement > 0) {
+			opponent.horizontalMovement = 0
+			opponent.verticalMovement = 0
+			target = []
+		}	
+		if (dungeon[opponentVertical - 1][opponentHorizontal] == WALL_CELL && didIHitAWall(opponent, dungeon[opponentVertical - 1][opponentHorizontal]) == true && opponent.verticalMovement < 0) {
+			opponent.horizontalMovement = 0
+			opponent.verticalMovement = 0
+			target = []
+		}	
+		if (dungeon[opponentVertical + 1][opponentHorizontal] == WALL_CELL && didIHitAWall(opponent, dungeon[opponentVertical + 1][opponentHorizontal]) == true && opponent.verticalMovement > 0) {
+			opponent.horizontalMovement = 0
+			opponent.verticalMovement = 0
+			target = []
+		}
+	}
 }
 
 
