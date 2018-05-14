@@ -780,7 +780,44 @@ def CollideOpponentWithDragon() {
 	 then trigger the loss algorithm.
 	*/
 	
+	var hasCollided = false
 	
+	for [opponent : opponentList] {
+		if ( DidICollideWithAnActor(opponent, dragon) == true ) {
+			hasCollided = true
+			if (opponent.emotion == "knight") {
+				opponent.sprite = SPRITE_KNIGHT_ATTACK
+			}
+			else if (opponent.emotion == "joy") {
+				opponent.sprite = SPRITE_JOY_ATTACK
+			}
+			else if (opponent.emotion == "sadness") {
+				opponent.sprite = SPRITE_SADNESS_ATTACK
+			}
+			else if (opponent.emotion == "fear") {
+				opponent.sprite = SPRITE_FEAR_ATTACK
+			}
+			else if (opponent.emotion == "anger") {
+				opponent.sprite = SPRITE_ANGER_ATTACK
+			}
+			else if (opponent.emotion == "surprise") {
+				opponent.sprite = SPRITE_SURPRISE_ATTACK
+			}
+			else if (opponent.emotion == "disgust") {
+				if (dragon.VERTICAL_POSITION < opponent.VERTICAL_POSITION || dragon.VERTICAL_POSITION > opponent.VERTICAL_POSITION) {
+					opponent.sprite = SPRITE_DISGUST_ATTACK_VERTICAL
+				}
+				else {
+					opponent.sprite = SPRITE_DISGUST_ATTACK_HORIZONTAL
+				}
+			}
+			break
+		}
+	}
+	
+	if (hasCollided == true) {
+		FailDragon()
+	}
 }
 
 
@@ -1457,6 +1494,16 @@ def AlreadyChecked( vertical, horizontal ) {
 		}
 	}
 	return false
+}
+
+
+def FailDragon() {
+
+}
+
+
+def SucceedDragon() {
+
 }
 
 
