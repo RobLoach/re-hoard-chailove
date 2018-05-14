@@ -834,7 +834,17 @@ def CollideOpponentWithOpponent() {
 	 and no longer has a target.
 	*/
 	
+	var listCopy = opponentList
 	
+	for [permanent = 0; permanent < opponentList.length - 1; ++permanent] {
+		for [temporary = permanent + 1; temporary < listCopy.length; ++temporary] {
+			if ( DidICollideWithAnActor(permanent, temporary) == true ) {
+				permanent.HORIZONTAL_MOVEMENT = 0
+				permanent.VERTICAL_MOVEMENT = 0
+				permanent.target = []
+			}
+		}
+	}
 }
 
 
