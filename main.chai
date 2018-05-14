@@ -21,7 +21,7 @@ global INITIAL_DUNGEON_SIZE = 15
 global VERTICAL_DIMENSION = 0
 global HORIZONTAL_DIMENSION = 1
 global TILE_VERTICAL = currentTile[VERTICAL_DIMENSION]
-global TILE_HORIZONTAL = currentTile[VERTICAL_DIMENSION]
+global TILE_HORIZONTAL = currentTile[HORIZONTAL_DIMENSION]
 global POSITION_VERTICAL = position[VERTICAL_DIMENSION]
 global POSITION_HORIZONTAL = position[HORIZONTAL_DIMENSION]
 global CORNERS = [ 
@@ -626,8 +626,15 @@ def SetCrossOfSight() {
 /* collision-detection code translated from Mozilla
 https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection  */
 
-def DidICollide(me, you) {
+def DidICollideWithAnActor(me, you) {
 	if ( (me.POSITION_HORIZONTAL < you.POSITION_HORIZONTAL + SQUARE_SIZE) && (me.POSITION_HORIZONTAL + SQUARE_SIZE > you.POSITION_HORIZONTAL) && (me.POSITION_VERTICAL < you.POSITION_VERTICAL + SQUARE_SIZE) && (SQUARE_SIZE + me.POSITION_VERTICAL > you.POSITION_VERTICAL) ) {
+		return true
+	}
+}
+
+
+def DidIHitAWall(me, tile) {
+	if ( (me.POSITION_HORIZONTAL < tile[HORIZONTAL_DIMENSION] * SQUARE_SIZE + SQUARE_SIZE) && (me.POSITION_HORIZONTAL + SQUARE_SIZE > tile[HORIZONTAL_DIMENSION] * SQUARE_SIZE ) && (me.POSITION_VERTICAL < tile[VERTICAL_DIMENSION] * SQUARE_SIZE + SQUARE_SIZE) && (SQUARE_SIZE + me.POSITION_VERTICAL > tile[VERTICAL_DIMENSION] * SQUARE_SIZE ) ) {
 		return true
 	}
 }
@@ -700,14 +707,31 @@ def ControlDragon() {
 }
 
 
-def CollideMobileWithWall() {
+def CollideDragonWithWall() {
 	/*
 	Check the four tiles that border the actor.
 	If a tile collides with the actor,
 	the movement of the contact direction becomes 0.
-	If the actor is an opponent,
-	the opponent no longer has a target.
 	*/
+	
+	var dragonVertical = dragon.TILE_VERTICAL
+	var dragonHorizontal = dragon.TILE_HORIZONTAL
+	
+	if (dungeon[dragonVertical][dragonHorizontal - 1] == WALL_CELL) {
+		var  currentTile = Tile()
+	}
+}
+
+
+def CollideOpponentWithWall() {
+	/*
+	Check the four tiles that border the actor.
+	If a tile collides with the actor,
+	the movement of the contact direction becomes 0, 
+	and the opponent no longer has a target.
+	*/
+	
+	
 }
 
 
@@ -719,6 +743,8 @@ def CollideOpponentWithDragon() {
 	If so, change the opponent's sprite,
 	 then trigger the loss algorithm.
 	*/
+	
+	
 }
 
 
@@ -734,6 +760,8 @@ def CollideOpponentWithOpponent() {
 	the permanent opponent stops moving
 	 and no longer has a target.
 	*/
+	
+	
 }
 
 
@@ -743,6 +771,8 @@ def CollideArrowFireWithWall() {
 	If a tile collides with the actor,
 	destroy the hazard.
 	*/
+	
+	
 }
 
 
@@ -759,6 +789,8 @@ def CollideArrowFireWithHazard() {
 	In either of these collisions, 
 	 destroy the current hazard.
 	*/
+	
+	
 }
 
 
@@ -770,6 +802,8 @@ def CollideArrowFireWithActor() {
 	 destroy the hazard,
 	 then hurt the actor.
 	*/
+	
+	
 }
 
 
@@ -781,6 +815,8 @@ def CollideDynamiteWithWorld() {
 	An explosionCount of -5
 	 destroys the hazard.
 	*/
+	
+	
 }
 
 
@@ -791,6 +827,8 @@ def CollideDragonWithTreasure(dragon) {
 	If so, then the treasure and the door open.
 	Also, a sound plays.
 	*/
+	
+	
 }
 
 def CollideDragonWithDoor(dragon) {
@@ -804,6 +842,8 @@ def CollideDragonWithDoor(dragon) {
 	4. Run cleanup.
 	5. Switch to intermission mode.
 	*/
+	
+	
 }
 
 
