@@ -896,7 +896,29 @@ def CollideArrowFireWithHazard() {
 	 destroy the current hazard.
 	*/
 	
-	
+	if (hazardList.length > 1) {
+		for [first = 0; first < hazardList.length - 1; ++first] {
+			if (hazardList[first].type != "dynamite") {
+				for [second = first + 1; second < hazardList.length; ++second] {
+					if ( DidICollideWithAnActor(first, second) == true ) {
+						if (hazardList[second].type == "dynamite") {
+							hazardList[second].explosionCount = 0
+							hazardList[first] = hazardList[hazardList.length - 1]
+							hazardList.pop_back()
+						}
+						else {
+							hazardList[first] = hazardList[hazardList.length - 1]
+							hazardList[second] = hazardList[hazardList.length]
+							//Get rid of 2 hazards by popping twice.
+							hazardList.pop_back()
+							hazardList.pop_back()
+							break
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 
