@@ -824,7 +824,7 @@ def CollideOpponentWithDragon() {
 				opponentList[opponent].sprite = SPRITE_SURPRISE_ATTACK
 			}
 			else if (opponentList[opponent].emotion == "disgust") {
-				if (dragon.VERTICAL_POSITION < opponentList[opponent].VERTICAL_POSITION || dragon.VERTICAL_POSITION > opponentList[opponent].VERTICAL_POSITION) {
+				if (dragon.POSITION_VERTICAL < opponentList[opponent].POSITION_VERTICAL || dragon.POSITION_VERTICAL > opponentList[opponent].POSITION_VERTICAL) {
 					opponentList[opponent].sprite = SPRITE_DISGUST_ATTACK_VERTICAL
 				}
 				else {
@@ -857,8 +857,8 @@ def CollideOpponentWithOpponent() {
 	for [permanent = 0; permanent < opponentList.length - 1; ++permanent] {
 		for [temporary = permanent + 1; temporary < opponentList.length; ++temporary] {
 			if ( DidICollideWithAnActor(opponentList[permanent], opponentList[temporary]) == true ) {
-				opponentList[permanent].HORIZONTAL_MOVEMENT = 0
-				opponentList[permanent].VERTICAL_MOVEMENT = 0
+				opponentList[permanent].horizontalMovement = 0
+				opponentList[permanent].verticalMovement = 0
 				opponentList[permanent].target = []
 			}
 		}
@@ -1017,7 +1017,21 @@ def CollideDragonWithDoor() {
 	*/
 	
 	if ( DidIHitAWall(dragon, dungeon[0][2]) == true && gotTreasure == true) {
+		StopEveryone()
 		
+		currentMusic = false
+		currentMusic.play()
+		
+		for (position = 1; position < 18; ++position) {
+			dragon.POSITION_VERTICAL = dragon.POSITION_VERTICAL - 1
+		}
+		
+		currentMusic = love.sound.newSoundData(MUSIC_SUCCESS)
+		currentMusic.play()
+		
+		Cleanup()
+		
+		intermissionPhase = true
 	}
 }
 
@@ -1037,6 +1051,11 @@ def StopEveryone() {
 			hazardList[current].verticalMovement = 0
 		}
 	}
+}
+
+
+def Cleanup() {
+
 }
 
 
