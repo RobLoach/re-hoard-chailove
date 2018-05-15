@@ -910,24 +910,24 @@ def CollideArrowFireWithWall() {
 	var hazardVertical
 	
 	for [hazard : hazardList] {
-		hazardVertical = hazardList[current].TILE_VERTICAL
-		hazardHorizontal = hazardList[current].TILE_HORIZONTAL
+		hazardVertical = hazardList[hazard].TILE_VERTICAL
+		hazardHorizontal = hazardList[hazard].TILE_HORIZONTAL
 		
-		if (hazardList[current].type != "dynamite") {
-			if (dungeon[hazardVertical][hazardHorizontal - 1] == WALL_CELL && didIHitAWall(hazardList[current], dungeon[hazardVertical][hazardHorizontal - 1]) == true && hazardList[current].horizontalMovement < 0) {
-				hazardList[current] = hazardList[hazardList.length]
+		if (hazardList[hazard].type != "dynamite") {
+			if (dungeon[hazardVertical][hazardHorizontal - 1] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical][hazardHorizontal - 1]) == true && hazardList[hazard].horizontalMovement < 0) {
+				hazardList[hazard] = hazardList[hazardList.length]
 				hazardList.pop_back()
 			}	
-			if (dungeon[hazardVertical][hazardHorizontal + 1] == WALL_CELL && didIHitAWall(hazardList[current], dungeon[hazardVertical][hazardHorizontal + 1]) == true && hazardList[current].horizontalMovement > 0) {
-				hazardList[current] = hazardList[hazardList.length]
+			if (dungeon[hazardVertical][hazardHorizontal + 1] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical][hazardHorizontal + 1]) == true && hazardList[hazard].horizontalMovement > 0) {
+				hazardList[hazard] = hazardList[hazardList.length]
 				hazardList.pop_back()
 			}	
-			if (dungeon[hazardVertical - 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[current], dungeon[hazardVertical - 1][hazardHorizontal]) == true && hazardList[current].verticalMovement < 0) {
-				hazardList[current] = hazardList[hazardList.length]
+			if (dungeon[hazardVertical - 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical - 1][hazardHorizontal]) == true && hazardList[hazard].verticalMovement < 0) {
+				hazardList[hazard] = hazardList[hazardList.length]
 				hazardList.pop_back()
 			}	
-			if (dungeon[hazardVertical + 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[current], dungeon[hazardVertical + 1][hazardHorizontal]) == true && hazardList[current].verticalMovement > 0) {
-				hazardList[current] = hazardList[hazardList.length]
+			if (dungeon[hazardVertical + 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical + 1][hazardHorizontal]) == true && hazardList[hazard].verticalMovement > 0) {
+				hazardList[hazard] = hazardList[hazardList.length]
 				hazardList.pop_back()
 			}
 		}
@@ -960,10 +960,10 @@ def CollideArrowFireWithHazard() {
 							hazardList.pop_back()
 						}
 						else {
-							if (hazardList[current].type == "arrow") {
+							if (hazardList[first].type == "arrow") {
 								var effect = love.sound.newSoundData(EFFECT_PIERCE)
 							}
-							else if (hazardList[current].type == "fire") {
+							else if (hazardList[second].type == "fire") {
 								var effect = love.sound.newSoundData(EFFECT_FIRE_HIT)
 							}
 						
@@ -994,23 +994,23 @@ def CollideHazardWithDragon() {
 	*/
 	
 	for [current : hazardList] {
-		if ( DidICollideWithAnActor(hazardList[current], dragon) == true ) {
-			if (hazardList[current].type == "dynamite") {
-				if (hazardList[current].explosionCount < 1) {
+		if ( DidICollideWithAnActor(hazardList[hazard], dragon) == true ) {
+			if (hazardList[hazard].type == "dynamite") {
+				if (hazardList[hazard].explosionCount < 1) {
 					FailDragon()
 				}
 			}
-			else if (hazardList[current].type == "arrow") {
+			else if (hazardList[hazard].type == "arrow") {
 				var effect = love.sound.newSoundData(EFFECT_PIERCE)
 				effect.play()
-				hazardList[current] = hazardList[hazardList.length]
+				hazardList[hazard] = hazardList[hazardList.length]
 				hazardList.pop_back()
 				FailDragon()
 			}
-			else if (hazardList[current].type == "fire") {
+			else if (hazardList[hazard].type == "fire") {
 				var effect = love.sound.newSoundData(EFFECT_BUMP)
 				effect.play()
-				hazardList[current] = hazardList[hazardList.length]
+				hazardList[hazard] = hazardList[hazardList.length]
 				hazardList.pop_back()
 			}
 		}
@@ -1116,15 +1116,15 @@ def StopEveryone() {
 	dragon.horizontalMovement = 0
 	dragon.verticalMovement = 0
 	
-	for [current : opponentList] {
-		opponentList[current].horizontalMovement = 0
-		opponentList[current].verticalMovement = 0
+	for [opponent : opponentList] {
+		opponentList[opponent].horizontalMovement = 0
+		opponentList[opponent].verticalMovement = 0
 	}
 	
-	for [current : hazardList] {
-		if (hazardList[current].type != "dynamite") {
-			hazardList[current].horizontalMovement = 0
-			hazardList[current].verticalMovement = 0
+	for [hazard : hazardList] {
+		if (hazardList[hazard].type != "dynamite") {
+			hazardList[hazard].horizontalMovement = 0
+			hazardList[hazard].verticalMovement = 0
 		}
 	}
 }
