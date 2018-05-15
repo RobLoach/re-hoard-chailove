@@ -1027,6 +1027,9 @@ def CollideDragonWithDoor() {
 }
 
 
+
+
+
 def StopEveryone() {
 	dragon.horizontalMovement = 0
 	dragon.verticalMovement = 0
@@ -1037,7 +1040,18 @@ def StopEveryone() {
 	}
 	
 	for [hazard : hazardList] {
-		if (hazardList[hazard].type != "dynamite") {
+		if (hazardList[hazard].type == "dynamite") {
+			if (hazardList[hazard].explosionCount < 1) {
+				hazardList[hazard].explosionCount = -5
+			}
+			else {
+				hazardList[hazard].explosionCount = 999
+				/* By the time explosionCount counts down to 0,
+				anything that required everyone to stop
+				 would have already been accomplished. */
+			}
+		}
+		else {
 			hazardList[hazard].horizontalMovement = 0
 			hazardList[hazard].verticalMovement = 0
 		}
