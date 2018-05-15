@@ -721,6 +721,8 @@ def ControlDragon() {
 				}
 				
 				hazardList.push_back(fire)
+				var effect = love.sound.newSoundData(EFFECT_FIRE_BREATHE)
+				effect.play()
 			}
 		}
 	}
@@ -739,15 +741,26 @@ def CollideDragonWithWall() {
 	
 	if (dungeon[dragonVertical][dragonHorizontal - 1] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical][dragonHorizontal - 1]) == true && dragon.horizontalMovement < 0) {
 		dragon.horizontalMovement = 0
-	}	
+		var effect = love.sound.newSoundData(EFFECT_BUMP)
+		effect.play()
+	}
+	
 	if (dungeon[dragonVertical][dragonHorizontal + 1] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical][dragonHorizontal + 1]) == true && dragon.horizontalMovement > 0) {
 		dragon.horizontalMovement = 0
-	}	
+		var effect = love.sound.newSoundData(EFFECT_BUMP)
+		effect.play()
+	}
+	
 	if (dungeon[dragonVertical - 1][dragonHorizontal] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical - 1][dragonHorizontal]) == true && dragon.verticalMovement < 0) {
 		dragon.verticalMovement = 0
-	}	
+		var effect = love.sound.newSoundData(EFFECT_BUMP)
+		effect.play()
+	}
+	
 	if (dungeon[dragonVertical + 1][dragonHorizontal] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical + 1][dragonHorizontal]) == true && dragon.verticalMovement > 0) {
 		dragon.verticalMovement = 0
+		var effect = love.sound.newSoundData(EFFECT_BUMP)
+		effect.play()
 	}
 }
 
@@ -807,22 +820,40 @@ def CollideOpponentWithDragon() {
 			hasCollided = true
 			if (opponentList[opponent].emotion == "knight") {
 				opponentList[opponent].sprite = SPRITE_KNIGHT_ATTACK
+				var effect = love.sound.newSoundData(EFFECT_SLICE)
+				effect.play()
 			}
+			
 			else if (opponentList[opponent].emotion == "joy") {
 				opponentList[opponent].sprite = SPRITE_JOY_ATTACK
+				var effect = love.sound.newSoundData(EFFECT_BUMP)
+				effect.play()
 			}
+			
 			else if (opponentList[opponent].emotion == "sadness") {
 				opponentList[opponent].sprite = SPRITE_SADNESS_ATTACK
+				var effect = love.sound.newSoundData(EFFECT_SLICE)
+				effect.play()
 			}
+			
 			else if (opponentList[opponent].emotion == "fear") {
 				opponentList[opponent].sprite = SPRITE_FEAR_ATTACK
+				var effect = love.sound.newSoundData(EFFECT_PIERCE)
+				effect.play()
 			}
+			
 			else if (opponentList[opponent].emotion == "anger") {
 				opponentList[opponent].sprite = SPRITE_ANGER_ATTACK
+				var effect = love.sound.newSoundData(EFFECT_SLICE)
+				effect.play()
 			}
+			
 			else if (opponentList[opponent].emotion == "surprise") {
 				opponentList[opponent].sprite = SPRITE_SURPRISE_ATTACK
+				var effect = love.sound.newSoundData(EFFECT_EXPLODE)
+				effect.play()
 			}
+			
 			else if (opponentList[opponent].emotion == "disgust") {
 				if (dragon.POSITION_VERTICAL < opponentList[opponent].POSITION_VERTICAL || dragon.POSITION_VERTICAL > opponentList[opponent].POSITION_VERTICAL) {
 					opponentList[opponent].sprite = SPRITE_DISGUST_ATTACK_VERTICAL
@@ -830,7 +861,10 @@ def CollideOpponentWithDragon() {
 				else {
 					opponentList[opponent].sprite = SPRITE_DISGUST_ATTACK_HORIZONTAL
 				}
+				var effect = love.sound.newSoundData(EFFECT_PIERCE)
+				effect.play()
 			}
+			
 			break
 		}
 	}
@@ -930,8 +964,11 @@ def CollideArrowFireWithHazard() {
 							//Get rid of 2 hazards by popping twice.
 							hazardList.pop_back()
 							hazardList.pop_back()
-							break
 						}
+						
+						var effect = love.sound.newSoundData(EFFECT_PIERCE)
+						effect.play()
+						break
 					}
 				}
 			}
@@ -957,6 +994,8 @@ def CollideHazardWithDragon() {
 				}
 			}
 			else {
+				var effect = love.sound.newSoundData(EFFECT_PIERCE)
+				effect.play()
 				FailDragon()
 			}
 		}
@@ -983,6 +1022,8 @@ def CollideHazardWithOpponent() {
 				}
 				else {
 					HurtOpponent(opponent)
+					var effect = love.sound.newSoundData(EFFECT_PIERCE)
+					effect.play()
 				}
 			}
 		}
