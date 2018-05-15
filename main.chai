@@ -565,8 +565,8 @@ def SetOrientation() {
 
 def CountDownDynamite() {
 	for [hazard : hazardList] {
-		if (hazardList[type].type == "dynamite") {
-			hazardList.explosionCount = hazardList.explosionCount - 1
+		if (hazardList[hazard].type == "dynamite") {
+			hazardList[hazard].explosionCount = hazardList[hazard].explosionCount - 1
 		}
 	}
 }
@@ -574,8 +574,8 @@ def CountDownDynamite() {
 
 def ClearDynamite() {
 	for [hazard : hazardList] {
-		if (hazardList[type].type == "dynamite") {
-			if (hazard.explosionCount < -4) {
+		if (hazardList[hazard].type == "dynamite") {
+			if (hazardList[hazard].explosionCount < -4) {
 				hazardList[hazard] = hazardList[hazardList.length]
 				hazardList.pop_back
 			}
@@ -764,27 +764,27 @@ def CollideOpponentWithWall() {
 	var opponentVertical
 	
 	for [opponent : opponentList] {
-		opponentVertical = opponent.TILE_VERTICAL
-		opponentHorizontal = opponent.TILE_HORIZONTAL
+		opponentVertical = opponentList[opponent].TILE_VERTICAL
+		opponentHorizontal = opponentList[opponent].TILE_HORIZONTAL
 		
-		if (dungeon[opponentVertical][opponentHorizontal - 1] == WALL_CELL && didIHitAWall(opponent, dungeon[opponentVertical][opponentHorizontal - 1]) == true && opponent.horizontalMovement < 0) {
-			opponent.horizontalMovement = 0
-			opponent.verticalMovement = 0
+		if (dungeon[opponentVertical][opponentHorizontal - 1] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical][opponentHorizontal - 1]) == true && opponentList[opponent].horizontalMovement < 0) {
+			opponentList[opponent].horizontalMovement = 0
+			opponentList[opponent].verticalMovement = 0
 			target = []
 		}	
-		if (dungeon[opponentVertical][opponentHorizontal + 1] == WALL_CELL && didIHitAWall(opponent, dungeon[opponentVertical][opponentHorizontal + 1]) == true && opponent.horizontalMovement > 0) {
-			opponent.horizontalMovement = 0
-			opponent.verticalMovement = 0
+		if (dungeon[opponentVertical][opponentHorizontal + 1] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical][opponentHorizontal + 1]) == true && opponentList[opponent].horizontalMovement > 0) {
+			opponentList[opponent].horizontalMovement = 0
+			opponentList[opponent].verticalMovement = 0
 			target = []
 		}	
-		if (dungeon[opponentVertical - 1][opponentHorizontal] == WALL_CELL && didIHitAWall(opponent, dungeon[opponentVertical - 1][opponentHorizontal]) == true && opponent.verticalMovement < 0) {
-			opponent.horizontalMovement = 0
-			opponent.verticalMovement = 0
+		if (dungeon[opponentVertical - 1][opponentHorizontal] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical - 1][opponentHorizontal]) == true && opponentList[opponent].verticalMovement < 0) {
+			opponentList[opponent].horizontalMovement = 0
+			opponentList[opponent].verticalMovement = 0
 			target = []
 		}	
-		if (dungeon[opponentVertical + 1][opponentHorizontal] == WALL_CELL && didIHitAWall(opponent, dungeon[opponentVertical + 1][opponentHorizontal]) == true && opponent.verticalMovement > 0) {
-			opponent.horizontalMovement = 0
-			opponent.verticalMovement = 0
+		if (dungeon[opponentVertical + 1][opponentHorizontal] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical + 1][opponentHorizontal]) == true && opponentList[opponent].verticalMovement > 0) {
+			opponentList[opponent].horizontalMovement = 0
+			opponentList[opponent].verticalMovement = 0
 			target = []
 		}
 	}
@@ -803,32 +803,32 @@ def CollideOpponentWithDragon() {
 	var hasCollided = false
 	
 	for [opponent : opponentList] {
-		if ( DidICollideWithAnActor(opponent, dragon) == true ) {
+		if ( DidICollideWithAnActor(opponentList[opponent], dragon) == true ) {
 			hasCollided = true
-			if (opponent.emotion == "knight") {
-				opponent.sprite = SPRITE_KNIGHT_ATTACK
+			if (opponentList[opponent].emotion == "knight") {
+				opponentList[opponent].sprite = SPRITE_KNIGHT_ATTACK
 			}
-			else if (opponent.emotion == "joy") {
-				opponent.sprite = SPRITE_JOY_ATTACK
+			else if (opponentList[opponent].emotion == "joy") {
+				opponentList[opponent].sprite = SPRITE_JOY_ATTACK
 			}
-			else if (opponent.emotion == "sadness") {
-				opponent.sprite = SPRITE_SADNESS_ATTACK
+			else if (opponentList[opponent].emotion == "sadness") {
+				opponentList[opponent].sprite = SPRITE_SADNESS_ATTACK
 			}
-			else if (opponent.emotion == "fear") {
-				opponent.sprite = SPRITE_FEAR_ATTACK
+			else if (opponentList[opponent].emotion == "fear") {
+				opponentList[opponent].sprite = SPRITE_FEAR_ATTACK
 			}
-			else if (opponent.emotion == "anger") {
-				opponent.sprite = SPRITE_ANGER_ATTACK
+			else if (opponentList[opponent].emotion == "anger") {
+				opponentList[opponent].sprite = SPRITE_ANGER_ATTACK
 			}
-			else if (opponent.emotion == "surprise") {
-				opponent.sprite = SPRITE_SURPRISE_ATTACK
+			else if (opponentList[opponent].emotion == "surprise") {
+				opponentList[opponent].sprite = SPRITE_SURPRISE_ATTACK
 			}
-			else if (opponent.emotion == "disgust") {
-				if (dragon.VERTICAL_POSITION < opponent.VERTICAL_POSITION || dragon.VERTICAL_POSITION > opponent.VERTICAL_POSITION) {
-					opponent.sprite = SPRITE_DISGUST_ATTACK_VERTICAL
+			else if (opponentList[opponent].emotion == "disgust") {
+				if (dragon.VERTICAL_POSITION < opponentList[opponent].VERTICAL_POSITION || dragon.VERTICAL_POSITION > opponentList[opponent].VERTICAL_POSITION) {
+					opponentList[opponent].sprite = SPRITE_DISGUST_ATTACK_VERTICAL
 				}
 				else {
-					opponent.sprite = SPRITE_DISGUST_ATTACK_HORIZONTAL
+					opponentList[opponent].sprite = SPRITE_DISGUST_ATTACK_HORIZONTAL
 				}
 			}
 			break
@@ -854,14 +854,12 @@ def CollideOpponentWithOpponent() {
 	 and no longer has a target.
 	*/
 	
-	var listCopy = opponentList
-	
 	for [permanent = 0; permanent < opponentList.length - 1; ++permanent] {
-		for [temporary = permanent + 1; temporary < listCopy.length; ++temporary] {
-			if ( DidICollideWithAnActor(permanent, temporary) == true ) {
-				permanent.HORIZONTAL_MOVEMENT = 0
-				permanent.VERTICAL_MOVEMENT = 0
-				permanent.target = []
+		for [temporary = permanent + 1; temporary < opponentList.length; ++temporary] {
+			if ( DidICollideWithAnActor(opponentList[permanent], opponentList[temporary]) == true ) {
+				opponentList[permanent].HORIZONTAL_MOVEMENT = 0
+				opponentList[permanent].VERTICAL_MOVEMENT = 0
+				opponentList[permanent].target = []
 			}
 		}
 	}
@@ -879,22 +877,22 @@ def CollideArrowFireWithWall() {
 	var hazardVertical
 	
 	for [hazard : hazardList] {
-		hazardVertical = hazard.TILE_VERTICAL
-		hazardHorizontal = hazard.TILE_HORIZONTAL
+		hazardVertical = hazardList[hazard].TILE_VERTICAL
+		hazardHorizontal = hazardList[hazard].TILE_HORIZONTAL
 		
-		if (dungeon[hazardVertical][hazardHorizontal - 1] == WALL_CELL && didIHitAWall(hazard, dungeon[hazardVertical][hazardHorizontal - 1]) == true && hazard.horizontalMovement < 0) {
+		if (dungeon[hazardVertical][hazardHorizontal - 1] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical][hazardHorizontal - 1]) == true && hazardList[hazard].horizontalMovement < 0) {
 			hazardList[hazard] = hazardList[hazardList.length]
 			hazardList.pop_back()
 		}	
-		if (dungeon[hazardVertical][hazardHorizontal + 1] == WALL_CELL && didIHitAWall(hazard, dungeon[hazardVertical][hazardHorizontal + 1]) == true && hazard.horizontalMovement > 0) {
+		if (dungeon[hazardVertical][hazardHorizontal + 1] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical][hazardHorizontal + 1]) == true && hazardList[hazard].horizontalMovement > 0) {
 			hazardList[hazard] = hazardList[hazardList.length]
 			hazardList.pop_back()
 		}	
-		if (dungeon[hazardVertical - 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazard, dungeon[hazardVertical - 1][hazardHorizontal]) == true && hazard.verticalMovement < 0) {
+		if (dungeon[hazardVertical - 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical - 1][hazardHorizontal]) == true && hazardList[hazard].verticalMovement < 0) {
 			hazardList[hazard] = hazardList[hazardList.length]
 			hazardList.pop_back()
 		}	
-		if (dungeon[hazardVertical + 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazard, dungeon[hazardVertical + 1][hazardHorizontal]) == true && hazard.verticalMovement > 0) {
+		if (dungeon[hazardVertical + 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical + 1][hazardHorizontal]) == true && hazardList[hazard].verticalMovement > 0) {
 			hazardList[hazard] = hazardList[hazardList.length]
 			hazardList.pop_back()
 		}
@@ -952,9 +950,9 @@ def CollideHazardWithDragon() {
 	*/
 	
 	for [hazard : hazardList] {
-		if ( DidICollideWithAnActor(hazard, dragon) == true ) {
-			if (hazard.type == "dynamite") {
-				if (hazard.explosionCount < 1) {
+		if ( DidICollideWithAnActor(hazardList[hazard], dragon) == true ) {
+			if (hazardList[hazard].type == "dynamite") {
+				if (hazardList[hazard].explosionCount < 1) {
 					FailDragon()
 				}
 			}
@@ -977,9 +975,9 @@ def CollideHazardWithOpponent() {
 	
 	for [hazard : hazardList] {
 		for [opponent : opponentList] {
-			if ( DidICollideWithAnActor(hazard, opponent) == true ) {
-				if (hazard.type == "dynamite") {
-					if (hazard.explosionCount < 1) {
+			if ( DidICollideWithAnActor(hazardList[hazard], opponent) == true ) {
+				if (hazardList[hazard].type == "dynamite") {
+					if (hazardList[hazard].explosionCount < 1) {
 						HurtOpponent(opponent)
 					}
 				}
