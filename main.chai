@@ -728,13 +728,7 @@ def ControlDragon() {
 }
 
 
-def CollideDragonWithWall() {
-	/*
-	Check the four tiles that border the actor.
-	If a tile collides with the actor,
-	the movement of the contact direction becomes 0.
-	*/
-	
+def CollideDragonWithWall() {	
 	var dragonVertical = dragon.TILE_VERTICAL
 	var dragonHorizontal = dragon.TILE_HORIZONTAL
 	
@@ -765,13 +759,6 @@ def CollideDragonWithWall() {
 
 
 def CollideOpponentWithWall() {
-	/*
-	Check the four tiles that border the actor.
-	If a tile collides with the actor,
-	the movement of the contact direction becomes 0, 
-	and the opponent no longer has a target.
-	*/
-	
 	var opponentHorizontal
 	var opponentVertical
 	
@@ -804,14 +791,6 @@ def CollideOpponentWithWall() {
 
 
 def CollideOpponentWithDragon() {
-	/*
-	Iterate over opponentList.
-	Check if the dragon 
-	 collides with an opponent.
-	If so, change the opponent's sprite,
-	 then trigger the loss algorithm.
-	*/
-	
 	var hasCollided = false
 	
 	for [opponent : opponentList] {
@@ -875,18 +854,6 @@ def CollideOpponentWithDragon() {
 
 
 def CollideOpponentWithOpponent() {
-	/*
-	Copy opponentList.
-	Make a for loop 
-	that iterates over the permanent list
-	 and goes backwards until the index is 0.
-	Pop from the copy,
-	 then iterate over the temporary list.
-	If a collision occurs,
-	the permanent opponent stops moving
-	 and no longer has a target.
-	*/
-	
 	for [permanent = 0; permanent < opponentList.length - 1; ++permanent] {
 		for [temporary = permanent + 1; temporary < opponentList.length; ++temporary] {
 			if ( DidICollideWithAnActor(opponentList[permanent], opponentList[temporary]) == true ) {
@@ -900,12 +867,6 @@ def CollideOpponentWithOpponent() {
 
 
 def CollideArrowFireWithWall() {
-	/*
-	Check the four tiles that border the actor.
-	If a tile collides with the actor,
-	destroy the hazard.
-	*/
-	
 	var hazardHorizontal
 	var hazardVertical
 	
@@ -936,19 +897,6 @@ def CollideArrowFireWithWall() {
 
 
 def CollideArrowFireWithHazard() {
-	/*
-	Pop the current hazard off the queue.
-	Check if the hazard collided with another hazard.
-	If the current hazard collided
-	 with another arrow or fireball,
-	destroy the other hazard.
-	If the current hazard collided with
-	 some dynamite,
-	activate the dynamite.
-	In either of these collisions, 
-	 destroy the current hazard.
-	*/
-	
 	if (hazardList.length > 1) {
 		for [first = 0; first < hazardList.length - 1; ++first] {
 			if (hazardList[first].type != "dynamite") {
@@ -985,14 +933,6 @@ def CollideArrowFireWithHazard() {
 
 
 def CollideHazardWithDragon() {
-	/*
-	Check the dragon,
-	 then go through the queue.
-	In both cases, if the hazard collided,
-	 destroy the hazard,
-	 then hurt the actor.
-	*/
-	
 	for [current : hazardList] {
 		if ( DidICollideWithAnActor(hazardList[hazard], dragon) == true ) {
 			if (hazardList[hazard].type == "dynamite") {
@@ -1019,14 +959,6 @@ def CollideHazardWithDragon() {
 
 
 def CollideHazardWithOpponent() {
-	/*
-	Check the dragon,
-	 then go through the queue.
-	In both cases, if the hazard collided,
-	 destroy the hazard,
-	 then hurt the actor.
-	*/
-	
 	for [hazard : hazardList] {
 		for [opponent : opponentList] {
 			if ( DidICollideWithAnActor(hazardList[hazard], opponentList[opponent]) == true) {
@@ -1067,12 +999,6 @@ def CollideHazardWithOpponent() {
 
 
 def CollideDragonWithTreasure() {
-	/*
-	Check if the dragon collides with the treasure.
-	Also, check if the treasure is closed.
-	If so, then the treasure and the door open.
-	Also, a sound plays.
-	*/
 	if ( DidIHitAWall(dragon, dungeon[currentDungeonSize - 2, currentDungeonSize - 2] && gotTreasure == false) {
 		gotTreasure = true
 		var effect = love.sound.newSoundData(EFFECT_GOT_TREASURE)
@@ -1081,17 +1007,6 @@ def CollideDragonWithTreasure() {
 }
 
 def CollideDragonWithDoor() {
-	/*
-	Check if the dragon collides with the door.
-	Also, check if the door is open.
-	If so:
-	1. Stop everybody.
-	2. Play the victory song.
-	3. Have the dragon travel upwards.
-	4. Run cleanup.
-	5. Switch to intermission mode.
-	*/
-	
 	if ( DidIHitAWall(dragon, dungeon[0][2]) == true && gotTreasure == true) {
 		StopEveryone()
 		
