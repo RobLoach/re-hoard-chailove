@@ -992,15 +992,18 @@ def CollideHazardWithOpponent() {
 }
 
 
-def CollideDragonWithTreasure(dragon) {
+def CollideDragonWithTreasure() {
 	/*
 	Check if the dragon collides with the treasure.
 	Also, check if the treasure is closed.
 	If so, then the treasure and the door open.
 	Also, a sound plays.
 	*/
-	
-	
+	if ( DidIHitAWall(dragon, dungeon[currentDungeonSize - 2, currentDungeonSize - 2] && gotTreasure == false) {
+		gotTreasure = true
+		var effect = love.sound.newSoundData(EFFECT_GOT_TREASURE)
+		effect.play()
+	}
 }
 
 def CollideDragonWithDoor(dragon) {
