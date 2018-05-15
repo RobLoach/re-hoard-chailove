@@ -29,6 +29,8 @@ global CORNERS = [
 	[-2, 0],	//west
 	[0, 2]		//south
 ]
+global DYNAMITE_EXPLOSION_POINT = 0
+global DYNAMITE_ERASURE_POINT = -4
 
 
 //asset constants
@@ -574,7 +576,7 @@ def CountDownDynamite() {
 def ClearDynamite() {
 	for [hazard : hazardList] {
 		if (hazardList[hazard].type == "dynamite") {
-			if (hazardList[hazard].explosionCount < -4) {
+			if (hazardList[hazard].explosionCount < DYNAMITE_ERASURE_POINT) {
 				hazardList[hazard] = hazardList[hazardList.length]
 				hazardList.pop_back
 			}
@@ -903,7 +905,7 @@ def CollideArrowFireWithHazard() {
 				for [second = first + 1; second < hazardList.length; ++second] {
 					if ( DidICollideWithAnActor(first, second) == true ) {
 						if (hazardList[second].type == "dynamite") {
-							hazardList[second].explosionCount = 0
+							hazardList[second].explosionCount = DYNAMITE_EXPLOSION_POINT
 							hazardList[first] = hazardList[hazardList.length - 1]
 							hazardList.pop_back()
 						}
@@ -1042,7 +1044,7 @@ def StopEveryone() {
 	for [hazard : hazardList] {
 		if (hazardList[hazard].type == "dynamite") {
 			if (hazardList[hazard].explosionCount < 1) {
-				hazardList[hazard].explosionCount = -5
+				hazardList[hazard].explosionCount = DYNAMITE_ERASURE_POINT
 			}
 			else {
 				hazardList[hazard].explosionCount = 999
