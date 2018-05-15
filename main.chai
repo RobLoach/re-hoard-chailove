@@ -573,12 +573,21 @@ def CountDownDynamite() {
 }
 
 
+def EraseHazard(hazard) {
+	if (hazardList[hazard].type == "arrow") {
+		arrowCount = arrowCount - 1
+	}
+	hazardList[hazard] = hazardList[hazardList.length]
+	hazardList.pop_back()
+}
+
+
 def ClearDynamite() {
 	for [hazard : hazardList] {
 		if (hazardList[hazard].type == "dynamite") {
 			if (hazardList[hazard].explosionCount < DYNAMITE_ERASURE_POINT) {
-				hazardList[hazard] = hazardList[hazardList.length]
-				hazardList.pop_back
+				EraseHazard(hazard)
+				dynamiteCount = dynamiteCount - 1
 			}
 		}
 	}
@@ -878,20 +887,16 @@ def CollideArrowFireWithWall() {
 		
 		if (hazardList[hazard].type != "dynamite") {
 			if (dungeon[hazardVertical][hazardHorizontal - 1] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical][hazardHorizontal - 1]) == true && hazardList[hazard].horizontalMovement < 0) {
-				hazardList[hazard] = hazardList[hazardList.length]
-				hazardList.pop_back()
+				EraseHazard(hazard)
 			}	
 			if (dungeon[hazardVertical][hazardHorizontal + 1] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical][hazardHorizontal + 1]) == true && hazardList[hazard].horizontalMovement > 0) {
-				hazardList[hazard] = hazardList[hazardList.length]
-				hazardList.pop_back()
+				EraseHazard(hazard)
 			}	
 			if (dungeon[hazardVertical - 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical - 1][hazardHorizontal]) == true && hazardList[hazard].verticalMovement < 0) {
-				hazardList[hazard] = hazardList[hazardList.length]
-				hazardList.pop_back()
+				EraseHazard(hazard)
 			}	
 			if (dungeon[hazardVertical + 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical + 1][hazardHorizontal]) == true && hazardList[hazard].verticalMovement > 0) {
-				hazardList[hazard] = hazardList[hazardList.length]
-				hazardList.pop_back()
+				EraseHazard(hazard)
 			}
 		}
 	}
@@ -945,15 +950,13 @@ def CollideHazardWithDragon() {
 			else if (hazardList[hazard].type == "arrow") {
 				var effect = love.sound.newSoundData(EFFECT_PIERCE)
 				effect.play()
-				hazardList[hazard] = hazardList[hazardList.length]
-				hazardList.pop_back()
+				EraseHazard(hazard)
 				FailDragon()
 			}
 			else if (hazardList[hazard].type == "fire") {
 				var effect = love.sound.newSoundData(EFFECT_BUMP)
 				effect.play()
-				hazardList[hazard] = hazardList[hazardList.length]
-				hazardList.pop_back()
+				EraseHazard(hazard)
 			}
 		}
 	}
@@ -966,8 +969,7 @@ def CollideHazardWithOpponent() {
 			if ( DidICollideWithAnActor(hazardList[hazard], opponentList[opponent]) == true) {
 				if (opponentList[opponent].emotion == "knight") {
 					if (hazardList[hazard].type != "dynamite") {
-						hazardList[hazard] = hazardList[hazardList.length]
-						hazardList.pop_back()
+						EraseHazard(hazard)
 					}
 					
 					var effect = love.sound.newSoundData(EFFECT_BLOCKED_FIRE)
@@ -989,8 +991,7 @@ def CollideHazardWithOpponent() {
 						}
 						
 						effect.play()
-						hazardList[hazard] = hazardList[hazardList.length]
-						hazardList.pop_back()
+						EraseHazard(hazard)
 						HurtOpponent(opponentList[opponent])
 					}
 				}
