@@ -8,11 +8,6 @@ Title music by 0xabad1dea
 Gameplay music based on song by Tanner Helland
 */
 
-/*
-knight blocks fire
-internal to current
-*/
-
 
 /*parameters*/
 
@@ -1034,24 +1029,36 @@ def CollideHazardWithOpponent() {
 	
 	for [hazard : hazardList] {
 		for [opponent : opponentList] {
-			if ( DidICollideWithAnActor(hazardList[hazard], opponentList[opponent]) == true ) {
-				if (hazardList[hazard].type == "dynamite") {
-					if (hazardList[hazard].explosionCount < 1) {
-						HurtOpponent(opponentList[opponent])
-					}
-				}
-				else {
-					if (hazardList[current].type == "arrow") {
-						var effect = love.sound.newSoundData(EFFECT_PIERCE)
-					}
-					else if (hazardList[current].type == "fire") {
-						var effect = love.sound.newSoundData(EFFECT_BUMP)
+			if ( DidICollideWithAnActor(hazardList[hazard], opponentList[opponent]) == true) {
+				if (opponentList[opponent].emotion == "knight") {
+					if (hazardList[hazard].type != "dynamite") {
+						hazardList[hazard] = hazardList[hazardList.length]
+						hazardList.pop_back()
 					}
 					
+					var effect = love.sound.newSoundData(EFFECT_BLOCKED_FIRE)
 					effect.play()
-					hazardList[current] = hazardList[hazardList.length]
-					hazardList.pop_back()
-					HurtOpponent(opponentList[opponent])
+				}
+				
+				else {
+					if (hazardList[hazard].type == "dynamite") {
+						if (hazardList[hazard].explosionCount < 1) {
+							HurtOpponent(opponentList[opponent])
+						}
+					}
+					else {
+						if (hazardList[hazard].type == "arrow") {
+							var effect = love.sound.newSoundData(EFFECT_PIERCE)
+						}
+						else if (hazardList[hazard].type == "fire") {
+							var effect = love.sound.newSoundData(EFFECT_BUMP)
+						}
+						
+						effect.play()
+						hazardList[hazard] = hazardList[hazardList.length]
+						hazardList.pop_back()
+						HurtOpponent(opponentList[opponent])
+					}
 				}
 			}
 		}
