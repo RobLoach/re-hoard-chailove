@@ -563,6 +563,15 @@ def SetOrientation() {
 }
 
 
+def CountDownDynamite() {
+	for [hazard : hazardList] {
+		if (hazardList[type].type == "dynamite") {
+			hazardList.explosionCount = hazardList.explosionCount - 1
+		}
+	}
+}
+
+
 def ClearDynamite() {
 	for [hazard : hazardList] {
 		if (hazardList[type].type == "dynamite") {
