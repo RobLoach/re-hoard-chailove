@@ -932,7 +932,7 @@ def CollideHazardWithDragon() {
 	
 	for [hazard : hazardList] {
 		if ( DidICollideWithAnActor(hazard, dragon) == true ) {
-			if (hazard.type = "dynamite") {
+			if (hazard.type == "dynamite") {
 				if (hazard.explosionCount < 1) {
 					FailDragon()
 				}
@@ -957,7 +957,7 @@ def CollideHazardWithOpponent() {
 	for [hazard : hazardList] {
 		for [opponent : opponentList] {
 			if ( DidICollideWithAnActor(hazard, opponent) == true ) {
-				if (hazard.type = "dynamite") {
+				if (hazard.type == "dynamite") {
 					if (hazard.explosionCount < 1) {
 						HurtOpponent(opponent)
 					}
@@ -968,19 +968,6 @@ def CollideHazardWithOpponent() {
 			}
 		}
 	}
-}
-
-
-def CollideDynamiteWithWorld() {
-	/*
-	Check the explosionCount.
-	An explosionCount of 0 to -4
-	 hurts any actor on contact.
-	An explosionCount of -5
-	 destroys the hazard.
-	*/
-	
-	
 }
 
 
