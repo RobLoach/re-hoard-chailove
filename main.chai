@@ -1030,7 +1030,18 @@ def CollideDragonWithDoor() {
 }
 
 
-
+def CheckAllCollisions() {
+	CollideDragonWithWall()
+	CollideOpponentWithWall()
+	CollideOpponentWithDragon()
+	CollideOpponentWithOpponent()
+	CollideArrowFireWithWall()
+	CollideArrowFireWithHazard()
+	CollideHazardWithDragon()
+	CollideHazardWithOpponent()
+	CollideDragonWithTreasure()
+	CollideDragonWithDoor()
+}
 
 
 def StopEveryone() {
