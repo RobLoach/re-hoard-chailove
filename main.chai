@@ -1004,7 +1004,7 @@ def CollideDragonWithTreasure() {
 	}
 }
 
-def CollideDragonWithDoor(dragon) {
+def CollideDragonWithDoor() {
 	/*
 	Check if the dragon collides with the door.
 	Also, check if the door is open.
@@ -1016,7 +1016,27 @@ def CollideDragonWithDoor(dragon) {
 	5. Switch to intermission mode.
 	*/
 	
+	if ( DidIHitAWall(dragon, dungeon[0][2]) == true && gotTreasure == true) {
+		
+	}
+}
+
+
+def StopEveryone() {
+	dragon.horizontalMovement = 0
+	dragon.verticalMovement = 0
 	
+	for [current : opponentList] {
+		opponentList[current].horizontalMovement = 0
+		opponentList[current].verticalMovement = 0
+	}
+	
+	for [current : hazardList] {
+		if (hazardList[current].type != "dynamite") {
+			hazardList[current].horizontalMovement = 0
+			hazardList[current].verticalMovement = 0
+		}
+	}
 }
 
 
