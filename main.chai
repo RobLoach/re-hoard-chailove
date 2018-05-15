@@ -8,6 +8,10 @@ Title music by 0xabad1dea
 Gameplay music based on song by Tanner Helland
 */
 
+/*
+knight blocks fire
+internal to current
+*/
 
 
 /*parameters*/
@@ -911,24 +915,26 @@ def CollideArrowFireWithWall() {
 	var hazardVertical
 	
 	for [hazard : hazardList] {
-		hazardVertical = hazardList[hazard].TILE_VERTICAL
-		hazardHorizontal = hazardList[hazard].TILE_HORIZONTAL
+		hazardVertical = hazardList[current].TILE_VERTICAL
+		hazardHorizontal = hazardList[current].TILE_HORIZONTAL
 		
-		if (dungeon[hazardVertical][hazardHorizontal - 1] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical][hazardHorizontal - 1]) == true && hazardList[hazard].horizontalMovement < 0) {
-			hazardList[hazard] = hazardList[hazardList.length]
-			hazardList.pop_back()
-		}	
-		if (dungeon[hazardVertical][hazardHorizontal + 1] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical][hazardHorizontal + 1]) == true && hazardList[hazard].horizontalMovement > 0) {
-			hazardList[hazard] = hazardList[hazardList.length]
-			hazardList.pop_back()
-		}	
-		if (dungeon[hazardVertical - 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical - 1][hazardHorizontal]) == true && hazardList[hazard].verticalMovement < 0) {
-			hazardList[hazard] = hazardList[hazardList.length]
-			hazardList.pop_back()
-		}	
-		if (dungeon[hazardVertical + 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[hazard], dungeon[hazardVertical + 1][hazardHorizontal]) == true && hazardList[hazard].verticalMovement > 0) {
-			hazardList[hazard] = hazardList[hazardList.length]
-			hazardList.pop_back()
+		if (hazardList[current].type != "dynamite") {
+			if (dungeon[hazardVertical][hazardHorizontal - 1] == WALL_CELL && didIHitAWall(hazardList[current], dungeon[hazardVertical][hazardHorizontal - 1]) == true && hazardList[current].horizontalMovement < 0) {
+				hazardList[current] = hazardList[hazardList.length]
+				hazardList.pop_back()
+			}	
+			if (dungeon[hazardVertical][hazardHorizontal + 1] == WALL_CELL && didIHitAWall(hazardList[current], dungeon[hazardVertical][hazardHorizontal + 1]) == true && hazardList[current].horizontalMovement > 0) {
+				hazardList[current] = hazardList[hazardList.length]
+				hazardList.pop_back()
+			}	
+			if (dungeon[hazardVertical - 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[current], dungeon[hazardVertical - 1][hazardHorizontal]) == true && hazardList[current].verticalMovement < 0) {
+				hazardList[current] = hazardList[hazardList.length]
+				hazardList.pop_back()
+			}	
+			if (dungeon[hazardVertical + 1][hazardHorizontal] == WALL_CELL && didIHitAWall(hazardList[current], dungeon[hazardVertical + 1][hazardHorizontal]) == true && hazardList[current].verticalMovement > 0) {
+				hazardList[current] = hazardList[hazardList.length]
+				hazardList.pop_back()
+			}
 		}
 	}
 }
@@ -959,16 +965,22 @@ def CollideArrowFireWithHazard() {
 							hazardList.pop_back()
 						}
 						else {
+							if (hazardList[current].type == "arrow") {
+								var effect = love.sound.newSoundData(EFFECT_PIERCE)
+							}
+							else if (hazardList[current].type == "fire") {
+								var effect = love.sound.newSoundData(EFFECT_FIRE_HIT)
+							}
+						
 							hazardList[first] = hazardList[hazardList.length - 1]
 							hazardList[second] = hazardList[hazardList.length]
 							//Get rid of 2 hazards by popping twice.
 							hazardList.pop_back()
 							hazardList.pop_back()
+							
+							effect.play()
+							break
 						}
-						
-						var effect = love.sound.newSoundData(EFFECT_PIERCE)
-						effect.play()
-						break
 					}
 				}
 			}
@@ -986,17 +998,25 @@ def CollideHazardWithDragon() {
 	 then hurt the actor.
 	*/
 	
-	for [hazard : hazardList] {
-		if ( DidICollideWithAnActor(hazardList[hazard], dragon) == true ) {
-			if (hazardList[hazard].type == "dynamite") {
-				if (hazardList[hazard].explosionCount < 1) {
+	for [current : hazardList] {
+		if ( DidICollideWithAnActor(hazardList[current], dragon) == true ) {
+			if (hazardList[current].type == "dynamite") {
+				if (hazardList[current].explosionCount < 1) {
 					FailDragon()
 				}
 			}
-			else {
+			else if (hazardList[current].type == "arrow") {
 				var effect = love.sound.newSoundData(EFFECT_PIERCE)
 				effect.play()
+				hazardList[current] = hazardList[hazardList.length]
+				hazardList.pop_back()
 				FailDragon()
+			}
+			else if (hazardList[current].type == "fire") {
+				var effect = love.sound.newSoundData(EFFECT_BUMP)
+				effect.play()
+				hazardList[current] = hazardList[hazardList.length]
+				hazardList.pop_back()
 			}
 		}
 	}
@@ -1014,16 +1034,24 @@ def CollideHazardWithOpponent() {
 	
 	for [hazard : hazardList] {
 		for [opponent : opponentList] {
-			if ( DidICollideWithAnActor(hazardList[hazard], opponent) == true ) {
+			if ( DidICollideWithAnActor(hazardList[hazard], opponentList[opponent]) == true ) {
 				if (hazardList[hazard].type == "dynamite") {
 					if (hazardList[hazard].explosionCount < 1) {
-						HurtOpponent(opponent)
+						HurtOpponent(opponentList[opponent])
 					}
 				}
 				else {
-					HurtOpponent(opponent)
-					var effect = love.sound.newSoundData(EFFECT_PIERCE)
+					if (hazardList[current].type == "arrow") {
+						var effect = love.sound.newSoundData(EFFECT_PIERCE)
+					}
+					else if (hazardList[current].type == "fire") {
+						var effect = love.sound.newSoundData(EFFECT_BUMP)
+					}
+					
 					effect.play()
+					hazardList[current] = hazardList[hazardList.length]
+					hazardList.pop_back()
+					HurtOpponent(opponentList[opponent])
 				}
 			}
 		}
