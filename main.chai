@@ -563,6 +563,18 @@ def SetOrientation() {
 }
 
 
+def ClearDynamite() {
+	for [hazard : hazardList] {
+		if (hazardList[type].type == "dynamite") {
+			if (hazard.explosionCount < -4) {
+				hazardList[hazard] = hazardList[hazardList.length]
+				hazardList.pop_back
+			}
+		}
+	}
+}
+
+
 def InitializeSafeCells() {
 	for (iterator : totalFloorLocations) {
 		safeFloorLocations[iterator] = allFloorLocations[iterator]
