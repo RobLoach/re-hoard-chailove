@@ -945,7 +945,7 @@ def CollideHazardWithDragon() {
 }
 
 
-def CollideArrowFireWithOpponent() {
+def CollideHazardWithOpponent() {
 	/*
 	Check the dragon,
 	 then go through the queue.
@@ -955,8 +955,17 @@ def CollideArrowFireWithOpponent() {
 	*/
 	
 	for [hazard : hazardList] {
-		if ( DidICollideWithAnActor(hazard, dragon) == true ) {
-			FailDragon()
+		for [opponent : opponentList] {
+			if ( DidICollideWithAnActor(hazard, opponent) == true ) {
+				if (hazard.type = "dynamite") {
+					if (hazard.explosionCount < 1) {
+						HurtOpponent(opponent)
+					}
+				}
+				else {
+					HurtOpponent(opponent)
+				}
+			}
 		}
 	}
 }
@@ -999,6 +1008,11 @@ def CollideDragonWithDoor(dragon) {
 	*/
 	
 	
+}
+
+
+def HurtOpponent(opponent) {
+
 }
 
 
