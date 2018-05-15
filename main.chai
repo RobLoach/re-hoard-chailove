@@ -207,7 +207,6 @@ class Opponent {
 	var target = []
 	var isPatrolling = false
 	var isHunting = false
-	var isHurt = false
 	var horizontalMovement
 	var verticalMovement
 }
@@ -922,7 +921,7 @@ def CollideArrowFireWithHazard() {
 }
 
 
-def CollideArrowFireWithActor() {
+def CollideHazardWithDragon() {
 	/*
 	Check the dragon,
 	 then go through the queue.
@@ -931,7 +930,35 @@ def CollideArrowFireWithActor() {
 	 then hurt the actor.
 	*/
 	
+	for [hazard : hazardList] {
+		if ( DidICollideWithAnActor(hazard, dragon) == true ) {
+			if (hazard.type = "dynamite") {
+				if (hazard.explosionCount < 1) {
+					FailDragon()
+				}
+			}
+			else {
+				FailDragon()
+			}
+		}
+	}
+}
+
+
+def CollideArrowFireWithOpponent() {
+	/*
+	Check the dragon,
+	 then go through the queue.
+	In both cases, if the hazard collided,
+	 destroy the hazard,
+	 then hurt the actor.
+	*/
 	
+	for [hazard : hazardList] {
+		if ( DidICollideWithAnActor(hazard, dragon) == true ) {
+			FailDragon()
+		}
+	}
 }
 
 
