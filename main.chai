@@ -1614,6 +1614,43 @@ def SetOpponentDragonSprite() {
 }
 
 
+def DrawEnvironment() {
+	for (var vertical = 0; vertical < currentDungeonSize; ++vertical) {
+		for (var horizontal = 0; horizontal < currentDungeonSize; ++horizontal) {
+			if (horizontal == 2 && vertical == 1) {
+				if (gotTreasure == false) {
+					love.graphics.draw(SPRITE_DOOR_CLOSED, 16, 0)
+				}
+				else if (gotTreasure == true) {
+					love.graphics.draw(SPRITE_DOOR_OPEN, 16, 0)
+				}
+			}
+			else if (horizontal == currentDungeonSize - 1 && vertical == currentDungeonSize - 1) {
+				if (gotTreasure == false) {
+					love.graphics.draw(SPRITE_TREASURE_CLOSED_CLOSED, horizontal * 8, vertical * 8)
+				}
+				else if (gotTreasure == true) {
+					love.graphics.draw(SPRITE_TREASURE_OPEN_CLOSED, horizontal * 8, vertical * 8)
+				}
+			}
+			else {
+				if (dungeon[vertical][horizontal] == WALL_CELL) {
+				love.graphics.draw(SPRITE_WALL, horizontal * 8, vertical * 8)
+				}
+				else if (dungeon[vertical][horizontal] == FLOOR_CELL) {
+				love.graphics.draw(SPRITE_FLOOR, horizontal * 8, vertical * 8)
+				}
+			}
+		}
+	}
+}
+
+
+def DrawActors() {
+	
+}
+
+
 def BreadthFirst(startCell, endCell) {
 	var frontier = [startCell]
 	var checkingCell = []
