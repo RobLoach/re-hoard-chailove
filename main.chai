@@ -154,7 +154,7 @@ global currentLevel = 0
 global previousLevel = 0
 global tries = 3
 global incrementor = (currentLevel / 2) * 2
-global currentDungeonSize = INITIAL_DUNGEON_SIZE + incrementor
+global currentDungeonLength = INITIAL_DUNGEON_SIZE + incrementor
 global dungeon = []
 global allFloorLocations = []
 global opponentSetupFloorLocations = []
@@ -317,28 +317,28 @@ def Average(a, b) {
 
 
 def DungeonStructure() {
-	for (var vertical = 0; vertical < currentDungeonSize; ++vertical) {
-		for (var horizontal = 0; horizontal < currentDungeonSize; ++horizontal) {
+	for (var vertical = 0; vertical < currentDungeonLength; ++vertical) {
+		for (var horizontal = 0; horizontal < currentDungeonLength; ++horizontal) {
 			dungeon[vertical][horizontal] = WALL_CELL
 		}
 	}
 }
 
 def PlanDungeon() {
-	var horizontal = ( love.math.random(1, currentDungeonSize) ) + 1
-	var vertical = ( love.math.random(1, currentDungeonSize) ) + 1
+	var horizontal = ( love.math.random(1, currentDungeonLength) ) + 1
+	var vertical = ( love.math.random(1, currentDungeonLength) ) + 1
 	
 	if (horizontal % 2 == 1) {
-		if (horizontal == currentDungeonSize) {
-			horizontal = currentDungeonSize - 1
+		if (horizontal == currentDungeonLength) {
+			horizontal = currentDungeonLength - 1
 			}
 		else {
 			horizontal = horizontal + 1
 		}
 	}	
 	if (vertical % 2 == 1) {
-		if (vertical == currentDungeonSize) {
-			vertical = currentDungeonSize - 1
+		if (vertical == currentDungeonLength) {
+			vertical = currentDungeonLength - 1
 			}
 		else {
 			vertical = vertical + 1
@@ -346,7 +346,7 @@ def PlanDungeon() {
 	}
 	
 	WalkDungeon(horizontal, vertical)
-	DemolishDungeon(currentDungeonSize, currentDungeonSize)
+	DemolishDungeon(currentDungeonLength, currentDungeonLength)
 }
 
 
@@ -390,8 +390,8 @@ def DemolishDungeon(width, height) {
 
 
 def DrawDungeon() {
-	for (var vertical = 0; vertical < currentDungeonSize - 1; ++vertical) {
-		for (var horizontal = 0; horizontal < currentDungeonSize - 1; ++horizontal) {
+	for (var vertical = 0; vertical < currentDungeonLength - 1; ++vertical) {
+		for (var horizontal = 0; horizontal < currentDungeonLength - 1; ++horizontal) {
 			if (dungeon[vertical][horizontal] == WALL_CELL) {
 				love.graphics.draw(sprite_wall, (horizontal - 1) * 8 + 1, (vertical - 1) * 8 + 1)
 			}
@@ -404,8 +404,8 @@ def DrawDungeon() {
 
 
 def CollectFloorCells() {
-	for (var vertical = 0; vertical < currentDungeonSize - 1; ++vertical) {
-		for (var horizontal = 0; horizontal < currentDungeonSize - 1; ++horizontal) {
+	for (var vertical = 0; vertical < currentDungeonLength - 1; ++vertical) {
+		for (var horizontal = 0; horizontal < currentDungeonLength - 1; ++horizontal) {
 			if (dungeon[vertical][horizontal] == FLOOR_CELL) {
 				allFloorLocations.push_back( [horizontal, vertical] )
 			}
@@ -415,7 +415,7 @@ def CollectFloorCells() {
 
 
 def CollectOpponentSetupCells() {
-	var topHalfOfDungeon = currentDungeonSize / 2
+	var topHalfOfDungeon = currentDungeonLength / 2
 	
 	for (var index = 0; index < totalFloorLocations - 2; ++index) {
 		if (allFloorLocations[index][1] > topHalfOfDungeon || allFloorLocations[index][2] > topHalfOfDungeon) {
@@ -503,7 +503,7 @@ def Populate() {
 	opponentList[0].position = PlaceKnight()
 	opponentList[0].orientation = "north"
 	
-	for (iterator = 1; iterator < currentDungeonSize / 3 + 1; ++iterator) {
+	for (iterator = 1; iterator < currentDungeonLength / 3 + 1; ++iterator) {
 		opponentList[iterator] = Opponent()
 		opponentList[iterator].emotion = GenerateEmotion()
 		InitializeSubordinateSprite( opponentList[iterator] )
@@ -1015,7 +1015,7 @@ def CollideHazardWithOpponent() {
 
 
 def CollideDragonWithTreasure() {
-	if ( DidIHitAWall(dragon, dungeon[currentDungeonSize - 2, currentDungeonSize - 2] && gotTreasure == false) {
+	if ( DidIHitAWall(dragon, dungeon[currentDungeonLength - 2, currentDungeonLength - 2] && gotTreasure == false) {
 		gotTreasure = true
 		var effect = love.sound.newSoundData(EFFECT_GOT_TREASURE)
 		effect.play()
@@ -1628,8 +1628,8 @@ def SetOpponentDragonSprite() {
 
 
 def DrawEnvironment() {
-	for (var vertical = 0; vertical < currentDungeonSize; ++vertical) {
-		for (var horizontal = 0; horizontal < currentDungeonSize; ++horizontal) {
+	for (var vertical = 0; vertical < currentDungeonLength; ++vertical) {
+		for (var horizontal = 0; horizontal < currentDungeonLength; ++horizontal) {
 			if (horizontal == 2 && vertical == 1) {
 				if (gotTreasure == false) {
 					love.graphics.draw(SPRITE_DOOR_CLOSED, 16, 0)
@@ -1638,7 +1638,7 @@ def DrawEnvironment() {
 					love.graphics.draw(SPRITE_DOOR_OPEN, 16, 0)
 				}
 			}
-			else if (horizontal == currentDungeonSize - 1 && vertical == currentDungeonSize - 1) {
+			else if (horizontal == currentDungeonLength - 2 && vertical == currentDungeonLength - 2) {
 				if (gotTreasure == false) {
 					love.graphics.draw(SPRITE_TREASURE_CLOSED_CLOSED, horizontal * 8, vertical * 8)
 				}
