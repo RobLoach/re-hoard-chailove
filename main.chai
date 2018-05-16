@@ -602,6 +602,9 @@ def EraseHazard(hazard) {
 	if (hazardList[hazard].type == "arrow") {
 		arrowCount = arrowCount - 1
 	}
+	else if (hazardList[hazard].type == "fire") {
+		isFireballThere = false
+	}
 	hazardList[hazard] = hazardList[hazardList.length]
 	hazardList.pop_back()
 }
