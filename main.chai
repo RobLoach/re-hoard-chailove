@@ -482,11 +482,11 @@ def PlaceKnight() {
 
 
 def PlaceSubordinate() {
-	var roll = love.math.random(0, opponentSetupFloorLocations.length - 1)
+	var roll = love.math.random(0, opponentSetupFloorLocations.length() - 1)
 	
 	var basin = opponentSetupFloorLocations[roll]
-	opponentSetupFloorLocations[roll] = opponentSetupFloorLocations[opponentSetupFloorLocations.length - 1]
-	opponentSetupFloorLocations[opponentSetupFloorLocations.length - 1] = basin
+	opponentSetupFloorLocations[roll] = opponentSetupFloorLocations[opponentSetupFloorLocations.length() - 1]
+	opponentSetupFloorLocations[opponentSetupFloorLocations.length() - 1] = basin
 	
 	var position = opponentSetupFloorLocations.pop_back()
 	position[HORIZONTAL_DIMENSION] = position[HORIZONTAL_DIMENSION] * 8
@@ -529,12 +529,12 @@ def SetCurrentTile(actor) {
 def SetCollisionWorld () {
 	collisionWorld = []
 
-	for (var iterator = 0; iterator < dungeon.length; ++iterator) {
+	for (var iterator = 0; iterator < dungeon.length(); ++iterator) {
 		collisionWorld[iterator] = dungeon[iterator]
 	}
 	
-	for (var vertical = 0; vertical < collisionWorld.length; ++vertical) {
-		for (var horizontal = 0; horizontal < collisionWorld[vertical].length; ++horizontal) {
+	for (var vertical = 0; vertical < collisionWorld.length(); ++vertical) {
+		for (var horizontal = 0; horizontal < collisionWorld[vertical].length(); ++horizontal) {
 			for (currentOpponent : opponentList) {
 				if ( currrentOpponent.location == collisionWorld[vertical][horizontal] ) {
 					collisionWorld[vertical][horizontal] = WALL_CELL
@@ -605,14 +605,20 @@ def EraseHazard(hazard) {
 	else if (hazardList[hazard].type == "fire") {
 		isFireballThere = false
 	}
-	hazardList[hazard] = hazardList[hazardList.length]
+	hazardList[hazard] = hazardList[hazardList.length()]
 	hazardList.pop_back()
 }
 
 
-def InitializeSafeCells() {
-	for (iterator : totalFloorLocations) {
-		safeFloorLocations[iterator] = allFloorLocations[iterator]
+def CollectSafeCells() {
+	safeFloorLocations = allFloorLocations
+	
+	for [cell : safeFloorLocations] {
+		for [hazard : hazardList] {
+			if ( safeFloorLocations[cell] == hazardList[hazard] ) {
+				safeFloorLocations[cell] = safeFloorLocations[safeFloorLocations.length()]
+				safeFloorLocations.pop_back()
+			}
 	}
 }
 
@@ -881,8 +887,8 @@ def CollideOpponentWithDragon() {
 
 
 def CollideOpponentWithOpponent() {
-	for [permanent = 0; permanent < opponentList.length - 1; ++permanent] {
-		for [temporary = permanent + 1; temporary < opponentList.length; ++temporary] {
+	for [permanent = 0; permanent < opponentList.length() - 1; ++permanent] {
+		for [temporary = permanent + 1; temporary < opponentList.length(); ++temporary] {
 			if ( DidICollideWithAnActor(opponentList[permanent], opponentList[temporary]) == true ) {
 				opponentList[permanent].horizontalMovement = 0
 				opponentList[permanent].verticalMovement = 0
@@ -920,14 +926,14 @@ def CollideArrowFireWithWall() {
 
 
 def CollideArrowFireWithHazard() {
-	if (hazardList.length > 1) {
-		for [first = 0; first < hazardList.length - 1; ++first] {
+	if (hazardList.length() > 1) {
+		for [first = 0; first < hazardList.length() - 1; ++first] {
 			if (hazardList[first].type != "dynamite") {
-				for [second = first + 1; second < hazardList.length; ++second] {
+				for [second = first + 1; second < hazardList.length(); ++second] {
 					if ( DidICollideWithAnActor(first, second) == true ) {
 						if (hazardList[second].type == "dynamite") {
 							hazardList[second].explosionCount = DYNAMITE_EXPLOSION_POINT
-							hazardList[first] = hazardList[hazardList.length - 1]
+							hazardList[first] = hazardList[hazardList.length() - 1]
 							hazardList.pop_back()
 						}
 						else {
@@ -938,8 +944,8 @@ def CollideArrowFireWithHazard() {
 								var effect = love.sound.newSoundData(EFFECT_FIRE_HIT)
 							}
 						
-							hazardList[first] = hazardList[hazardList.length - 1]
-							hazardList[second] = hazardList[hazardList.length]
+							hazardList[first] = hazardList[hazardList.length() - 1]
+							hazardList[second] = hazardList[hazardList.length()]
 							//Get rid of 2 hazards by popping twice.
 							hazardList.pop_back()
 							hazardList.pop_back()
