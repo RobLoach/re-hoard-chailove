@@ -752,10 +752,19 @@ def DidIHitAWall(me, tile) {
 	}
 }
 
-
-def MoveActor(character) {
-	character.POSITION_HORIZONTAL = character.POSITION_HORIZONTAL + character.horizontalMovement
-	character.POSITION_VERTICAL = character.POSITION_VERTICAL + character.horizontalMovement
+def SetOpponentVelocity(opponent, velocity) {
+	if ( opponent.target[HORIZONTAL_DIMENSION] < opponent.currentTile[HORIZONTAL_DIMENSION] ) {
+		opponent.horizontalMovement = -velocity
+	}
+	else if ( opponent.target[HORIZONTAL_DIMENSION] > opponent.currentTile[HORIZONTAL_DIMENSION] ) {
+		opponent.horizontalMovement = velocity
+	}
+	else if ( opponent.target[VERTICAL_DIMENSION] < opponent.currentTile[VERTICAL_DIMENSION] ) {
+		opponent.verticalMovement = -velocity
+	}
+	else if ( opponent.target[VERTICAL_DIMENSION] > opponent.currentTile[VERTICAL_DIMENSION] ) {
+		opponent.verticalMovement = velocity
+	}
 }
 
 
@@ -817,6 +826,341 @@ def ControlDragon() {
 				var effect = love.sound.newSoundData(EFFECT_FIRE_BREATHE)
 				effect.play()
 			}
+		}
+	}
+}
+
+
+def Cleanup() {
+
+}
+
+
+def HurtOpponent(opponent) {
+
+}
+
+
+def ReturnToYourPlaces() {
+	dragon.position = [8, 8]
+	
+	for [opponent : opponentList] {
+		if (THIS_OPPONENT.emotion == "knight") {
+			THIS_OPPONENT.position = PlaceKnight()
+		}
+		else {
+			THIS_OPPONENT.position = PlaceSubordinate()
+		}
+	}
+	
+	hazardList = []
+}
+
+
+def SetCurrentDragonSprite() {
+	if (dragon.horizontalMovement != 0 && dragon.verticalMovement != 0) {
+		if (dragon.horizontalMovement < 0) {
+			if (dragon.activeSprite == SPRITE_DRAGON_FLY1_LEFT) {
+				dragon.activeSprite = SPRITE_DRAGON_FLY2_LEFT
+			}
+			else {
+				dragon.activeSprite = SPRITE_DRAGON_FLY1_LEFT
+			}
+		}
+		else if (dragon.horizontalMovement > 0) {
+			if (dragon.activeSprite == SPRITE_DRAGON_FLY1_RIGHT) {
+				dragon.activeSprite = SPRITE_DRAGON_FLY2_RIGHT
+			}
+			else {
+				dragon.activeSprite = SPRITE_DRAGON_FLY1_RIGHT
+			}
+		}
+		if (dragon.verticalMovement < 0) {
+			if (dragon.activeSprite == SPRITE_DRAGON_FLY1_UP) {
+				dragon.activeSprite = SPRITE_DRAGON_FLY2_UP
+			}
+			else {
+				dragon.activeSprite = SPRITE_DRAGON_FLY1_UP
+			}
+		}
+		else if (dragon.verticalMovement > 0) {
+			if (dragon.activeSprite == SPRITE_DRAGON_FLY1_DOWN) {
+				dragon.activeSprite = SPRITE_DRAGON_FLY2_DOWN
+			}
+			else {
+				dragon.activeSprite = SPRITE_DRAGON_FLY1_DOWN
+			}
+		}
+	}
+	
+	if ( love.joystick[0].isDown("A") ) {
+		if (dragon.activeSprite == SPRITE_DRAGON_FLY1_LEFT || dragon.activeSprite == SPRITE_DRAGON_FLY2_LEFT) {
+			dragon.activeSprite = SPRITE_DRAGON_FIRE_LEFT
+		}
+		else if (dragon.activeSprite == SPRITE_DRAGON_FLY1_RIGHT || dragon.activeSprite == SPRITE_DRAGON_FLY2_RIGHT) {
+			dragon.activeSprite = SPRITE_DRAGON_FIRE_RIGHT
+		}
+		else if (dragon.activeSprite == SPRITE_DRAGON_FLY1_UP || dragon.activeSprite == SPRITE_DRAGON_FLY2_UP) {
+			dragon.activeSprite = SPRITE_DRAGON_FIRE_UP
+		}
+		else if (dragon.activeSprite == SPRITE_DRAGON_FLY1_DOWN || dragon.activeSprite == SPRITE_DRAGON_FLY2_DOWN) {
+			dragon.activeSprite = SPRITE_DRAGON_FIRE_DOWN
+		}
+	}
+}
+
+
+def SetCurrentOpponentSprite() {
+	for [opponent : opponentList] {
+		if (normalPhase == true) {
+			if (THIS_OPPONENT.horizontalMovement != 0 && THIS_OPPONENT.verticalMovement != 0) {
+				if (THIS_OPPONENT.emotion = "knight") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK1) {
+						THIS_OPPONENT.activeSprite = SPRITE_KNIGHT_WALK2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_KNIGHT_WALK1
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "joy") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK1) {
+						THIS_OPPONENT.activeSprite = SPRITE_JOY_WALK2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_JOY_WALK1
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "sadness") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK1) {
+						THIS_OPPONENT.activeSprite = SPRITE_SADNESS_WALK2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_SADNESS_WALK1
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "fear") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK1) {
+						THIS_OPPONENT.activeSprite = SPRITE_FEAR_WALK2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_FEAR_WALK1
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "disgust") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK1) {
+						THIS_OPPONENT.activeSprite = SPRITE_DISGUST_WALK2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_DISGUST_WALK
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "anger") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK1) {
+						THIS_OPPONENT.activeSprite = SPRITE_ANGER_WALK2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_ANGER_WALK1
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "surprise") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK1) {
+						THIS_OPPONENT.activeSprite = SPRITE_SURPRISE_WALK2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_SURPRISE_WALK1
+					}
+				}
+			}
+		}
+		
+		else if (panicPhase == true) {
+			if (THIS_OPPONENT.horizontalMovement != 0 && THIS_OPPONENT.verticalMovement != 0) {
+				if (THIS_OPPONENT.emotion = "knight") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT1) {
+						THIS_OPPONENT.activeSprite = SPRITE_KNIGHT_HUNT2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_KNIGHT_HUNT1
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "joy") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT1) {
+						THIS_OPPONENT.activeSprite = SPRITE_JOY_HUNT2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_JOY_HUNT1
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "sadness") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT1) {
+						THIS_OPPONENT.activeSprite = SPRITE_SADNESS_HUNT2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_SADNESS_HUNT1
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "fear") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT1) {
+						THIS_OPPONENT.activeSprite = SPRITE_FEAR_HUNT2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_FEAR_HUNT1
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "disgust") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT1) {
+						THIS_OPPONENT.activeSprite = SPRITE_DISGUST_HUNT2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_DISGUST_HUNT
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "anger") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT1) {
+						THIS_OPPONENT.activeSprite = SPRITE_ANGER_HUNT2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_ANGER_HUNT1
+					}
+				}
+				else if (THIS_OPPONENT.emotion = "surprise") {
+					if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT1) {
+						THIS_OPPONENT.activeSprite = SPRITE_SURPRISE_HUNT2
+					}
+					else {
+						THIS_OPPONENT.activeSprite = SPRITE_SURPRISE_HUNT1
+					}
+				}
+			}
+		}
+	}
+}
+
+
+def DrawEnvironment() {
+	for (var vertical = 0; vertical < currentDungeonLength; ++vertical) {
+		for (var horizontal = 0; horizontal < currentDungeonLength; ++horizontal) {
+			if (horizontal == 2 && vertical == 1) {
+				if (gotTreasure == false) {
+					love.graphics.draw(SPRITE_DOOR_CLOSED, 16, 0)
+				}
+				else if (gotTreasure == true) {
+					love.graphics.draw(SPRITE_DOOR_OPEN, 16, 0)
+				}
+			}
+			else if (horizontal == currentDungeonLength - 2 && vertical == currentDungeonLength - 2) {
+				if (gotTreasure == false) {
+					love.graphics.draw(SPRITE_TREASURE_CLOSED_CLOSED, horizontal * 8, vertical * 8)
+				}
+				else if (gotTreasure == true) {
+					love.graphics.draw(SPRITE_TREASURE_OPEN_CLOSED, horizontal * 8, vertical * 8)
+				}
+			}
+			else {
+				if (dungeon[vertical][horizontal] == WALL_CELL) {
+				love.graphics.draw(SPRITE_WALL, horizontal * 8, vertical * 8)
+				}
+				else if (dungeon[vertical][horizontal] == FLOOR_CELL) {
+				love.graphics.draw(SPRITE_FLOOR, horizontal * 8, vertical * 8)
+				}
+			}
+		}
+	}
+}
+
+
+def DrawActors() {
+	love.graphics.draw(dragon.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
+	
+	for [opponent : opponentList] {
+		love.graphics.draw(THIS_OPPONENT.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
+	}
+	
+	for [hazard : hazardList] {
+		love.graphics.draw(THIS_HAZARD.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
+	}
+}
+
+
+def BreadthFirst(startCell, endCell) {
+	var frontier = [startCell]
+	var checkingCell = []
+	var visitedCells = []
+	
+
+	while ( frontier.length() > 0 ) {
+		checkingCell = frontier.pop_back()
+
+		if (checkingCell == endCell) {
+			return visitedCells
+		}
+
+		if ( dungeon[ checkingCell[0] - 1 ][ checkingCell[1] ] == FLOOR_CELL && AlreadyChecked( checkingCell[0] - 1, checkingCell[1] ) == false) {
+			frontier.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
+			visitedCells.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
+		}
+		if ( dungeon[ checkingCell[0] + 1 ][ checkingCell[1] ] == FLOOR_CELL && AlreadyChecked( checkingCell[0] + 1, checkingCell[1] ) == false) {
+			frontier.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
+			visitedCells.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
+		}
+		if ( dungeon[ checkingCell[0] ][ checkingCell[1] - 1 ] == FLOOR_CELL && AlreadyChecked( checkingCell[0], checkingCell[1] - 1 ) == false) {
+			frontier.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
+			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
+		}
+		if ( dungeon[ checkingCell[0] ][ checkingCell[1] + 1 ] == FLOOR_CELL && AlreadyChecked( checkingCell[0], checkingCell[1] + 1 ) == false) {
+			frontier.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
+			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
+		}
+	}
+
+	return visitedCells
+}
+
+
+def AlreadyChecked( vertical, horizontal ) {
+	for (item : frontier) {
+		// TODO: Do something with item.
+		if ( [vertical, horizontal] ) {
+			return true
+		}
+	}
+	return false
+}
+
+
+
+def Patrol() {
+	for [opponent : opponentList] {
+		if (THIS_OPPONENT.isPatrolling == true) {
+			if (THIS_OPPONENT.emotion == "knight") {
+				
+			}
+			else if (THIS_OPPONENT.emotion == "joy") {
+				if (THIS_OPPONENT.path.length() < 1) {
+					var roll = love.math.random( 0, safeFloorLocations.length()
+					var pickedTarget = safeFloorLocations[roll]
+					THIS_OPPONENT.path = BreadthFirst(THIS_OPPONENT.currentTile, pickedTarget)
+				}
+				else {
+					if (THIS_OPPONENT.currentTile == THIS_OPPONENT.target) {
+						THIS_OPPONENT.target = THIS_OPPONENT.path.pop_back()
+					}
+					SetOpponentVelocity(THIS_OPPONENT, 1)
+				}
+			}
+			// Sadness stays still when "patrolling."
+			else if (THIS_OPPONENT.emotion == "fear") {
+				
+			}
+			else if (THIS_OPPONENT.emotion == "disgust") {
+				
+			}
+			else if (THIS_OPPONENT.emotion == "anger") {
+				
+			}
+			else if (THIS_OPPONENT.emotion == "surprise") {
+				
+			} 
 		}
 	}
 }
@@ -1153,340 +1497,9 @@ def StopEveryone() {
 }
 
 
-def Cleanup() {
-
-}
-
-
-def HurtOpponent(opponent) {
-
-}
-
-
-def ReturnToYourPlaces() {
-	dragon.position = [8, 8]
-	
-	for [opponent : opponentList] {
-		if (THIS_OPPONENT.emotion == "knight") {
-			THIS_OPPONENT.position = PlaceKnight()
-		}
-		else {
-			THIS_OPPONENT.position = PlaceSubordinate()
-		}
-	}
-	
-	hazardList = []
-}
-
-
-def SetCurrentDragonSprite() {
-	if (dragon.horizontalMovement != 0 && dragon.verticalMovement != 0) {
-		if (dragon.horizontalMovement < 0) {
-			if (dragon.activeSprite == SPRITE_DRAGON_FLY1_LEFT) {
-				dragon.activeSprite = SPRITE_DRAGON_FLY2_LEFT
-			}
-			else {
-				dragon.activeSprite = SPRITE_DRAGON_FLY1_LEFT
-			}
-		}
-		else if (dragon.horizontalMovement > 0) {
-			if (dragon.activeSprite == SPRITE_DRAGON_FLY1_RIGHT) {
-				dragon.activeSprite = SPRITE_DRAGON_FLY2_RIGHT
-			}
-			else {
-				dragon.activeSprite = SPRITE_DRAGON_FLY1_RIGHT
-			}
-		}
-		if (dragon.verticalMovement < 0) {
-			if (dragon.activeSprite == SPRITE_DRAGON_FLY1_UP) {
-				dragon.activeSprite = SPRITE_DRAGON_FLY2_UP
-			}
-			else {
-				dragon.activeSprite = SPRITE_DRAGON_FLY1_UP
-			}
-		}
-		else if (dragon.verticalMovement > 0) {
-			if (dragon.activeSprite == SPRITE_DRAGON_FLY1_DOWN) {
-				dragon.activeSprite = SPRITE_DRAGON_FLY2_DOWN
-			}
-			else {
-				dragon.activeSprite = SPRITE_DRAGON_FLY1_DOWN
-			}
-		}
-	}
-	
-	if ( love.joystick[0].isDown("A") ) {
-		if (dragon.activeSprite == SPRITE_DRAGON_FLY1_LEFT || dragon.activeSprite == SPRITE_DRAGON_FLY2_LEFT) {
-			dragon.activeSprite = SPRITE_DRAGON_FIRE_LEFT
-		}
-		else if (dragon.activeSprite == SPRITE_DRAGON_FLY1_RIGHT || dragon.activeSprite == SPRITE_DRAGON_FLY2_RIGHT) {
-			dragon.activeSprite = SPRITE_DRAGON_FIRE_RIGHT
-		}
-		else if (dragon.activeSprite == SPRITE_DRAGON_FLY1_UP || dragon.activeSprite == SPRITE_DRAGON_FLY2_UP) {
-			dragon.activeSprite = SPRITE_DRAGON_FIRE_UP
-		}
-		else if (dragon.activeSprite == SPRITE_DRAGON_FLY1_DOWN || dragon.activeSprite == SPRITE_DRAGON_FLY2_DOWN) {
-			dragon.activeSprite = SPRITE_DRAGON_FIRE_DOWN
-		}
-	}
-}
-
-
-def SetCurrentOpponentSprite() {
-	for [opponent : opponentList] {
-		if (normalPhase == true) {
-			if (THIS_OPPONENT.horizontalMovement != 0 && THIS_OPPONENT.verticalMovement != 0) {
-				if (THIS_OPPONENT.emotion = "knight") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK1) {
-						THIS_OPPONENT.activeSprite = SPRITE_KNIGHT_WALK2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_KNIGHT_WALK1
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "joy") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK1) {
-						THIS_OPPONENT.activeSprite = SPRITE_JOY_WALK2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_JOY_WALK1
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "sadness") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK1) {
-						THIS_OPPONENT.activeSprite = SPRITE_SADNESS_WALK2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_SADNESS_WALK1
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "fear") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK1) {
-						THIS_OPPONENT.activeSprite = SPRITE_FEAR_WALK2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_FEAR_WALK1
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "disgust") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK1) {
-						THIS_OPPONENT.activeSprite = SPRITE_DISGUST_WALK2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_DISGUST_WALK
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "anger") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK1) {
-						THIS_OPPONENT.activeSprite = SPRITE_ANGER_WALK2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_ANGER_WALK1
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "surprise") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK1) {
-						THIS_OPPONENT.activeSprite = SPRITE_SURPRISE_WALK2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_SURPRISE_WALK1
-					}
-				}
-			}
-		}
-		
-		else if (panicPhase == true) {
-			if (THIS_OPPONENT.horizontalMovement != 0 && THIS_OPPONENT.verticalMovement != 0) {
-				if (THIS_OPPONENT.emotion = "knight") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT1) {
-						THIS_OPPONENT.activeSprite = SPRITE_KNIGHT_HUNT2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_KNIGHT_HUNT1
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "joy") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT1) {
-						THIS_OPPONENT.activeSprite = SPRITE_JOY_HUNT2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_JOY_HUNT1
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "sadness") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT1) {
-						THIS_OPPONENT.activeSprite = SPRITE_SADNESS_HUNT2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_SADNESS_HUNT1
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "fear") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT1) {
-						THIS_OPPONENT.activeSprite = SPRITE_FEAR_HUNT2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_FEAR_HUNT1
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "disgust") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT1) {
-						THIS_OPPONENT.activeSprite = SPRITE_DISGUST_HUNT2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_DISGUST_HUNT
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "anger") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT1) {
-						THIS_OPPONENT.activeSprite = SPRITE_ANGER_HUNT2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_ANGER_HUNT1
-					}
-				}
-				else if (THIS_OPPONENT.emotion = "surprise") {
-					if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT1) {
-						THIS_OPPONENT.activeSprite = SPRITE_SURPRISE_HUNT2
-					}
-					else {
-						THIS_OPPONENT.activeSprite = SPRITE_SURPRISE_HUNT1
-					}
-				}
-			}
-		}
-	}
-}
-
-
-def DrawEnvironment() {
-	for (var vertical = 0; vertical < currentDungeonLength; ++vertical) {
-		for (var horizontal = 0; horizontal < currentDungeonLength; ++horizontal) {
-			if (horizontal == 2 && vertical == 1) {
-				if (gotTreasure == false) {
-					love.graphics.draw(SPRITE_DOOR_CLOSED, 16, 0)
-				}
-				else if (gotTreasure == true) {
-					love.graphics.draw(SPRITE_DOOR_OPEN, 16, 0)
-				}
-			}
-			else if (horizontal == currentDungeonLength - 2 && vertical == currentDungeonLength - 2) {
-				if (gotTreasure == false) {
-					love.graphics.draw(SPRITE_TREASURE_CLOSED_CLOSED, horizontal * 8, vertical * 8)
-				}
-				else if (gotTreasure == true) {
-					love.graphics.draw(SPRITE_TREASURE_OPEN_CLOSED, horizontal * 8, vertical * 8)
-				}
-			}
-			else {
-				if (dungeon[vertical][horizontal] == WALL_CELL) {
-				love.graphics.draw(SPRITE_WALL, horizontal * 8, vertical * 8)
-				}
-				else if (dungeon[vertical][horizontal] == FLOOR_CELL) {
-				love.graphics.draw(SPRITE_FLOOR, horizontal * 8, vertical * 8)
-				}
-			}
-		}
-	}
-}
-
-
-def DrawActors() {
-	love.graphics.draw(dragon.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
-	
-	for [opponent : opponentList] {
-		love.graphics.draw(THIS_OPPONENT.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
-	}
-	
-	for [hazard : hazardList] {
-		love.graphics.draw(THIS_HAZARD.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
-	}
-}
-
-
-def MoveOpponent(opponent) {
-	
-}
-
-
-def BreadthFirst(startCell, endCell) {
-	var frontier = [startCell]
-	var checkingCell = []
-	var visitedCells = []
-	
-
-	while ( frontier.length() > 0 ) {
-		checkingCell = frontier.pop_back()
-
-		if (checkingCell == endCell) {
-			return visitedCells
-		}
-
-		if ( dungeon[ checkingCell[0] - 1 ][ checkingCell[1] ] == FLOOR_CELL && AlreadyChecked( checkingCell[0] - 1, checkingCell[1] ) == false) {
-			frontier.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
-			visitedCells.push_back([ checkingCell[0] - 1 ][ checkingCell[1] ])
-		}
-		if ( dungeon[ checkingCell[0] + 1 ][ checkingCell[1] ] == FLOOR_CELL && AlreadyChecked( checkingCell[0] + 1, checkingCell[1] ) == false) {
-			frontier.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
-			visitedCells.push_back([ checkingCell[0] + 0 ][ checkingCell[1] ])
-		}
-		if ( dungeon[ checkingCell[0] ][ checkingCell[1] - 1 ] == FLOOR_CELL && AlreadyChecked( checkingCell[0], checkingCell[1] - 1 ) == false) {
-			frontier.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
-			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] - 1 ])
-		}
-		if ( dungeon[ checkingCell[0] ][ checkingCell[1] + 1 ] == FLOOR_CELL && AlreadyChecked( checkingCell[0], checkingCell[1] + 1 ) == false) {
-			frontier.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
-			visitedCells.push_back([ checkingCell[0] ][ checkingCell[1] + 1 ])
-		}
-	}
-
-	return visitedCells
-}
-
-
-def Patrol() {
-	for [opponent : opponentList] {
-		if (THIS_OPPONENT.isPatrolling == true) {
-			if (THIS_OPPONENT.emotion == "knight") {
-				
-			}
-			else if (THIS_OPPONENT.emotion == "joy") {
-				if (THIS_OPPONENT.path.length() < 1) {
-					var roll = love.math.random( 0, safeFloorLocations.length()
-					var pickedTarget = safeFloorLocations[roll]
-					THIS_OPPONENT.path = AStar(THIS_OPPONENT.currentTile, pickedTarget)
-				}
-				else {
-					THIS_OPPONENT.target = THIS_OPPONENT.path.pop_back()
-					MoveOpponent(opponent)
-				}
-			}
-			// Sadness stays still when "patrolling."
-			else if (THIS_OPPONENT.emotion == "fear") {
-				
-			}
-			else if (THIS_OPPONENT.emotion == "disgust") {
-				
-			}
-			else if (THIS_OPPONENT.emotion == "anger") {
-				
-			}
-			else if (THIS_OPPONENT.emotion == "surprise") {
-				
-			} 
-		}
-	}
-}
-
-
-def AlreadyChecked( vertical, horizontal ) {
-	for (item : frontier) {
-		// TODO: Do something with item.
-		if ( [vertical, horizontal] ) {
-			return true
-		}
-	}
-	return false
+def MoveActor(character) {
+	character.POSITION_HORIZONTAL = character.POSITION_HORIZONTAL + character.horizontalMovement
+	character.POSITION_VERTICAL = character.POSITION_VERTICAL + character.horizontalMovement
 }
 
 
