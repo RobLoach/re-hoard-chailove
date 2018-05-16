@@ -612,15 +612,74 @@ def EraseHazard(hazard) {
 }
 
 
+def EraseSafeCell(cell) {
+	safeFloorLocations[cell] = safeFloorLocations[ safeFloorLocations.length() ]
+	safeFloorLocations.pop_back()
+}
+
+
 def CollectSafeCells() {
 	safeFloorLocations = allFloorLocations
 	
-	for [cell : safeFloorLocations] {
-		for [hazard : hazardList] {
-			if ( safeFloorLocations[cell] == THIS_HAZARD ) {
-				safeFloorLocations[cell] = safeFloorLocations[safeFloorLocations.length()]
-				safeFloorLocations.pop_back()
+	for [hazard : hazardList] { 
+		for [cell : safeFloorLocations] {
+			if ( safeFloorLocations[cell] == THIS_HAZARD.currentTile ) {
+				EraseSafeCell(cell)
 			}
+
+			else {
+				if (THIS_HAZARD.type == "arrow" || THIS_HAZARD.type == "fire") {
+					if (THIS_HAZARD.orientation == "west") {
+						if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION] - 1, THIS_HAZARD.currentTile[VERTICAL_DIMENSION] ]) {
+							EraseSafeCell(cell)
+						}
+					}
+					else if (THIS_HAZARD.orientation == "east") {
+						if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION] + 1, THIS_HAZARD.currentTile[VERTICAL_DIMENSION] ]) {
+							EraseSafeCell(cell)
+						}
+					}
+					else if (THIS_HAZARD.orientation == "north") {
+						if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION], THIS_HAZARD.currentTile[VERTICAL_DIMENSION] - 1 ]) {
+							EraseSafeCell(cell)
+						}
+					}
+					else if (THIS_HAZARD.orientation == "south") {
+						if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION], THIS_HAZARD.currentTile[VERTICAL_DIMENSION] + 1 ]) {
+							EraseSafeCell(cell)
+						}
+					}
+				}
+	
+				else if ( THIS_HAZARD.type == "dynamite" ) {
+					if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION] - 1, THIS_HAZARD.currentTile[VERTICAL_DIMENSION] ]) {
+						EraseSafeCell(cell)
+					}
+					else if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION] + 1, THIS_HAZARD.currentTile[VERTICAL_DIMENSION] ]) {
+						EraseSafeCell(cell)
+					}
+					else if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION] - 1, THIS_HAZARD.currentTile[VERTICAL_DIMENSION] - 1 ]) {
+						EraseSafeCell(cell)
+					}
+					else if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION] + 1, THIS_HAZARD.currentTile[VERTICAL_DIMENSION] - 1 ]) {
+						EraseSafeCell(cell)
+					}
+					else if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION] - 1, THIS_HAZARD.currentTile[VERTICAL_DIMENSION] + 1 ]) {
+						EraseSafeCell(cell)
+					}
+					else if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION] + 1, THIS_HAZARD.currentTile[VERTICAL_DIMENSION] + 1 ]) {
+						EraseSafeCell(cell)
+					}
+					else if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION], THIS_HAZARD.currentTile[VERTICAL_DIMENSION] - 1 ]) {
+						EraseSafeCell(cell)
+					}
+					else if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION], THIS_HAZARD.currentTile[VERTICAL_DIMENSION] + 1 ]) {
+						EraseSafeCell(cell)
+					}
+				}
+
+			}
+		}
 	}
 }
 
