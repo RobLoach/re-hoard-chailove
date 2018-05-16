@@ -206,6 +206,7 @@ class Opponent {
 	var orientation
 	var crossOfSight = []
 	var target = []
+	var path = []
 	var isPatrolling = false
 	var isHunting = false
 	var horizontalMovement
@@ -791,6 +792,14 @@ def CollideDragonWithWall() {
 }
 
 
+def StopOpponent(opponent) {
+	opponent.horizontalMovement = 0
+	opponent.verticalMovement = 0
+	opponent.target = []
+	opponent.path = []
+}
+
+
 def CollideOpponentWithWall() {
 	var opponentHorizontal
 	var opponentVertical
@@ -800,24 +809,16 @@ def CollideOpponentWithWall() {
 		opponentHorizontal = opponentList[opponent].TILE_HORIZONTAL
 		
 		if (dungeon[opponentVertical][opponentHorizontal - 1] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical][opponentHorizontal - 1]) == true && opponentList[opponent].horizontalMovement < 0) {
-			opponentList[opponent].horizontalMovement = 0
-			opponentList[opponent].verticalMovement = 0
-			target = []
+			StopOpponent( opponentList[opponent] )
 		}	
 		if (dungeon[opponentVertical][opponentHorizontal + 1] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical][opponentHorizontal + 1]) == true && opponentList[opponent].horizontalMovement > 0) {
-			opponentList[opponent].horizontalMovement = 0
-			opponentList[opponent].verticalMovement = 0
-			target = []
+			StopOpponent( opponentList[opponent] )
 		}	
 		if (dungeon[opponentVertical - 1][opponentHorizontal] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical - 1][opponentHorizontal]) == true && opponentList[opponent].verticalMovement < 0) {
-			opponentList[opponent].horizontalMovement = 0
-			opponentList[opponent].verticalMovement = 0
-			target = []
+			StopOpponent( opponentList[opponent] )
 		}	
 		if (dungeon[opponentVertical + 1][opponentHorizontal] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical + 1][opponentHorizontal]) == true && opponentList[opponent].verticalMovement > 0) {
-			opponentList[opponent].horizontalMovement = 0
-			opponentList[opponent].verticalMovement = 0
-			target = []
+			StopOpponent( opponentList[opponent] )
 		}
 	}
 }
@@ -890,9 +891,7 @@ def CollideOpponentWithOpponent() {
 	for [permanent = 0; permanent < opponentList.length() - 1; ++permanent] {
 		for [temporary = permanent + 1; temporary < opponentList.length(); ++temporary] {
 			if ( DidICollideWithAnActor(opponentList[permanent], opponentList[temporary]) == true ) {
-				opponentList[permanent].horizontalMovement = 0
-				opponentList[permanent].verticalMovement = 0
-				opponentList[permanent].target = []
+				StopOpponent( opponentList[opponent] )
 			}
 		}
 	}
@@ -1071,8 +1070,7 @@ def StopEveryone() {
 	dragon.verticalMovement = 0
 	
 	for [opponent : opponentList] {
-		opponentList[opponent].horizontalMovement = 0
-		opponentList[opponent].verticalMovement = 0
+		StopOpponent( opponentList[opponent] )
 	}
 	
 	for [hazard : hazardList] {
@@ -1729,6 +1727,33 @@ def BreadthFirst(startCell, endCell) {
 	}
 
 	return visitedCells
+}
+
+
+def Patrol() {
+	for [opponent : opponentList] {
+		if (opponentList[opponent].isPatrolling == true) {
+			if (opponentList[opponent].emotion == "knight") {
+			
+			}
+			else if (opponentList[opponent].emotion == "joy") {
+			
+			}
+			// Sadness stays still when "patrolling."
+			else if (opponentList[opponent].emotion == "fear") {
+			
+			}
+			else if (opponentList[opponent].emotion == "disgust") {
+			
+			}
+			else if (opponentList[opponent].emotion == "anger") {
+			
+			}
+			else if (opponentList[opponent].emotion == "surprise") {
+			
+			} 
+		}
+	}
 }
 
 
