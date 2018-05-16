@@ -1404,6 +1404,11 @@ def DrawActors() {
 }
 
 
+def MoveOpponent(opponent) {
+	
+}
+
+
 def BreadthFirst(startCell, endCell) {
 	var frontier = [startCell]
 	var checkingCell = []
@@ -1442,14 +1447,18 @@ def BreadthFirst(startCell, endCell) {
 def Patrol() {
 	for [opponent : opponentList] {
 		if (THIS_OPPONENT.isPatrolling == true) {
-			var thisPath = THIS_OPPONENT.path
-		
 			if (THIS_OPPONENT.emotion == "knight") {
 				
 			}
 			else if (THIS_OPPONENT.emotion == "joy") {
-				if (thisPath.length() == 0) {
-				
+				if (THIS_OPPONENT.path.length() < 1) {
+					var roll = love.math.random( 0, safeFloorLocations.length()
+					var pickedTarget = safeFloorLocations[roll]
+					THIS_OPPONENT.path = AStar(THIS_OPPONENT.currentTile, pickedTarget)
+				}
+				else {
+					THIS_OPPONENT.target = THIS_OPPONENT.path.pop_back()
+					MoveOpponent(opponent)
 				}
 			}
 			// Sadness stays still when "patrolling."
