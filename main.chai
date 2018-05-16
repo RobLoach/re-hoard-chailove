@@ -573,12 +573,16 @@ def CountDownDynamite() {
 }
 
 
-def EraseHazard(hazard) {
-	if (hazardList[hazard].type == "arrow") {
-		arrowCount = arrowCount - 1
+def ExplodeDynamite() {
+	for [hazard : hazardList] {
+		if (hazardList[hazard].type == "dynamite") {
+			if (hazardList[hazard].explosionCount == DYNAMITE_EXPLOSION_POINT) {
+				hazardList[hazard].activeSprite = SPRITE_DYNAMITE_ON
+				var effect = love.sound.newSoundData(EFFECT_EXPLODE)
+				effect.play()
+			}
+		}
 	}
-	hazardList[hazard] = hazardList[hazardList.length]
-	hazardList.pop_back()
 }
 
 
@@ -591,6 +595,15 @@ def ClearDynamite() {
 			}
 		}
 	}
+}
+
+
+def EraseHazard(hazard) {
+	if (hazardList[hazard].type == "arrow") {
+		arrowCount = arrowCount - 1
+	}
+	hazardList[hazard] = hazardList[hazardList.length]
+	hazardList.pop_back()
 }
 
 
