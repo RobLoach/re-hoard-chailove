@@ -31,6 +31,7 @@ global CORNERS = [
 ]
 global DYNAMITE_EXPLOSION_POINT = 0
 global DYNAMITE_ERASURE_POINT = -4
+global THIS_OPPONENT = opponentList[opponent]
 
 
 //asset constants
@@ -504,12 +505,12 @@ def Populate() {
 	opponentList[0].position = PlaceKnight()
 	opponentList[0].orientation = "north"
 	
-	for (iterator = 1; iterator < currentDungeonLength / 3 + 1; ++iterator) {
-		opponentList[iterator] = Opponent()
-		opponentList[iterator].emotion = GenerateEmotion()
-		InitializeSubordinateSprite( opponentList[iterator] )
-		opponentList[iterator].position = PlaceSubordinate()
-		opponentList[iterator].orientation = "north"
+	for (opponent = 1; opponent < currentDungeonLength / 3 + 1; ++opponent) {
+		THIS_OPPONENT = Opponent()
+		THIS_OPPONENT.emotion = GenerateEmotion()
+		InitializeSubordinateSprite( THIS_OPPONENT )
+		THIS_OPPONENT.position = PlaceSubordinate()
+		THIS_OPPONENT.orientation = "north"
 	}
 }
 
@@ -805,20 +806,20 @@ def CollideOpponentWithWall() {
 	var opponentVertical
 	
 	for [opponent : opponentList] {
-		opponentVertical = opponentList[opponent].TILE_VERTICAL
-		opponentHorizontal = opponentList[opponent].TILE_HORIZONTAL
+		opponentVertical = THIS_OPPONENT.TILE_VERTICAL
+		opponentHorizontal = THIS_OPPONENT.TILE_HORIZONTAL
 		
-		if (dungeon[opponentVertical][opponentHorizontal - 1] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical][opponentHorizontal - 1]) == true && opponentList[opponent].horizontalMovement < 0) {
-			StopOpponent( opponentList[opponent] )
+		if (dungeon[opponentVertical][opponentHorizontal - 1] == WALL_CELL && didIHitAWall(THIS_OPPONENT, dungeon[opponentVertical][opponentHorizontal - 1]) == true && THIS_OPPONENT.horizontalMovement < 0) {
+			StopOpponent( THIS_OPPONENT )
 		}	
-		if (dungeon[opponentVertical][opponentHorizontal + 1] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical][opponentHorizontal + 1]) == true && opponentList[opponent].horizontalMovement > 0) {
-			StopOpponent( opponentList[opponent] )
+		if (dungeon[opponentVertical][opponentHorizontal + 1] == WALL_CELL && didIHitAWall(THIS_OPPONENT, dungeon[opponentVertical][opponentHorizontal + 1]) == true && THIS_OPPONENT.horizontalMovement > 0) {
+			StopOpponent( THIS_OPPONENT )
 		}	
-		if (dungeon[opponentVertical - 1][opponentHorizontal] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical - 1][opponentHorizontal]) == true && opponentList[opponent].verticalMovement < 0) {
-			StopOpponent( opponentList[opponent] )
+		if (dungeon[opponentVertical - 1][opponentHorizontal] == WALL_CELL && didIHitAWall(THIS_OPPONENT, dungeon[opponentVertical - 1][opponentHorizontal]) == true && THIS_OPPONENT.verticalMovement < 0) {
+			StopOpponent( THIS_OPPONENT )
 		}	
-		if (dungeon[opponentVertical + 1][opponentHorizontal] == WALL_CELL && didIHitAWall(opponentList[opponent], dungeon[opponentVertical + 1][opponentHorizontal]) == true && opponentList[opponent].verticalMovement > 0) {
-			StopOpponent( opponentList[opponent] )
+		if (dungeon[opponentVertical + 1][opponentHorizontal] == WALL_CELL && didIHitAWall(THIS_OPPONENT, dungeon[opponentVertical + 1][opponentHorizontal]) == true && THIS_OPPONENT.verticalMovement > 0) {
+			StopOpponent( THIS_OPPONENT )
 		}
 	}
 }
@@ -828,50 +829,50 @@ def CollideOpponentWithDragon() {
 	var hasCollided = false
 	
 	for [opponent : opponentList] {
-		if ( DidICollideWithAnActor(opponentList[opponent], dragon) == true ) {
+		if ( DidICollideWithAnActor(THIS_OPPONENT, dragon) == true ) {
 			hasCollided = true
-			if (opponentList[opponent].emotion == "knight") {
-				opponentList[opponent].sprite = SPRITE_KNIGHT_ATTACK
+			if (THIS_OPPONENT.emotion == "knight") {
+				THIS_OPPONENT.sprite = SPRITE_KNIGHT_ATTACK
 				var effect = love.sound.newSoundData(EFFECT_SLICE)
 				effect.play()
 			}
 			
-			else if (opponentList[opponent].emotion == "joy") {
-				opponentList[opponent].sprite = SPRITE_JOY_ATTACK
+			else if (THIS_OPPONENT.emotion == "joy") {
+				THIS_OPPONENT.sprite = SPRITE_JOY_ATTACK
 				var effect = love.sound.newSoundData(EFFECT_BUMP)
 				effect.play()
 			}
 			
-			else if (opponentList[opponent].emotion == "sadness") {
-				opponentList[opponent].sprite = SPRITE_SADNESS_ATTACK
+			else if (THIS_OPPONENT.emotion == "sadness") {
+				THIS_OPPONENT.sprite = SPRITE_SADNESS_ATTACK
 				var effect = love.sound.newSoundData(EFFECT_SLICE)
 				effect.play()
 			}
 			
-			else if (opponentList[opponent].emotion == "fear") {
-				opponentList[opponent].sprite = SPRITE_FEAR_ATTACK
+			else if (THIS_OPPONENT.emotion == "fear") {
+				THIS_OPPONENT.sprite = SPRITE_FEAR_ATTACK
 				var effect = love.sound.newSoundData(EFFECT_PIERCE)
 				effect.play()
 			}
 			
-			else if (opponentList[opponent].emotion == "anger") {
-				opponentList[opponent].sprite = SPRITE_ANGER_ATTACK
+			else if (THIS_OPPONENT.emotion == "anger") {
+				THIS_OPPONENT.sprite = SPRITE_ANGER_ATTACK
 				var effect = love.sound.newSoundData(EFFECT_SLICE)
 				effect.play()
 			}
 			
-			else if (opponentList[opponent].emotion == "surprise") {
-				opponentList[opponent].sprite = SPRITE_SURPRISE_ATTACK
+			else if (THIS_OPPONENT.emotion == "surprise") {
+				THIS_OPPONENT.sprite = SPRITE_SURPRISE_ATTACK
 				var effect = love.sound.newSoundData(EFFECT_EXPLODE)
 				effect.play()
 			}
 			
-			else if (opponentList[opponent].emotion == "disgust") {
-				if (dragon.POSITION_VERTICAL < opponentList[opponent].POSITION_VERTICAL || dragon.POSITION_VERTICAL > opponentList[opponent].POSITION_VERTICAL) {
-					opponentList[opponent].sprite = SPRITE_DISGUST_ATTACK_VERTICAL
+			else if (THIS_OPPONENT.emotion == "disgust") {
+				if (dragon.POSITION_VERTICAL < THIS_OPPONENT.POSITION_VERTICAL || dragon.POSITION_VERTICAL > THIS_OPPONENT.POSITION_VERTICAL) {
+					THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_VERTICAL
 				}
 				else {
-					opponentList[opponent].sprite = SPRITE_DISGUST_ATTACK_HORIZONTAL
+					THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_HORIZONTAL
 				}
 				var effect = love.sound.newSoundData(EFFECT_PIERCE)
 				effect.play()
@@ -891,7 +892,7 @@ def CollideOpponentWithOpponent() {
 	for [permanent = 0; permanent < opponentList.length() - 1; ++permanent] {
 		for [temporary = permanent + 1; temporary < opponentList.length(); ++temporary] {
 			if ( DidICollideWithAnActor(opponentList[permanent], opponentList[temporary]) == true ) {
-				StopOpponent( opponentList[opponent] )
+				StopOpponent( THIS_OPPONENT )
 			}
 		}
 	}
@@ -987,8 +988,8 @@ def CollideHazardWithDragon() {
 def CollideHazardWithOpponent() {
 	for [hazard : hazardList] {
 		for [opponent : opponentList] {
-			if ( DidICollideWithAnActor(hazardList[hazard], opponentList[opponent]) == true) {
-				if (opponentList[opponent].emotion == "knight") {
+			if ( DidICollideWithAnActor(hazardList[hazard], THIS_OPPONENT) == true) {
+				if (THIS_OPPONENT.emotion == "knight") {
 					if (hazardList[hazard].type != "dynamite") {
 						EraseHazard(hazard)
 					}
@@ -1000,7 +1001,7 @@ def CollideHazardWithOpponent() {
 				else {
 					if (hazardList[hazard].type == "dynamite") {
 						if (hazardList[hazard].explosionCount < 1) {
-							HurtOpponent(opponentList[opponent])
+							HurtOpponent(THIS_OPPONENT)
 						}
 					}
 					else {
@@ -1013,7 +1014,7 @@ def CollideHazardWithOpponent() {
 						
 						effect.play()
 						EraseHazard(hazard)
-						HurtOpponent(opponentList[opponent])
+						HurtOpponent(THIS_OPPONENT)
 					}
 				}
 			}
@@ -1070,7 +1071,7 @@ def StopEveryone() {
 	dragon.verticalMovement = 0
 	
 	for [opponent : opponentList] {
-		StopOpponent( opponentList[opponent] )
+		StopOpponent( THIS_OPPONENT )
 	}
 	
 	for [hazard : hazardList] {
@@ -1107,11 +1108,11 @@ def ReturnToYourPlaces() {
 	dragon.position = [8, 8]
 	
 	for [opponent : opponentList] {
-		if (opponentList[opponent].emotion == "knight") {
-			opponentList[opponent].position = PlaceKnight()
+		if (THIS_OPPONENT.emotion == "knight") {
+			THIS_OPPONENT.position = PlaceKnight()
 		}
 		else {
-			opponentList[opponent].position = PlaceSubordinate()
+			THIS_OPPONENT.position = PlaceSubordinate()
 		}
 	}
 	
@@ -1173,474 +1174,474 @@ def SetCurrentDragonSprite() {
 
 
 def SetOpponentDragonSprite() {
-	for (iterator : opponentList) {
+	for [opponent : opponentList] {
 		if (normalPhase == true) {
-			if (opponentList[iterator].horizontalMovement != 0 && opponentList[iterator].verticalMovement != 0) {
-				if (opponentList[iterator].horizontalMovement < 0) {
-					if (opponentList[iterator].emotion = "knight") {
-						if (opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK2_LEFT
+			if (THIS_OPPONENT.horizontalMovement != 0 && THIS_OPPONENT.verticalMovement != 0) {
+				if (THIS_OPPONENT.horizontalMovement < 0) {
+					if (THIS_OPPONENT.emotion = "knight") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK1_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK1_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "joy") {
-						if (opponentList[iterator].activeSprite == SPRITE_JOY_WALK1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_JOY_WALK2_LEFT
+					else if (THIS_OPPONENT.emotion = "joy") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_JOY_WALK1_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK1_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "sadness") {
-						if (opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK2_LEFT
+					else if (THIS_OPPONENT.emotion = "sadness") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK1_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK1_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "fear") {
-						if (opponentList[iterator].activeSprite == SPRITE_FEAR_WALK1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_WALK2_LEFT
+					else if (THIS_OPPONENT.emotion = "fear") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_WALK1_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK1_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "disgust") {
-						if (opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK2_LEFT
+					else if (THIS_OPPONENT.emotion = "disgust") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "anger") {
-						if (opponentList[iterator].activeSprite == SPRITE_ANGER_WALK1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_WALK2_LEFT
+					else if (THIS_OPPONENT.emotion = "anger") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_WALK1_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK1_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "surprise") {
-						if (opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK2_LEFT
+					else if (THIS_OPPONENT.emotion = "surprise") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK1_LEFT
-						}
-					}
-				}
-				else if (opponentList[iterator].horizontalMovement > 0) {
-					if (opponentList[iterator].emotion = "knight") {
-						if (opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK1_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "joy") {
-						if (opponentList[iterator].activeSprite == SPRITE_JOY_WALK1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_JOY_WALK2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_JOY_WALK1_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "sadness") {
-						if (opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK1_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "fear") {
-						if (opponentList[iterator].activeSprite == SPRITE_FEAR_WALK1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_WALK2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_WALK1_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "disgust") {
-						if (opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "anger") {
-						if (opponentList[iterator].activeSprite == SPRITE_ANGER_WALK1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_WALK2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_WALK1_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "surprise") {
-						if (opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK1_RIGHT
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK1_LEFT
 						}
 					}
 				}
-				if (opponentList[iterator].verticalMovement < 0) {
-					if (opponentList[iterator].emotion = "knight") {
-						if (opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK2_UP
+				else if (THIS_OPPONENT.horizontalMovement > 0) {
+					if (THIS_OPPONENT.emotion = "knight") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK1_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "joy") {
-						if (opponentList[iterator].activeSprite == SPRITE_JOY_WALK1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_JOY_WALK2_UP
+					else if (THIS_OPPONENT.emotion = "joy") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_JOY_WALK1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK1_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "sadness") {
-						if (opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK2_UP
+					else if (THIS_OPPONENT.emotion = "sadness") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK1_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "fear") {
-						if (opponentList[iterator].activeSprite == SPRITE_FEAR_WALK1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_WALK2_UP
+					else if (THIS_OPPONENT.emotion = "fear") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_WALK1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK1_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "disgust") {
-						if (opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK2_UP
+					else if (THIS_OPPONENT.emotion = "disgust") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK_UP
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "anger") {
-						if (opponentList[iterator].activeSprite == SPRITE_ANGER_WALK1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_WALK2_UP
+					else if (THIS_OPPONENT.emotion = "anger") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_WALK1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK1_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "surprise") {
-						if (opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK2_UP
+					else if (THIS_OPPONENT.emotion = "surprise") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK1_RIGHT
 						}
 					}
 				}
-				else if (opponentList[iterator].verticalMovement > 0) {
-					if (opponentList[iterator].emotion = "knight") {
-						if (opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK2_DOWN
+				if (THIS_OPPONENT.verticalMovement < 0) {
+					if (THIS_OPPONENT.emotion = "knight") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_WALK1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK1_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "joy") {
-						if (opponentList[iterator].activeSprite == SPRITE_JOY_WALK1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_JOY_WALK2_DOWN
+					else if (THIS_OPPONENT.emotion = "joy") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_JOY_WALK1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK1_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "sadness") {
-						if (opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK2_DOWN
+					else if (THIS_OPPONENT.emotion = "sadness") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_WALK1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK1_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "fear") {
-						if (opponentList[iterator].activeSprite == SPRITE_FEAR_WALK1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_WALK2_DOWN
+					else if (THIS_OPPONENT.emotion = "fear") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_WALK1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK1_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "disgust") {
-						if (opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK2_DOWN
+					else if (THIS_OPPONENT.emotion = "disgust") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_WALK_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "anger") {
-						if (opponentList[iterator].activeSprite == SPRITE_ANGER_WALK1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_WALK2_DOWN
+					else if (THIS_OPPONENT.emotion = "anger") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_WALK1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK1_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "surprise") {
-						if (opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK2_DOWN
+					else if (THIS_OPPONENT.emotion = "surprise") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_WALK1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK1_UP
+						}
+					}
+				}
+				else if (THIS_OPPONENT.verticalMovement > 0) {
+					if (THIS_OPPONENT.emotion = "knight") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_WALK1_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "joy") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_WALK1_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "sadness") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_WALK1_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "fear") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_WALK1_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "disgust") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_WALK_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "anger") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_WALK1_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "surprise") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_WALK1_DOWN
 						}
 					}
 				}
 			}
 		}
 		else if (panicPhase == true) {
-			if (opponentList[iterator].horizontalMovement != 0 && opponentList[iterator].verticalMovement != 0) {
-				if (opponentList[iterator].horizontalMovement < 0) {
-					if (opponentList[iterator].emotion = "knight") {
-						if (opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT2_LEFT
+			if (THIS_OPPONENT.horizontalMovement != 0 && THIS_OPPONENT.verticalMovement != 0) {
+				if (THIS_OPPONENT.horizontalMovement < 0) {
+					if (THIS_OPPONENT.emotion = "knight") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT1_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT1_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "joy") {
-						if (opponentList[iterator].activeSprite == SPRITE_JOY_HUNT1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_JOY_HUNT2_LEFT
+					else if (THIS_OPPONENT.emotion = "joy") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_JOY_HUNT1_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT1_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "sadness") {
-						if (opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT2_LEFT
+					else if (THIS_OPPONENT.emotion = "sadness") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT1_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT1_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "fear") {
-						if (opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT2_LEFT
+					else if (THIS_OPPONENT.emotion = "fear") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT1_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT1_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "disgust") {
-						if (opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT2_LEFT
+					else if (THIS_OPPONENT.emotion = "disgust") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "anger") {
-						if (opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT2_LEFT
+					else if (THIS_OPPONENT.emotion = "anger") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT1_LEFT
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT1_LEFT
 						}
 					}
-					else if (opponentList[iterator].emotion = "surprise") {
-						if (opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT2_LEFT
+					else if (THIS_OPPONENT.emotion = "surprise") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT2_LEFT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT1_LEFT
-						}
-					}
-				}
-				else if (opponentList[iterator].horizontalMovement > 0) {
-					if (opponentList[iterator].emotion = "knight") {
-						if (opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT1_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "joy") {
-						if (opponentList[iterator].activeSprite == SPRITE_JOY_HUNT1_LEFT) {
-							opponentList[iterator].activeSprite == SPRITE_JOY_HUNT2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_JOY_HUNT1_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "sadness") {
-						if (opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT1_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "fear") {
-						if (opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT1_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "disgust") {
-						if (opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "anger") {
-						if (opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT1_RIGHT
-						}
-					}
-					else if (opponentList[iterator].emotion = "surprise") {
-						if (opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT1_RIGHT) {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT2_RIGHT
-						}
-						else {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT1_RIGHT
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT1_LEFT
 						}
 					}
 				}
-				if (opponentList[iterator].verticalMovement < 0) {
-					if (opponentList[iterator].emotion = "knight") {
-						if (opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT2_UP
+				else if (THIS_OPPONENT.horizontalMovement > 0) {
+					if (THIS_OPPONENT.emotion = "knight") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT1_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "joy") {
-						if (opponentList[iterator].activeSprite == SPRITE_JOY_HUNT1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_JOY_HUNT2_UP
+					else if (THIS_OPPONENT.emotion = "joy") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT1_LEFT) {
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_JOY_HUNT1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT1_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "sadness") {
-						if (opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT2_UP
+					else if (THIS_OPPONENT.emotion = "sadness") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT1_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "fear") {
-						if (opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT2_UP
+					else if (THIS_OPPONENT.emotion = "fear") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT1_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "disgust") {
-						if (opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT2_UP
+					else if (THIS_OPPONENT.emotion = "disgust") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT_UP
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "anger") {
-						if (opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT2_UP
+					else if (THIS_OPPONENT.emotion = "anger") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT1_RIGHT
 						}
 					}
-					else if (opponentList[iterator].emotion = "surprise") {
-						if (opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT1_UP) {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT2_UP
+					else if (THIS_OPPONENT.emotion = "surprise") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT1_RIGHT) {
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT2_RIGHT
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT1_UP
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT1_RIGHT
 						}
 					}
 				}
-				else if (opponentList[iterator].verticalMovement > 0) {
-					if (opponentList[iterator].emotion = "knight") {
-						if (opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT2_DOWN
+				if (THIS_OPPONENT.verticalMovement < 0) {
+					if (THIS_OPPONENT.emotion = "knight") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_KNIGHT_HUNT1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT1_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "joy") {
-						if (opponentList[iterator].activeSprite == SPRITE_JOY_HUNT1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_JOY_HUNT2_DOWN
+					else if (THIS_OPPONENT.emotion = "joy") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_JOY_HUNT1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT1_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "sadness") {
-						if (opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT2_DOWN
+					else if (THIS_OPPONENT.emotion = "sadness") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SADNESS_HUNT1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT1_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "fear") {
-						if (opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT2_DOWN
+					else if (THIS_OPPONENT.emotion = "fear") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_FEAR_HUNT1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT1_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "disgust") {
-						if (opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT2_DOWN
+					else if (THIS_OPPONENT.emotion = "disgust") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_DISGUST_HUNT_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "anger") {
-						if (opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT2_DOWN
+					else if (THIS_OPPONENT.emotion = "anger") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_ANGER_HUNT1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT1_UP
 						}
 					}
-					else if (opponentList[iterator].emotion = "surprise") {
-						if (opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT1_DOWN) {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT2_DOWN
+					else if (THIS_OPPONENT.emotion = "surprise") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT1_UP) {
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT2_UP
 						}
 						else {
-							opponentList[iterator].activeSprite == SPRITE_SURPRISE_HUNT1_DOWN
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT1_UP
+						}
+					}
+				}
+				else if (THIS_OPPONENT.verticalMovement > 0) {
+					if (THIS_OPPONENT.emotion = "knight") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_KNIGHT_HUNT1_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "joy") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_JOY_HUNT1_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "sadness") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_SADNESS_HUNT1_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "fear") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_FEAR_HUNT1_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "disgust") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_DISGUST_HUNT_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "anger") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_ANGER_HUNT1_DOWN
+						}
+					}
+					else if (THIS_OPPONENT.emotion = "surprise") {
+						if (THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT1_DOWN) {
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT2_DOWN
+						}
+						else {
+							THIS_OPPONENT.activeSprite == SPRITE_SURPRISE_HUNT1_DOWN
 						}
 					}
 				}
@@ -1686,7 +1687,7 @@ def DrawActors() {
 	love.graphics.draw(dragon.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
 	
 	for [opponent : opponentList] {
-		love.graphics.draw(opponentList[opponent].activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
+		love.graphics.draw(THIS_OPPONENT.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
 	}
 	
 	for [hazard : hazardList] {
@@ -1732,25 +1733,25 @@ def BreadthFirst(startCell, endCell) {
 
 def Patrol() {
 	for [opponent : opponentList] {
-		if (opponentList[opponent].isPatrolling == true) {
-			if (opponentList[opponent].emotion == "knight") {
-			
+		if (THIS_OPPONENT.isPatrolling == true) {
+			if (THIS_OPPONENT.emotion == "knight") {
+				
 			}
-			else if (opponentList[opponent].emotion == "joy") {
-			
+			else if (THIS_OPPONENT.emotion == "joy") {
+				if THIS_OPPONENT.
 			}
 			// Sadness stays still when "patrolling."
-			else if (opponentList[opponent].emotion == "fear") {
-			
+			else if (THIS_OPPONENT.emotion == "fear") {
+				
 			}
-			else if (opponentList[opponent].emotion == "disgust") {
-			
+			else if (THIS_OPPONENT.emotion == "disgust") {
+				
 			}
-			else if (opponentList[opponent].emotion == "anger") {
-			
+			else if (THIS_OPPONENT.emotion == "anger") {
+				
 			}
-			else if (opponentList[opponent].emotion == "surprise") {
-			
+			else if (THIS_OPPONENT.emotion == "surprise") {
+				
 			} 
 		}
 	}
