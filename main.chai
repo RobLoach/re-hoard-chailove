@@ -190,7 +190,7 @@ global message_finalRound
 //classes
 class Player {
 	var activeSprite = SPRITE_DRAGON_FLY1_DOWN
-	var position = [9, 9]
+	var position = [8, 8]
 	var currentTile = [1, 1]
 	var orientation = "south"
 	var isHurt = false
@@ -1096,6 +1096,22 @@ def Cleanup() {
 
 def HurtOpponent(opponent) {
 
+}
+
+
+def ReturnToYourPlaces() {
+	dragon.position = [8, 8]
+	
+	for [opponent : opponentList] {
+		if (opponentList[opponent].emotion == "knight") {
+			opponentList[opponent].position = PlaceKnight()
+		}
+		else {
+			opponentList[opponent].position = PlaceSubordinate()
+		}
+	}
+	
+	hazardList = []
 }
 
 
