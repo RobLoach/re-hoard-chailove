@@ -1182,15 +1182,43 @@ def Patrol() {
 			}
 
 			else if (THIS_OPPONENT.emotion == "disgust") {
-				
+				if (THIS_OPPONENT.path.length() < 1) {
+					for [currentTile : safeFloorLocations] {
+						if ( THIS_OPPONENT.location != safeFloorLocations[currentTile] ) {
+							var check_vertical = safeFloorLocations[currentTile][0]
+							var check_horizontal = safeFloorLocations[currentTile][1]
+
+							for [check : allFloorLocations] {
+								if ( [check_vertical - 1, check_horizontal] == allFloorLocations[check] && [check_vertical + 1, check_horizontal] == allFloorLocations[check] && [check_vertical, check_horizontal - 1] == allFloorLocations[check] && [check_vertical, check_horizontal + 1] == allFloorLocations[check] && [check_vertical - 1, check_horizontal - 1] == allFloorLocations[check] && [check_vertical - 1, check_horizontal + 1] == allFloorLocations[check] && [check_vertical + 1, check_horizontal - 1] == allFloorLocations[check] && [check_vertical + 1, check_horizontal + 1] == allFloorLocations[check] ) {
+									THIS_OPPONENT.path = BreadthFirst( THIS_OPPONENT.currentTile, allFloorLocations[check] )
+									break
+								}
+							}
+						}
+					}
+				}
+				else {
+					THIS_OPPONENT.target = pop_back(THIS_OPPONENT.path)
+					SetOpponentVelocity(THIS_OPPONENT, 1)
+				}
 			}
 
 			else if (THIS_OPPONENT.emotion == "anger") {
-				
+				if (THIS_OPPONENT.path.length() < 1) {
+					
+				}
+				else {
+					
+				}
 			}
 
 			else if (THIS_OPPONENT.emotion == "surprise") {
-				
+				if (THIS_OPPONENT.path.length() < 1) {
+					
+				}
+				else {
+					
+				}
 			} 
 		}
 	}
