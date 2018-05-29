@@ -1210,7 +1210,7 @@ def Patrol() {
 
 					THIS_OPPONENT.path.push_back(safeFloorLocations[ 0 ])
 					THIS_OPPONENT.path.push_back(safeFloorLocations[ topRightCorner ])
-					THIS_OPPONENT.path.push_back(safeFloorLocations[ safeFloorLOcations.length() ])
+					THIS_OPPONENT.path.push_back(safeFloorLocations[ safeFloorLocations.length() ])
 					THIS_OPPONENT.path.push_back(safeFloorLocations[ bottomLengthCorner ])
 				}
 				else {
@@ -1222,10 +1222,60 @@ def Patrol() {
 
 			else if (THIS_OPPONENT.emotion == "surprise") {
 				if (THIS_OPPONENT.path.length() < 1) {
-					
+					var roll = love.math.random( 0, safeFloorLocations.length()
+					var pickedTarget = safeFloorLocations[roll]
+					THIS_OPPONENT.path = BreadthFirst(THIS_OPPONENT.currentTile, pickedTarget)
+
+					if (dynamiteCount < surpriseCount) {
+						if (THIS_OPPONENT.orientation == "north") {
+							for [currentTile : safeFloorLocations] {
+								if ( [ THIS_OPPONENT.TILE_VERTICAL + 1, THIS_OPPONENT.TILE_HORIZONTAL] == safeFloorLocations[currentTile] ) {
+									var newDynamite = Dynamite
+									newDynamite.position = [THIS_OPPONENT.POSITION_VERTICAL + SQUARE_SIZE, THIS_OPPONENT.POSITION_HORIZONTAL]
+									newDynamite.currentTile = [THIS_OPPONENT.TILE_VERTICAL + 1, THIS_OPPONENT.TILE_HORIZONTAL]
+									hazardList.push_back(newDynamite)
+									break
+								}
+							}
+						}
+						else if (THIS_OPPONENT.orientation == "south") {
+							for [currentTile : safeFloorLocations] {
+								if ( [ THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL] == safeFloorLocations[currentTile] ) {
+									var newDynamite = Dynamite
+									newDynamite.position = [THIS_OPPONENT.POSITION_VERTICAL - SQUARE_SIZE, THIS_OPPONENT.POSITION_HORIZONTAL]
+									newDynamite.currentTile = [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL]
+									hazardList.push_back(newDynamite)
+									break
+								}
+							}
+						}
+						else if (THIS_OPPONENT.orientation == "west") {
+							for [currentTile : safeFloorLocations] {
+								if ( [ THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL + 1] == safeFloorLocations[currentTile] ) {
+									var newDynamite = Dynamite
+									newDynamite.position = [THIS_OPPONENT.POSITION_VERTICAL, THIS_OPPONENT.POSITION_HORIZONTAL + SQUARE_SIZE]
+									newDynamite.currentTile = [THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL + 1]
+									hazardList.push_back(newDynamite)
+									break
+								}
+							}
+						}
+						else if (THIS_OPPONENT.orientation == "east") {
+							for [currentTile : safeFloorLocations] {
+								if ( [ THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL - 1] == safeFloorLocations[currentTile] ) {
+									var newDynamite = Dynamite
+									newDynamite.position = [THIS_OPPONENT.POSITION_VERTICAL, THIS_OPPONENT.POSITION_HORIZONTAL - SQUARE_SIZE]
+									newDynamite.currentTile = [THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL - 1]
+									hazardList.push_back(newDynamite)
+									break
+								}
+							}
+						}
+					}
 				}
 				else {
-					
+					THIS_OPPONENT.target = pop_back(THIS_OPPONENT.path)
+					SetOpponentVelocity(THIS_OPPONENT, 1)
 				}
 			} 
 		}
