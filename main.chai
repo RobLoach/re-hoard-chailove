@@ -165,6 +165,7 @@ global opponentList = []
 global hazardList = []
 global treasureLocation = []
 global gotTreasure = false
+global knightStep = 0
 global isFireballThere = false
 global fearCount = 0
 global arrowCount = 0
@@ -1135,10 +1136,30 @@ def Patrol() {
 		if (THIS_OPPONENT.isPatrolling == true) {
 			if (THIS_OPPONENT.emotion == "knight") {
 				if (THIS_OPPONENT.path.length() < 1) {
-					
+					for (currentCell = safeFloorCells.length(), currentCell = 0, --currentCell) {
+						if ( safeFloorCells[currentCell] == [currentDungeonLength - 3, currentDungeonLength - 2] ) {
+							THIS_OPPONENT.path.push_back( [currentDungeonLength - 3, currentDungeonLength - 2] )
+						}
+						if ( safeFloorCells[currentCell] == [currentDungeonLength - 3, currentDungeonLength - 3] ) {
+							THIS_OPPONENT.path.push_back( [currentDungeonLength - 3, currentDungeonLength - 3] )
+						}
+						if ( safeFloorCells[currentCell] == [currentDungeonLength - 2, currentDungeonLength - 3] ) {
+							THIS_OPPONENT.path.push_back( [currentDungeonLength - 2, currentDungeonLength - 3] )
+						}
+					}
 				}
 				else {
-					
+					if ( knightStep <= THIS_OPPONENT.path.length() ) {
+						THIS_OPPONENT.target = THIS_OPPONENT[knightStep]
+						SetOpponentVelocity(THIS_OPPONENT, 1)
+						knightStep++
+					}
+					else {
+						var hold = THIS_OPPONENT.path[ THIS_OPPONENT.path.length() ]
+						THIS_OPPONENT.path[ THIS_OPPONENT.path.length() ] = THIS_OPPONENT.path[0]
+						THIS_OPPONENT.path = hold
+						knightStep = 1
+					}
 				}
 			}
 			else if (THIS_OPPONENT.emotion == "joy") {
@@ -1150,7 +1171,7 @@ def Patrol() {
 				else {
 					if (THIS_OPPONENT.currentTile == THIS_OPPONENT.target) {
 						THIS_OPPONENT.target = THIS_OPPONENT.path.pop_back()
-					}
+					}			SetOpponentVelocity(THIS_OPPONENT, 1)
 					SetOpponentVelocity(THIS_OPPONENT, 1)
 				}
 			}
