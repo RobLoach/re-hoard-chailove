@@ -1185,13 +1185,41 @@ def Patrol() {
 				if (THIS_OPPONENT.path.length() < 1) {
 					for [currentTile : safeFloorLocations] {
 						if ( THIS_OPPONENT.location != safeFloorLocations[currentTile] ) {
-							var check_vertical = safeFloorLocations[currentTile][0]
-							var check_horizontal = safeFloorLocations[currentTile][1]
+							var checkVertical = safeFloorLocations[currentTile][0]
+							var checkHorizontal = safeFloorLocations[currentTile][1]
 
 							for [check : allFloorLocations] {
-								if ( [check_vertical - 1, check_horizontal] == allFloorLocations[check] && [check_vertical + 1, check_horizontal] == allFloorLocations[check] && [check_vertical, check_horizontal - 1] == allFloorLocations[check] && [check_vertical, check_horizontal + 1] == allFloorLocations[check] && [check_vertical - 1, check_horizontal - 1] == allFloorLocations[check] && [check_vertical - 1, check_horizontal + 1] == allFloorLocations[check] && [check_vertical + 1, check_horizontal - 1] == allFloorLocations[check] && [check_vertical + 1, check_horizontal + 1] == allFloorLocations[check] ) {
-									THIS_OPPONENT.path = BreadthFirst( THIS_OPPONENT.currentTile, allFloorLocations[check] )
-									break
+								if ( [checkVertical - 1, checkHorizontal] == allFloorLocations[check] ) {
+									for [check : allFloorLocations] {
+										if ( [checkVertical + 1, checkHorizontal] == allFloorLocations[check] ) {
+											for [check : allFloorLocations] {
+												if ( [checkVertical, checkHorizontal - 1] == allFloorLocations[check] ) {
+													for [check : allFloorLocations] {
+														if ( [checkVertical, checkHorizontal + 1] == allFloorLocations[check] ) {
+															for [check : allFloorLocations] { 
+																if ( [checkVertical - 1, checkHorizontal - 1] == allFloorLocations[check] ) {
+																	for [check : allFloorLocations] {
+																		if ( [checkVertical - 1, checkHorizontal + 1] == allFloorLocations[check] ) {
+																			for [check : allFloorLocations] {
+																				if ( [checkVertical + 1, checkHorizontal - 1] == allFloorLocations[check] ) {
+																					for [check : allFloorLocations] {
+																						if ( [checkVertical + 1, checkHorizontal + 1] == allFloorLocations[check] ) {
+																							THIS_OPPONENT.path = BreadthFirst( THIS_OPPONENT.currentTile, allFloorLocations[check] )
+																							break
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
 								}
 							}
 						}
