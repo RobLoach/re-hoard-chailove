@@ -1156,19 +1156,19 @@ def Patrol() {
 				if (THIS_OPPONENT.path.length() < 1) {
 					THIS_OPPONENT.path.push_back(THIS_OPPONENT.position)
 					for [currentTile : safeFloorLocations] {
-						if ( [ THIS.OPPONENT.location[1], THIS_OPPONENT.location[2] - 1 ] == currentTile[safeFloorLocations] ) {
+						if ( [ THIS.OPPONENT.location[1], THIS_OPPONENT.location[2] - 1 ] == safeFloorLocations[currentTile]) {
 							THIS_OPPONENT.path.push_back(currentTile[safeFloorLocations])
 							break
 						}
-						if ( [ THIS.OPPONENT.location[1], THIS_OPPONENT.location[2] + 1 ] == currentTile[safeFloorLocations] ) {
+						if ( [ THIS.OPPONENT.location[1], THIS_OPPONENT.location[2] + 1 ] == safeFloorLocations[currentTile]) {
 							THIS_OPPONENT.path.push_back(currentTile[safeFloorLocations])
 							break
 						}
-						if ( [ THIS.OPPONENT.location[1] - 1, THIS_OPPONENT.location[2] ] == currentTile[safeFloorLocations] ) {
+						if ( [ THIS.OPPONENT.location[1] - 1, THIS_OPPONENT.location[2] ] == safeFloorLocations[currentTile]) {
 							THIS_OPPONENT.path.push_back(currentTile[safeFloorLocations])
 							break
 						}
-						if ( [ THIS.OPPONENT.location[1] + 1, THIS_OPPONENT.location[2] ] == currentTile[safeFloorLocations] ) {
+						if ( [ THIS.OPPONENT.location[1] + 1, THIS_OPPONENT.location[2] ] == safeFloorLocations[currentTile]) {
 							THIS_OPPONENT.path.push_back(currentTile[safeFloorLocations])
 							break
 						}
