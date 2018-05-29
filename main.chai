@@ -1149,16 +1149,21 @@ def Patrol() {
 					SetOpponentVelocity(THIS_OPPONENT, 1)
 				}
 			}
+
 			// Sadness stays still when "patrolling."
+
 			else if (THIS_OPPONENT.emotion == "fear") {
-				
+
 			}
+
 			else if (THIS_OPPONENT.emotion == "disgust") {
 				
 			}
+
 			else if (THIS_OPPONENT.emotion == "anger") {
 				
 			}
+
 			else if (THIS_OPPONENT.emotion == "surprise") {
 				
 			} 
