@@ -1134,7 +1134,12 @@ def Patrol() {
 	for [opponent : opponentList] {
 		if (THIS_OPPONENT.isPatrolling == true) {
 			if (THIS_OPPONENT.emotion == "knight") {
-				
+				if (THIS_OPPONENT.path.length() < 1) {
+					
+				}
+				else {
+					
+				}
 			}
 			else if (THIS_OPPONENT.emotion == "joy") {
 				if (THIS_OPPONENT.path.length() < 1) {
