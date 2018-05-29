@@ -752,6 +752,7 @@ def DidIHitAWall(me, tile) {
 	}
 }
 
+
 def SetOpponentVelocity(opponent, velocity) {
 	if ( opponent.target[HORIZONTAL_DIMENSION] < opponent.currentTile[HORIZONTAL_DIMENSION] ) {
 		opponent.horizontalMovement = -velocity
@@ -1500,6 +1501,17 @@ def StopEveryone() {
 def MoveActor(character) {
 	character.POSITION_HORIZONTAL = character.POSITION_HORIZONTAL + character.horizontalMovement
 	character.POSITION_VERTICAL = character.POSITION_VERTICAL + character.horizontalMovement
+}
+
+
+def MotionSystem() {
+	MoveActor(dragon)
+	for [opponent : opponentList] {
+		MoveActor( opponentList[opponent] )
+	}
+	for [hazard : hazardList] {
+		MoveActor( hazardList[hazard] )
+	}
 }
 
 
