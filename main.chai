@@ -1337,6 +1337,25 @@ def PatrolSystem() {
 }
 
 
+def FromPatrolToHunt() {
+	for (opponent: opponentList) {
+		if (THIS_OPPONENT.isHunting == false) {
+			if (THIS_OPPONENT.emotion == "knight" && gotTreasure == true) {
+				THIS_OPPONENT.isPatrolling = false
+				THIS_OPPONENT.isHunting = true
+			}
+		}
+
+		for (look : THIS_OPPONENT.crossOfSight) {
+			if (THIS_OPPONENT.crossOfSight == dragon.currentTile) {
+				THIS_OPPONENT.isPatrolling = false
+				THIS_OPPONENT.isHunting = true
+			}
+		}
+	}
+}
+
+
 def HuntSystem() {
 	for (opponent : opponentList) {
 		if (THIS_OPPONENT.isHunting == true) {
