@@ -153,6 +153,7 @@ global panicPhase = false
 global startup = true
 global currentLevel = 0
 global previousLevel = 0
+global highestLevel = 0
 global tries = 3
 global incrementor = (currentLevel / 2) * 2
 global currentDungeonLength = INITIAL_DUNGEON_SIZE + incrementor
@@ -171,7 +172,6 @@ global fearCount = 0
 global arrowCount = 0
 global surpriseCount = 0
 global dynamiteCount = 0
-global highestRound = 0
 
 
 //translatable variables
@@ -241,7 +241,7 @@ def Translate() {
 	if (language == "eng") {
 	sprite_titleScreen = love.graphics.newImage("sprites/title.png")
 	message_pressA = "Press A."
-	message_highestRound = "Highest Round: " + (highestRound + 1)
+	message_highestRound = "Highest Round: " + (highestLevel + 1)
 	message_currentRound = "Round " + (currentLevel + 1)
 	message_tries = "Tries: " + tries
 	message_gameOver = "Game Over"
@@ -251,7 +251,7 @@ def Translate() {
 	else if (language == "spa") {
 	sprite_titleScreen = love.graphics.newImage("sprites/title.png")
 	message_pressA = "Oprima A."
-	message_highestRound = "Ronda Más Alta: " + (highestRound + 1)
+	message_highestRound = "Ronda Más Alta: " + (highestLevel + 1)
 	message_currentRound = "Ronda " + (currentLevel + 1)
 	message_tries = "Intentos: " + tries
 	message_gameOver = "Acabó el Juego"
@@ -261,7 +261,7 @@ def Translate() {
 	else if (language == "epo") {
 	sprite_titleScreen = love.graphics.newImage("sprites/title.png")
 	message_pressA = "Premu A."
-	message_highestRound = "Plej Alta Raŭndo: " + (highestRound + 1)
+	message_highestRound = "Plej Alta Raŭndo: " + (highestLevel + 1)
 	message_currentRound = "Raŭndo " + (currentLevel + 1)
 	message_tries = "Provoj: " + tries
 	message_gameOver = "Finis la Ludo"
@@ -1835,6 +1835,14 @@ def CollideDragonWithDoor() {
 		currentMusic = love.sound.newSoundData(MUSIC_SUCCESS)
 		currentMusic.play()
 		
+		currentLevel++
+		if (currentLevel - previousLevel = 2) {
+			(previousLevel = currentLevel - 1)
+		}
+		if (currentLevel > highestRound) {
+			highestRound = currentLevel
+		}
+
 		Cleanup()
 		
 		intermissionPhase = true
@@ -1938,11 +1946,6 @@ def FailDragon() {
 		previousLevel = currentLevel()
 		intermissionRun()
 	}
-}
-
-
-def SucceedDragon() {
-
 }
 
 
