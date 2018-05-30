@@ -1173,7 +1173,7 @@ def PatrolSystem() {
 				else {
 					if (THIS_OPPONENT.currentTile == THIS_OPPONENT.target) {
 						THIS_OPPONENT.target = THIS_OPPONENT.path.pop_back()
-					}			SetOpponentVelocity(THIS_OPPONENT, 1)
+					}
 					SetOpponentVelocity(THIS_OPPONENT, 1)
 				}
 			}
@@ -1264,10 +1264,10 @@ def PatrolSystem() {
 					var topRightCorner = safeFloorLocations.length() / 2 - 1
 					var bottomLeftCorner = safeFloorLocations.length() / 2 + 1
 
-					THIS_OPPONENT.path.push_back(safeFloorLocations[ 0 ])
-					THIS_OPPONENT.path.push_back(safeFloorLocations[ topRightCorner ])
-					THIS_OPPONENT.path.push_back(safeFloorLocations[ safeFloorLocations.length() ])
-					THIS_OPPONENT.path.push_back(safeFloorLocations[ bottomLengthCorner ])
+					THIS_OPPONENT.path.push_back(safeFloorLocations[ 0 ] )
+					THIS_OPPONENT.path.push_back(safeFloorLocations[ topRightCorner ] )
+					THIS_OPPONENT.path.push_back(safeFloorLocations[ safeFloorLocations.length() ] )
+					THIS_OPPONENT.path.push_back(safeFloorLocations[ bottomLengthCorner ] )
 				}
 				else {
 					THIS_OPPONENT.target = pop_back(THIS_OPPONENT.path)
