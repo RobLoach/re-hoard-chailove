@@ -1665,7 +1665,7 @@ def CollideOpponentWithOpponent() {
 	for (permanent = 0; permanent < opponentList.length() - 1; ++permanent) {
 		for (temporary = permanent + 1; temporary < opponentList.length(); ++temporary) {
 			if ( DidICollideWithAnActor(opponentList[permanent], opponentList[temporary]) == true ) {
-				StopOpponent( THIS_OPPONENT )
+				StopOpponent( opponentList[permanent] )
 			}
 		}
 	}
