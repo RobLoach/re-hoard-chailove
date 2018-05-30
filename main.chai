@@ -1480,7 +1480,7 @@ def HuntSystem() {
 						goal = [dragon.TILE_VERTICAL, dragon.TILE_HORIZONTAL - 1]
 					}
 					else if (roll == 3) {
-						goal = [dragon.TILE_VERTICAL, dragon.TILE_HORIZONTAL - 1]
+						goal = [dragon.TILE_VERTICAL, dragon.TILE_HORIZONTAL + 1]
 					}
 
 					THIS_OPPONENT.path = BreadthFirst(THIS_OPPONENT.currentTile, goal)
