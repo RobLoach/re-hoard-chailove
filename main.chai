@@ -312,6 +312,7 @@ def IntermissionRun() {
 
 
 def gameSetup {
+
 }
 
 
@@ -1901,7 +1902,42 @@ def MotionSystem() {
 
 
 def FailDragon() {
+	normalPhase = false
+	panicPhase = false
+	currentMusic = false
+	currentMusic.play()
 	
+	if (dragon.orientation == "north") {
+		dragon.activeSprite = SPRITE_DRAGON_EMBARRASSED_UP
+	}
+	else if (dragon.orientation == "south") {
+		dragon.activeSprite = SPRITE_DRAGON_EMBARRASSED_DOWN
+	}
+	else if (dragon.orientation == "west") {
+		dragon.activeSprite = SPRITE_DRAGON_EMBARRASSED_LEFT
+	}
+	else if (dragon.orientation == "east") {
+		dragon.activeSprite = SPRITE_DRAGON_EMBARRASSED_RIGHT
+	}
+
+	currentMusic = love.sound.newSoundData(MUSIC_FAILURE)
+	currentMusic.play()
+
+	var effect = EFFECT_RETREAT
+	for (position = dragon.POSITION_HORIZONTAL; position > -9; --position) {
+		dragon.POSITION_HORIZONTAL--
+		dragon.POSITION_VERTICAL--
+		effect.play()
+	}
+
+	tries--
+	if (tries < 1) {
+		LostGame()
+	}
+	else {
+		previousLevel = currentLevel()
+		intermissionRun()
+	}
 }
 
 
