@@ -287,7 +287,7 @@ def TitleRun() {
 	if ( love.joystick[0].isDown("A") ) {
 		titlePhase = false
 		intermissionPhase = true
-		IntermissionScreen()
+		IntermissionRun()
 	}
 }
 
