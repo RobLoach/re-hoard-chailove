@@ -1337,7 +1337,66 @@ def PatrolSystem() {
 }
 
 
+def HuntSystem() {
+	for (opponent : opponentList) {
+		if (THIS_OPPONENT.isHunting == true) {
+			if (THIS_OPPONENT.emotion == "knight") {
+				if (THIS_OPPONENT.path.length() < 1) {
+					
+				}
+				else {
+					
+				}
+			}
+			else if (THIS_OPPONENT.emotion == "joy") {
+				if (THIS_OPPONENT.path.length() < 1) {
+					
+				}
+				else {
+					
+				}
+			}
 
+			// Sadness stays still when "hunting."
+
+			else if (THIS_OPPONENT.emotion == "fear") {
+				if (THIS_OPPONENT.path.length() < 1) {
+					
+				}
+				else {
+					
+				}
+			}
+
+			else if (THIS_OPPONENT.emotion == "disgust") {
+				if (THIS_OPPONENT.path.length() < 1) {
+					
+				}
+				else {
+					
+				}
+			}
+
+			else if (THIS_OPPONENT.emotion == "anger") {
+				if (THIS_OPPONENT.path.length() < 1) {
+					
+				}
+				else {
+					
+				}
+			}
+
+			else if (THIS_OPPONENT.emotion == "surprise") {
+				if (THIS_OPPONENT.path.length() < 1) {
+					
+				}
+				else {
+					
+				}
+			} 
+		}
+	}
+}
 
 
 def CollideDragonWithWall() {	
