@@ -1133,7 +1133,7 @@ def AlreadyChecked( vertical, horizontal ) {
 
 def PatrolSystem() {
 	for (opponent : opponentList) {
-		if (THIS_OPPONENT.isPatrolling == true) {
+		if (THIS_OPPONENT.isPatrolling == true && THIS_OPPONENT.isHunting == false) {
 			if (THIS_OPPONENT.emotion == "knight") {
 				if (THIS_OPPONENT.path.length() < 1) {
 					for (currentCell = safeFloorCells.length(), currentCell = 0, --currentCell) {
