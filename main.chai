@@ -1166,7 +1166,7 @@ def PatrolSystem() {
 			}
 			else if (THIS_OPPONENT.emotion == "joy") {
 				if (THIS_OPPONENT.path.length() < 1) {
-					var roll = love.math.random( 0, safeFloorLocations.length()
+					var roll = love.math.random( 0, safeFloorLocations.length() )
 					var pickedTarget = safeFloorLocations[roll]
 					THIS_OPPONENT.path = BreadthFirst(THIS_OPPONENT.currentTile, pickedTarget)
 				}
@@ -1278,7 +1278,7 @@ def PatrolSystem() {
 
 			else if (THIS_OPPONENT.emotion == "surprise") {
 				if (THIS_OPPONENT.path.length() < 1) {
-					var roll = love.math.random( 0, safeFloorLocations.length()
+					var roll = love.math.random( 0, safeFloorLocations.length() )
 					var pickedTarget = safeFloorLocations[roll]
 					THIS_OPPONENT.path = BreadthFirst(THIS_OPPONENT.currentTile, pickedTarget)
 
