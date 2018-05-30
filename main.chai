@@ -213,6 +213,7 @@ class Opponent {
 	var isHunting = false
 	var horizontalMovement
 	var verticalMovement
+	var pauseCounter = 3
 }
 
 class ArrowFire {
@@ -1134,6 +1135,7 @@ def AlreadyChecked( vertical, horizontal ) {
 def PatrolSystem() {
 	for (opponent : opponentList) {
 		if (THIS_OPPONENT.isPatrolling == true && THIS_OPPONENT.isHunting == false) {
+
 			if (THIS_OPPONENT.emotion == "knight") {
 				if (THIS_OPPONENT.path.length() < 1) {
 					for (currentCell = safeFloorCells.length(), currentCell = 0, --currentCell) {
@@ -1342,6 +1344,8 @@ def FromPatrolToHunt() {
 		if (THIS_OPPONENT.isHunting == false) {
 			if (THIS_OPPONENT.emotion == "knight" && gotTreasure == true) {
 				THIS_OPPONENT.isPatrolling = false
+				THIS_OPPONENT.target = []
+				THIS_OPPONENT.path = []
 				THIS_OPPONENT.isHunting = true
 			}
 		}
@@ -1349,6 +1353,8 @@ def FromPatrolToHunt() {
 		for (look : THIS_OPPONENT.crossOfSight) {
 			if (THIS_OPPONENT.crossOfSight == dragon.currentTile) {
 				THIS_OPPONENT.isPatrolling = false
+				THIS_OPPONENT.target = []
+				THIS_OPPONENT.path = []
 				THIS_OPPONENT.isHunting = true
 			}
 		}
@@ -1359,60 +1365,131 @@ def FromPatrolToHunt() {
 def HuntSystem() {
 	for (opponent : opponentList) {
 		if (THIS_OPPONENT.isHunting == true) {
-			if (THIS_OPPONENT.emotion == "knight") {
+
+			if (panicPhase == false) {
+				panicPhase = true
+				currentMusic = love.sound.newSoundData(MUSIC_PANIC)
+				currentMusic.play()
+			}
+
+			if (THIS_OPPONENT.emotion == "knight" || THIS_OPPONENT.emotion == "anger") {
 				if (THIS_OPPONENT.path.length() < 1) {
-					
+					THIS_OPPONENT.path = BreadthFirst(THIS_OPPONENT.currentTile, dragon.currentTile)
 				}
 				else {
-					
+					THIS_OPPONENT.target = THIS_OPPONENT.path.pop_back()
+					SetOpponentVelocity(THIS_OPPONENT, 2)
 				}
 			}
-			else if (THIS_OPPONENT.emotion == "joy") {
+
+			else if (THIS_OPPONENT.emotion == "joy" || THIS_OPPONENT.emotion == "surprise") {
 				if (THIS_OPPONENT.path.length() < 1) {
-					
+					if (THIS_OPPONENT.emotion == "surprise" && THIS_OPPONENT.pauseCounter > 0) {
+						THIS_OPPONENT.pauseCounter--
+					}
+
+					THIS_OPPONENT.path = BreadthFirst(THIS_OPPONENT.currentTile, dragon.currentTile)
 				}
 				else {
-					
+					if (THIS_OPPONENT.emotion == "surprise" && THIS_OPPONENT.pauseCounter < 0) {
+						THIS_OPPONENT.pauseCounter--
+					}
+
+					THIS_OPPONENT.target = THIS_OPPONENT.path.pop_back()
+					SetOpponentVelocity(THIS_OPPONENT, 1)
 				}
 			}
 
 			// Sadness stays still when "hunting."
 
 			else if (THIS_OPPONENT.emotion == "fear") {
-				if (THIS_OPPONENT.path.length() < 1) {
-					
+				if (THIS_OPPONENT.pauseCounter > 0) {
+					THIS_OPPONENT.pauseCount = THIS_OPPONENT.pauseCounter - 1
 				}
 				else {
-					
+					if (THIS_OPPONENT.orientation == "north") {
+						var newArrow = ArrowFire
+
+						newArrow.type = "arrow"
+						newArrow.activeSprite = SPRITE_ARROW_UP
+						newArrow.position = [ THIS_OPPONENT.POSITION_VERTICAL, THIS_OPPONENT.POSITION_HORIZONTAL - SQUARE_SIZE ]
+						newArrow.currentTile = [ THIS_OPPONENT.TILE_HORIZONTAL, THIS_OPPONENT.TILE_HORIZONTAL - 1 ]
+						newArrow.orientation = "north"
+						newArrow.horizontalMovement = 0
+						newArrow.verticalMovement = -0.4
+
+						hazardList.push_back (newArrow)
+						arrowCount++
+					}
+					else if (THIS_OPPONENT.orientation == "south") {
+						var newArrow = ArrowFire
+
+						newArrow.type = "arrow"
+						newArrow.activeSprite = SPRITE_ARROW_DOWN
+						newArrow.position = [ THIS_OPPONENT.POSITION_VERTICAL, THIS_OPPONENT.POSITION_HORIZONTAL + SQUARE_SIZE ]
+						newArrow.currentTile = [ THIS_OPPONENT.TILE_HORIZONTAL, THIS_OPPONENT.TILE_HORIZONTAL + 1 ]
+						newArrow.orientation = "south"
+						newArrow.horizontalMovement = 0
+						newArrow.verticalMovement = 0.4
+
+						hazardList.push_back (newArrow)
+						arrowCount++
+					}
+					else if (THIS_OPPONENT.orientation == "west") {
+						var newArrow = ArrowFire
+
+						newArrow.type = "arrow"
+						newArrow.activeSprite = SPRITE_ARROW_LEFT
+						newArrow.position = [ THIS_OPPONENT.POSITION_VERTICAL - SQUARE_SIZE, THIS_OPPONENT.POSITION_HORIZONTAL ]
+						newArrow.currentTile = [ THIS_OPPONENT.TILE_HORIZONTAL - 1, THIS_OPPONENT.TILE_HORIZONTAL ]
+						newArrow.orientation = "west"
+						newArrow.horizontalMovement = -0.4
+						newArrow.verticalMovement = 0
+
+						hazardList.push_back (newArrow)
+						arrowCount++
+					}
+					else if (THIS_OPPONENT.orientation == "east") {
+						var newArrow = ArrowFire
+
+						newArrow.type = "arrow"
+						newArrow.activeSprite = SPRITE_ARROW_RIGHT
+						newArrow.position = [ THIS_OPPONENT.POSITION_VERTICAL + SQUARE_SIZE, THIS_OPPONENT.POSITION_HORIZONTAL ]
+						newArrow.currentTile = [ THIS_OPPONENT.TILE_HORIZONTAL + 1, THIS_OPPONENT.TILE_HORIZONTAL ]
+						newArrow.orientation = "east"
+						newArrow.horizontalMovement = 0.4
+						newArrow.verticalMovement = 0
+
+						hazardList.push_back (newArrow)
+						arrowCount++
+					}
 				}
 			}
 
 			else if (THIS_OPPONENT.emotion == "disgust") {
 				if (THIS_OPPONENT.path.length() < 1) {
-					
+					var goal
+					var roll = love.math.random( 0, 3 )
+					if (roll == 0) {
+						goal = [dragon.TILE_VERTICAL - 1, dragon.TILE_HORIZONTAL]
+					}
+					else if (roll == 1) {
+						goal = [dragon.TILE_VERTICAL + 1, dragon.TILE_HORIZONTAL]
+					}
+					else if (roll == 2) {
+						goal = [dragon.TILE_VERTICAL, dragon.TILE_HORIZONTAL - 1]
+					}
+					else if (roll == 3) {
+						goal = [dragon.TILE_VERTICAL, dragon.TILE_HORIZONTAL - 1]
+					}
+
+					THIS_OPPONENT.path = BreadthFirst(THIS_OPPONENT.currentTile, goal)
 				}
 				else {
-					
+					THIS_OPPONENT.target = THIS_OPPONENT.path.pop_back()
+					SetOpponentVelocity(THIS_OPPONENT, 1)
 				}
 			}
-
-			else if (THIS_OPPONENT.emotion == "anger") {
-				if (THIS_OPPONENT.path.length() < 1) {
-					
-				}
-				else {
-					
-				}
-			}
-
-			else if (THIS_OPPONENT.emotion == "surprise") {
-				if (THIS_OPPONENT.path.length() < 1) {
-					
-				}
-				else {
-					
-				}
-			} 
 		}
 	}
 }
