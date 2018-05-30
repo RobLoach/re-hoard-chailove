@@ -1495,6 +1495,25 @@ def HuntSystem() {
 }
 
 
+def FromHuntToPatrol() {
+	if (paincPhase == true) {
+		var calm = true
+
+		for (opponent: opponentList) {
+			if (THIS_OPPONENT.isHunting == true) {
+				calm = false
+			}
+		}
+
+		if (calm == true) {
+			panicPhase = false
+			currentMusic = love.sound.newSoundData(MUSIC_GAMEPLAY_NOINTRO)
+			currentMusic.play()
+		}
+	}
+}
+
+
 def CollideDragonWithWall() {	
 	var dragonVertical = dragon.TILE_VERTICAL
 	var dragonHorizontal = dragon.TILE_HORIZONTAL
