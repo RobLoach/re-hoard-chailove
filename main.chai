@@ -1839,8 +1839,8 @@ def CollideDragonWithDoor() {
 		if (currentLevel - previousLevel = 2) {
 			(previousLevel = currentLevel - 1)
 		}
-		if (currentLevel > highestRound) {
-			highestRound = currentLevel
+		if (currentLevel > highestLevel) {
+			highestLevel = currentLevel
 		}
 
 		Cleanup()
