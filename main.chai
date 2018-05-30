@@ -1513,6 +1513,81 @@ def FromHuntToPatrol() {
 	}
 }
 
+def FightProtocol() {
+	for (opponents: opponentList) {
+		var closeToDragon = false
+
+		if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL + 1]) {
+			var closeToDragon = true
+		}
+		if (THIS_OPPONENT.emotion == "sadness") {
+			if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL + 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL + 1]) {
+				var closeToDragon = true
+			}	
+		}
+		if (THIS_OPPONENT.emotion == "disgust") {
+			if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 2][THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 2][THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL - 2] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL + 2]) {
+			var closeToDragon = true
+		}
+
+		if (closeToDragon == true) {
+			AttackDragon(THIS_OPPONENT)
+		}
+	}
+}
+
+
+def AttackDragon(opponent) {
+	if (opponent.emotion == "knight") {
+		opponent.sprite = SPRITE_KNIGHT_ATTACK
+		var effect = love.sound.newSoundData(EFFECT_SLICE)
+		effect.play()
+	}
+	
+	else if (opponent.emotion == "joy") {
+		opponent.sprite = SPRITE_JOY_ATTACK
+		var effect = love.sound.newSoundData(EFFECT_BUMP)
+		effect.play()
+	}
+	
+	else if (opponent.emotion == "sadness") {
+		opponent.sprite = SPRITE_SADNESS_ATTACK
+		var effect = love.sound.newSoundData(EFFECT_SLICE)
+		effect.play()
+	}
+	
+	else if (opponent.emotion == "fear") {
+		opponent.sprite = SPRITE_FEAR_ATTACK
+		var effect = love.sound.newSoundData(EFFECT_PIERCE)
+		effect.play()
+	}
+	
+	else if (opponent.emotion == "anger") {
+		opponent.sprite = SPRITE_ANGER_ATTACK
+		var effect = love.sound.newSoundData(EFFECT_SLICE)
+		effect.play()
+	}
+	
+	else if (opponent.emotion == "surprise") {
+		opponent.sprite = SPRITE_SURPRISE_ATTACK
+		var effect = love.sound.newSoundData(EFFECT_EXPLODE)
+		effect.play()
+	}
+	
+	else if (opponent.emotion == "disgust") {
+		if (dragon.POSITION_VERTICAL < opponent.POSITION_VERTICAL || dragon.POSITION_VERTICAL > opponent.POSITION_VERTICAL) {
+			THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_VERTICAL
+		}
+		else {
+			THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_HORIZONTAL
+		}
+		var effect = love.sound.newSoundData(EFFECT_PIERCE)
+		effect.play()
+	}
+
+	FailDragon()
+}
+
 
 def CollideDragonWithWall() {	
 	var dragonVertical = dragon.TILE_VERTICAL
@@ -1577,64 +1652,11 @@ def CollideOpponentWithWall() {
 
 
 def CollideOpponentWithDragon() {
-	var hasCollided = false
-	
 	for (opponent : opponentList) {
 		if ( DidICollideWithAnActor(THIS_OPPONENT, dragon) == true ) {
-			hasCollided = true
-			if (THIS_OPPONENT.emotion == "knight") {
-				THIS_OPPONENT.sprite = SPRITE_KNIGHT_ATTACK
-				var effect = love.sound.newSoundData(EFFECT_SLICE)
-				effect.play()
-			}
-			
-			else if (THIS_OPPONENT.emotion == "joy") {
-				THIS_OPPONENT.sprite = SPRITE_JOY_ATTACK
-				var effect = love.sound.newSoundData(EFFECT_BUMP)
-				effect.play()
-			}
-			
-			else if (THIS_OPPONENT.emotion == "sadness") {
-				THIS_OPPONENT.sprite = SPRITE_SADNESS_ATTACK
-				var effect = love.sound.newSoundData(EFFECT_SLICE)
-				effect.play()
-			}
-			
-			else if (THIS_OPPONENT.emotion == "fear") {
-				THIS_OPPONENT.sprite = SPRITE_FEAR_ATTACK
-				var effect = love.sound.newSoundData(EFFECT_PIERCE)
-				effect.play()
-			}
-			
-			else if (THIS_OPPONENT.emotion == "anger") {
-				THIS_OPPONENT.sprite = SPRITE_ANGER_ATTACK
-				var effect = love.sound.newSoundData(EFFECT_SLICE)
-				effect.play()
-			}
-			
-			else if (THIS_OPPONENT.emotion == "surprise") {
-				THIS_OPPONENT.sprite = SPRITE_SURPRISE_ATTACK
-				var effect = love.sound.newSoundData(EFFECT_EXPLODE)
-				effect.play()
-			}
-			
-			else if (THIS_OPPONENT.emotion == "disgust") {
-				if (dragon.POSITION_VERTICAL < THIS_OPPONENT.POSITION_VERTICAL || dragon.POSITION_VERTICAL > THIS_OPPONENT.POSITION_VERTICAL) {
-					THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_VERTICAL
-				}
-				else {
-					THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_HORIZONTAL
-				}
-				var effect = love.sound.newSoundData(EFFECT_PIERCE)
-				effect.play()
-			}
-			
+			AttackDragon(THIS_OPPONENT)
 			break
 		}
-	}
-	
-	if (hasCollided == true) {
-		FailDragon()
 	}
 }
 
