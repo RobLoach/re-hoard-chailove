@@ -1575,12 +1575,28 @@ def AttackDragon(opponent) {
 	}
 	
 	else if (opponent.emotion == "disgust") {
-		if (dragon.POSITION_VERTICAL < opponent.POSITION_VERTICAL || dragon.POSITION_VERTICAL > opponent.POSITION_VERTICAL) {
+		var lance
+		if (dragon.POSITION_VERTICAL < opponent.POSITION_VERTICAL {	
 			THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_VERTICAL
+			lance = SPRITE_LANCE_UP
+			love.graphics.draw(lance, opponent.POSITION_HORIZONTAL, opponent.POSITION_VERTICAL - SQUARE_SIZE)
 		}
-		else {
+		else if (dragon.POSITION_VERTICAL > opponent.POSITION_VERTICAL) {
+			THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_VERTICAL
+			lance = SPRITE_LANCE_DOWN
+			love.graphics.draw(lance, opponent.POSITION_HORIZONTAL, opponent.POSITION_VERTICAL + SQUARE_SIZE)
+		}
+		else if (dragon.POSITION_HORIZONTAL < opponent.POSITION_HORIZONTAL {
 			THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_HORIZONTAL
+			lance = SPRITE_LANCE_LEFT
+			love.graphics.draw(lance, opponent.POSITION_HORIZONTAL - SQUARE_SIZE, opponent.POSITION_VERTICAL)
 		}
+		else if (dragon.POSITION_HORIZONTAL > opponent.POSITION_HORIZONTAL) {
+			THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_HORIZONTAL
+			lance = SPRITE_LANCE_RIGHT
+			love.graphics.draw(lance, opponent.POSITION_HORIZONTAL + SQUARE_SIZE, opponent.POSITION_VERTICAL)
+		}
+		
 		var effect = love.sound.newSoundData(EFFECT_PIERCE)
 		effect.play()
 	}
