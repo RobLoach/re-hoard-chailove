@@ -1996,9 +1996,22 @@ def load() {
 def draw() {
 	love.graphics.print("The code still works!", 100, 100)
 	
-	/*DrawDungeon()
-	DrawEnvironment()
-	DrawActors()*/
+	/*
+	if (titlePhase == true) {
+		TitleScreen()
+	}
+	else if (intermissionPhase == true) {
+		IntermissionScreen()
+	}
+	else if (setupPhase == true) {
+		love.graphics.clear()
+	}
+	else if (normalPhase == true or panicPhase == true) {
+		DrawDungeon()
+		DrawEnvironment()
+		DrawActors()
+	}	
+	*/
 }
 
 def update(dt) {
