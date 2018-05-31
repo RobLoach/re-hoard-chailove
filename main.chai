@@ -175,7 +175,7 @@ global dynamiteCount = 0
 
 
 //translatable variables
-global language
+global language == "eng"
 global sprite_titleScreen
 global message_copyright = "Tinglar 2017‒2018"
 global message_pressA
@@ -311,7 +311,7 @@ def IntermissionRun() {
 }
 
 
-def SetupGame {
+def SetupGame() {
 	DungeonStructure()
 	LayOutDungeon()
 	CollectFloorCells()
@@ -2016,5 +2016,17 @@ def draw() {
 
 def update(dt) {
 	/*
+	if (titlePhase == true) {
+		TitleRun()
+	}
+	else if (intermissionPhase == true) {
+		IntermissionRun()
+	}
+	else if (setupPhase == true) {
+		SetupGame()
+	}
+	else if (normalPhase == true or panicPhase == true) {
+		RunGameplay()
+	}	
 	*/
 }
