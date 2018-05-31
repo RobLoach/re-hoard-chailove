@@ -306,13 +306,18 @@ def IntermissionRun() {
 	if ( love.joystick[0].isDown("A") ) {
 		intermissionPhase = false
 		setupPhase = true
-		GameSetup()
+		SetupGame()
 	}
 }
 
 
-def gameSetup {
-
+def SetupGame {
+	DungeonStructure()
+	LayOutDungeon()
+	CollectFloorCells()
+	CollectOpponentSetupCells()
+	PopulateDungeon()
+	RunGameplay()
 }
 
 
@@ -329,7 +334,7 @@ def DungeonStructure() {
 	}
 }
 
-def PlanDungeon() {
+def LayOutDungeon() {
 	var horizontal = ( love.math.random(1, currentDungeonLength) ) + 1
 	var vertical = ( love.math.random(1, currentDungeonLength) ) + 1
 	
@@ -430,6 +435,46 @@ def CollectOpponentSetupCells() {
 }
 
 
+def PopulateDungeon() {
+	global dragon = Player()
+	opponentList[0] = Opponent()
+	opponentList[0].emotion = "knight"
+	opponentList[0].activeSprite = SPRITE_KNIGHT_WALK1
+	opponentList[0].position = PlaceKnight()
+	opponentList[0].orientation = "north"
+	
+	for (opponent = 1; opponent < currentDungeonLength / 3 + 1; ++opponent) {
+		THIS_OPPONENT = Opponent()
+		THIS_OPPONENT.emotion = GenerateEmotion()
+		InitializeSubordinateSprite(THIS_OPPONENT)
+		THIS_OPPONENT.position = PlaceSubordinate()
+		THIS_OPPONENT.orientation = "north"
+	}
+}
+
+
+def PlaceKnight() {
+	var position = opponentSetupFloorLocations.pop_back()
+	position[HORIZONTAL_DIMENSION] = position[HORIZONTAL_DIMENSION] * 8
+	position[VERTICAL_DIMENSION] = position[VERTICAL_DIMENSION] * 8
+	return position
+}
+
+
+def PlaceSubordinate() {
+	var roll = love.math.random(0, opponentSetupFloorLocations.length() - 1)
+	
+	var basin = opponentSetupFloorLocations[roll]
+	opponentSetupFloorLocations[roll] = opponentSetupFloorLocations[opponentSetupFloorLocations.length() - 1]
+	opponentSetupFloorLocations[opponentSetupFloorLocations.length() - 1] = basin
+	
+	var position = opponentSetupFloorLocations.pop_back()
+	position[HORIZONTAL_DIMENSION] = position[HORIZONTAL_DIMENSION] * 8
+	position[VERTICAL_DIMENSION] = position[VERTICAL_DIMENSION] * 8
+	return position
+}
+
+
 def GenerateEmotion() {
 	var roll = love.math.random(0, 5)
 	
@@ -478,48 +523,25 @@ def InitializeSubordinateSprite(opponent) {
 }
 
 
-def PlaceKnight() {
-	var position = opponentSetupFloorLocations.pop_back()
-	position[HORIZONTAL_DIMENSION] = position[HORIZONTAL_DIMENSION] * 8
-	position[VERTICAL_DIMENSION] = position[VERTICAL_DIMENSION] * 8
-	return position
-}
-
-
-def PlaceSubordinate() {
-	var roll = love.math.random(0, opponentSetupFloorLocations.length() - 1)
-	
-	var basin = opponentSetupFloorLocations[roll]
-	opponentSetupFloorLocations[roll] = opponentSetupFloorLocations[opponentSetupFloorLocations.length() - 1]
-	opponentSetupFloorLocations[opponentSetupFloorLocations.length() - 1] = basin
-	
-	var position = opponentSetupFloorLocations.pop_back()
-	position[HORIZONTAL_DIMENSION] = position[HORIZONTAL_DIMENSION] * 8
-	position[VERTICAL_DIMENSION] = position[VERTICAL_DIMENSION] * 8
-	return position
-}
-
-
-def Populate() {
-	global dragon = Player()
-	opponentList[0] = Opponent()
-	opponentList[0].emotion = "knight"
-	opponentList[0].activeSprite = SPRITE_KNIGHT_WALK1
-	opponentList[0].position = PlaceKnight()
-	opponentList[0].orientation = "north"
-	
-	for (opponent = 1; opponent < currentDungeonLength / 3 + 1; ++opponent) {
-		THIS_OPPONENT = Opponent()
-		THIS_OPPONENT.emotion = GenerateEmotion()
-		InitializeSubordinateSprite( THIS_OPPONENT )
-		THIS_OPPONENT.position = PlaceSubordinate()
-		THIS_OPPONENT.orientation = "north"
-	}
-}
-
-
 def RunGameplay() {
-	
+	TileSystem() //Should this function be relocated? If so, where?
+	SetCollisionWorld()
+	SetOrientation()
+	CountDownDynamite()
+	ExplodeDynamite()
+	ClearDynamite()
+	CollectSafeCells()
+	SetCrossOfSight()
+	ControlDragon()
+	SetCurrentDragonSprite()
+	SetCurrentOpponentSprite()
+	PatrolSystem()
+	FromPatrolToHunt()
+	HuntSystem()
+	FromHuntToPatrol()
+	FightProtocol()
+	CollisionSystem()
+	MotionSystem()
 }
 
 
@@ -531,7 +553,18 @@ def SetCurrentTile(actor) {
 }
 
 
-def SetCollisionWorld () {
+def TileSystem() {
+	SetCurrentTile(dragon)
+	for (opponent : opponentList) {
+		SetCurrentTile(THIS_OPPONENT)
+	}
+	for (hazard : hazardList) {
+		SetCurrentTile(THIS_HAZARD)
+	}
+}
+
+
+def SetCollisionWorld() {
 	collisionWorld = []
 
 	for (var iterator = 0; iterator < dungeon.length(); ++iterator) {
@@ -596,7 +629,6 @@ def ClearDynamite() {
 		if (THIS_HAZARD.type == "dynamite") {
 			if (THIS_HAZARD.explosionCount < DYNAMITE_ERASURE_POINT) {
 				EraseHazard(hazard)
-				dynamiteCount--
 			}
 		}
 	}
@@ -606,6 +638,9 @@ def ClearDynamite() {
 def EraseHazard(hazard) {
 	if (THIS_HAZARD.type == "arrow") {
 		arrowCount--
+	}
+	else if (THIS_HAZARD.type == "dynamite") {
+		dynamiteCount--
 	}
 	else if (THIS_HAZARD.type == "fire") {
 		isFireballThere = false
@@ -832,16 +867,6 @@ def ControlDragon() {
 			}
 		}
 	}
-}
-
-
-def Cleanup() {
-
-}
-
-
-def HurtOpponent(opponent) {
-
 }
 
 
@@ -1119,18 +1144,6 @@ def BreadthFirst(startCell, endCell) {
 
 	return visitedCells
 }
-
-
-def AlreadyChecked( vertical, horizontal ) {
-	for (item : frontier) {
-		// TODO: Do something with item.
-		if ( [vertical, horizontal] ) {
-			return true
-		}
-	}
-	return false
-}
-
 
 
 def PatrolSystem() {
@@ -1850,7 +1863,7 @@ def CollideDragonWithDoor() {
 }
 
 
-def CheckAllCollisions() {
+def CollisionSystem() {
 	CollideDragonWithWall()
 	CollideOpponentWithWall()
 	CollideOpponentWithDragon()
@@ -1910,6 +1923,7 @@ def MotionSystem() {
 
 
 def FailDragon() {
+	StopEveryone()
 	normalPhase = false
 	panicPhase = false
 	currentMusic = false
@@ -1944,6 +1958,7 @@ def FailDragon() {
 	}
 	else {
 		previousLevel = currentLevel()
+		ReturnToYourPlaces()
 		intermissionRun()
 	}
 }
@@ -1980,8 +1995,13 @@ def load() {
 
 def draw() {
 	love.graphics.print("The code still works!", 100, 100)
+	
+	/*DrawDungeon()
+	DrawEnvironment()
+	DrawActors()*/
 }
 
 def update(dt) {
-
+	/*
+	*/
 }
