@@ -1965,8 +1965,8 @@ def FailDragon() {
 
 
 def LostGame() {
-	normal_phase = false
-	panic_phase = false
+	normalPhase = false
+	panicPhase = false
 	love.graphics.clear()
 	love.graphics.print(message_gameOver, 50, 42)
 	love.graphics.print(message_finalRound, 48, 84)
@@ -1976,7 +1976,7 @@ def LostGame() {
 	
 	if ( love.joystick[0].isDown("A") ) {
 		love.graphics.clear()
-		title_phase = true
+		titlePhase = true
 		TitleRun()
 	}
 }
