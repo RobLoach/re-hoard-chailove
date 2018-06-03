@@ -23,7 +23,7 @@ global TILE_VERTICAL = currentTile[VERTICAL_DIMENSION]
 global TILE_HORIZONTAL = currentTile[HORIZONTAL_DIMENSION]
 global POSITION_VERTICAL = position[VERTICAL_DIMENSION]
 global POSITION_HORIZONTAL = position[HORIZONTAL_DIMENSION]
-global CORNERS = [ 
+global CORNERS = [
 	[0, -2],	//north
 	[2, 0],		//east
 	[-2, 0],	//west
@@ -33,115 +33,6 @@ global DYNAMITE_EXPLOSION_POINT = 0
 global DYNAMITE_ERASURE_POINT = -4
 global THIS_OPPONENT = opponentList[opponent]
 global THIS_HAZARD = hazardList[hazard]
-
-//asset constants
-global SPRITE_FLAG_ENG = love.graphics.newImage("sprites/flag_unitedstatesofamerica.png")
-global SPRITE_FLAG_SPA = love.graphics.newImage("sprites/flag_puertorico.png")
-global SPRITE_FLAG_EPO = love.graphics.newImage("sprites/flag_esperanto.png")
-global SPRITE_SELECT = love.graphics.newImage("sprites/select.png")
-
-global SPRITE_WALL = love.graphics.newImage("sprites/wall.png")
-global SPRITE_FLOOR = love.graphics.newImage("sprites/floor.png")
-global SPRITE_DOOR_CLOSED = love.graphics.newImage("sprites/door_closed.png")
-global SPRITE_DOOR_OPEN = love.graphics.newImage("sprites/door_open.png")
-global SPRITE_TREASURE_CLOSED = love.graphics.newImage("sprites/treasure_closed.png")
-global SPRITE_TREASURE_OPEN = love.graphics.newImage("sprites/treasure_open.png")
-
-global SPRITE_DRAGON_FLY1_LEFT = love.graphics.newImage("sprites/dragon_fly_left_1.png")
-global SPRITE_DRAGON_FLY2_LEFT = love.graphics.newImage("sprites/dragon_fly_left_2.png")
-global SPRITE_DRAGON_FLY1_RIGHT = love.graphics.newImage("sprites/dragon_fly_right_1.png")
-global SPRITE_DRAGON_FLY2_RIGHT = love.graphics.newImage("sprites/dragon_fly_right_2.png")
-global SPRITE_DRAGON_FLY1_UP = love.graphics.newImage("sprites/dragon_fly_up_1.png")
-global SPRITE_DRAGON_FLY2_UP = love.graphics.newImage("sprites/dragon_fly_up_2.png")
-global SPRITE_DRAGON_FLY1_DOWN = love.graphics.newImage("sprites/dragon_fly_down_1.png")
-global SPRITE_DRAGON_FLY2_DOWN = love.graphics.newImage("sprites/dragon_fly_down_2.png")
-global SPRITE_DRAGON_FIRE_LEFT = love.graphics.newImage("sprites/dragon_fire_left.png")
-global SPRITE_DRAGON_FIRE_RIGHT = love.graphics.newImage("sprites/dragon_fire_right.png")
-global SPRITE_DRAGON_FIRE_UP = love.graphics.newImage("sprites/dragon_fire_up.png")
-global SPRITE_DRAGON_FIRE_DOWN = love.graphics.newImage("sprites/dragon_fire_down.png")
-global SPRITE_DRAGON_EMBARRASSED_LEFT = love.graphics.newImage("sprites/dragon_embarrassed_left.png")
-global SPRITE_DRAGON_EMBARRASSED_RIGHT = love.graphics.newImage("sprites/dragon_embarrassed_right.png")
-global SPRITE_DRAGON_EMBARRASSED_UP = love.graphics.newImage("sprites/dragon_embarrassed_up.png")
-global SPRITE_DRAGON_EMBARRASSED_DOWN = love.graphics.newImage("sprites/dragon_embarrassed_down.png")
-global SPRITE_FIREBALL_LEFT = love.graphics.newImage("sprites/flame_left.png")
-global SPRITE_FIREBALL_RIGHT = love.graphics.newImage("sprites/flame_right.png")
-global SPRITE_FIREBALL_UP = love.graphics.newImage("sprites/flame_up.png")
-global SPRITE_FIREBALL_DOWN = love.graphics.newImage("sprites/flame_down.png")
-global SPRITE_KNIGHT_WALK1 = love.graphics.newImage("sprites/knight_patrol_1.png")
-global SPRITE_KNIGHT_WALK2 = love.graphics.newImage("sprites/knight_patrol_2.png")
-global SPRITE_KNIGHT_HUNT1 = love.graphics.newImage("sprites/knight_hunt_1.png")
-global SPRITE_KNIGHT_HUNT2 = love.graphics.newImage("sprites/knight_hunt_2.png")
-global SPRITE_KNIGHT_ATTACK = love.graphics.newImage("sprites/knight_fight.png")
-global SPRITE_KNIGHT_IS_HURT = love.graphics.newImage("sprites/knight_hurt.png")
-global SPRITE_JOY_WALK1 = love.graphics.newImage("sprites/joy_patrol_1.png")
-global SPRITE_JOY_WALK2 = love.graphics.newImage("sprites/joy_patrol_2.png")
-global SPRITE_JOY_HUNT1 = love.graphics.newImage("sprites/joy_hunt_1.png")
-global SPRITE_JOY_HUNT2 = love.graphics.newImage("sprites/joy_hunt_2.png")
-global SPRITE_JOY_ATTACK = love.graphics.newImage("sprites/joy_fight.png")
-global SPRITE_JOY_IS_HURT = love.graphics.newImage("sprites/joy_hurt.png")
-global SPRITE_SADNESS_WALK1 = love.graphics.newImage("sprites/sadness_patrol_1.png")
-global SPRITE_SADNESS_WALK2 = love.graphics.newImage("sprites/sadness_patrol_2.png")
-global SPRITE_SADNESS_HUNT1 = love.graphics.newImage("sprites/sadness_hunt_1.png")
-global SPRITE_SADNESS_HUNT2 = love.graphics.newImage("sprites/sadness_hunt_2.png")
-global SPRITE_SADNESS_ATTACK = love.graphics.newImage("sprites/sadness_fight.png")
-global SPRITE_SADNESS_IS_HURT = love.graphics.newImage("sprites/sadness_hurt.png")
-global SPRITE_FEAR_WALK1 = love.graphics.newImage("sprites/fear_patrol_1.png")
-global SPRITE_FEAR_WALK2 = love.graphics.newImage("sprites/fear_patrol_2.png")
-global SPRITE_FEAR_HUNT1 = love.graphics.newImage("sprites/fear_hunt_1.png")
-global SPRITE_FEAR_HUNT2 = love.graphics.newImage("sprites/fear_hunt_2.png")
-global SPRITE_FEAR_ATTACK = love.graphics.newImage("sprites/fear_fight.png")
-global SPRITE_FEAR_IS_HURT = love.graphics.newImage("sprites/fear_hurt.png")
-global SPRITE_DISGUST_WALK1 = love.graphics.newImage("sprites/disgust_patrol_1.png")
-global SPRITE_DISGUST_WALK2 = love.graphics.newImage("sprites/disgust_patrol_2.png")
-global SPRITE_DISGUST_HUNT1 = love.graphics.newImage("sprites/disgust_hunt_1.png")
-global SPRITE_DISGUST_HUNT2 = love.graphics.newImage("sprites/disgust_hunt_2.png")
-global SPRITE_DISGUST_ATTACK_HORIZONTAL = love.graphics.newImage("sprites/disgust_fight_horizontal.png")
-global SPRITE_DISGUST_ATTACK_VERTICAL = love.graphics.newImage("sprites/disgust_fight_vertical.png")
-global SPRITE_DISGUST_IS_HURT = love.graphics.newImage("sprites/disgust_hurt.png")
-global SPRITE_ANGER_WALK1 = love.graphics.newImage("sprites/anger_patrol_1.png")
-global SPRITE_ANGER_WALK2 = love.graphics.newImage("sprites/anger_patrol_2.png")
-global SPRITE_ANGER_HUNT1 = love.graphics.newImage("sprites/anger_hunt_1.png")
-global SPRITE_ANGER_HUNT2 = love.graphics.newImage("sprites/anger_hunt_2.png")
-global SPRITE_ANGER_ATTACK = love.graphics.newImage("sprites/anger_fight.png")
-global SPRITE_ANGER_IS_HURT = love.graphics.newImage("sprites/anger_hurt.png")
-global SPRITE_SURPRISE_WALK1 = love.graphics.newImage("sprites/surprise_patrol_1.png")
-global SPRITE_SURPRISE_WALK2 = love.graphics.newImage("sprites/surprise_patrol_2.png")
-global SPRITE_SURPRISE_HUNT1 = love.graphics.newImage("sprites/surprise_hunt_1.png")
-global SPRITE_SURPRISE_HUNT2 = love.graphics.newImage("sprites/surprise_hunt_2.png")
-global SPRITE_SURPRISE_ATTACK = love.graphics.newImage("sprites/surprise_fight.png")
-global SPRITE_SURPRISE_IS_HURT = love.graphics.newImage("sprites/surprise_hurt.png")
-global SPRITE_ARROW_LEFT = love.graphics.newImage("sprites/arrow_left.png")
-global SPRITE_ARROW_RIGHT = love.graphics.newImage("sprites/arrow_right.png")
-global SPRITE_ARROW_UP = love.graphics.newImage("sprites/arrow_up.png")
-global SPRITE_ARROW_DOWN = love.graphics.newImage("sprites/arrow_down.png")
-global SPRITE_LANCE_LEFT = love.graphics.newImage("sprites/lance_left.png")
-global SPRITE_LANCE_RIGHT = love.graphics.newImage("sprites/lance_right.png")
-global SPRITE_LANCE_UP = love.graphics.newImage("sprites/lance_up.png")
-global SPRITE_LANCE_DOWN = love.graphics.newImage("sprites/lance_down.png")
-global SPRITE_DYNAMITE_OFF = love.graphics.newImage("sprites/dynamite_set.png")
-global SPRITE_DYNAMITE_ON = love.graphics.newImage("sprites/dynamite_exploded.png")
-global SPRITE_WARP1 = love.graphics.newImage("sprites/warp_1.png")
-global SPRITE_WARP2 = love.graphics.newImage("sprites/warp_2.png")
-
-global MUSIC_TITLE = love.sound.newSoundData("sounds/title.wav")
-global MUSIC_GAMEPLAY_HASINTRO = love.sound.newSoundData("sounds/fullgameplay.wav")
-global MUSIC_GAMEPLAY_NOINTRO = love.sound.newSoundData("sounds/gameplay.wav")
-global MUSIC_PANIC = love.sound.newSoundData("sounds/panic.wav")
-global MUSIC_FAILURE = love.sound.newSoundData("sounds/fail.wav")
-global MUSIC_SUCCESS = love.sound.newSoundData("sounds/succeed.wav")
-global MUSIC_GAMEOVER = love.sound.newSoundData("sounds/lose.wav")
-
-global EFFECT_BUMP = love.sound.newSoundData("sounds/s_bump.wav")
-global EFFECT_SLICE = love.sound.newSoundData("sounds/s_slice.wav")
-global EFFECT_PIERCE = love.sound.newSoundData("sounds/s_pierce.wav")
-global EFFECT_EXPLODE = love.sound.newSoundData("sounds/s_explode.wav")
-global EFFECT_RETREAT = love.sound.newSoundData("sounds/s_retreat.wav")
-global EFFECT_FIRE_BREATHE = love.sound.newSoundData("sounds/s_fire.wav")
-global EFFECT_FIRE_HIT = love.sound.newSoundData("sounds/s_fire_hit.wav")
-global EFFECT_WARP = love.sound.newSoundData("sounds/s_warp.wav")
-global EFFECT_BLOCKED_FIRE = love.sound.newSoundData("sounds/s_blocked_fire.wav")
-global EFFECT_GOT_TREASURE = love.sound.newSoundData("sounds/s_treasure.wav")
-
 
 //internal variables
 global currentMusic
@@ -190,48 +81,36 @@ global message_finalRound
 /* data structures */
 
 //classes
-class Player {
-	var activeSprite = SPRITE_DRAGON_FLY1_DOWN
-	var position = [8, 8]
-	var currentTile = [1, 1]
-	var orientation = "south"
-	var isHurt = false
-	var horizontalMovement = 0
-	var verticalMovement = 0
-}
-
-class Opponent {
-	var emotion
-	var activeSprite
-	var position = []
-	var currentTile = []
-	var orientation
-	var crossOfSight = []
-	var target = []
-	var path = []
-	var isPatrolling = false
-	var isHunting = false
-	var horizontalMovement
-	var verticalMovement
-	var pauseCounter = 3
-}
 
 class ArrowFire {
 	var type
 	var activeSprite
-	var position = []
-	var currentTile = []
+	var position
+	var currentTile
 	var orientation
 	var horizontalMovement
 	var verticalMovement
+
+	def ArrowFire() {
+		this.position = []
+		this.currentTile = []
+	}
 }
 
 class Dynamite {
-	var type = "dynamite"
-	var activeSprite = SPRITE_DYNAMITE_OFF
-	var position = []
-	var currentTile = []
-	var explosionCount = love.math.random(4, 20)
+	var type
+	var activeSprite
+	var position
+	var currentTile
+	var explosionCount
+
+	def Dynamite() {
+		this.type = "dynamite"
+		this.activeSprite = SPRITE_DYNAMITE_OFF
+		this.position = []
+		this.currentTile = []
+		this.explosionCount = love.math.random(4, 20)
+	}
 }
 
 
@@ -247,7 +126,7 @@ def Translate() {
 	message_gameOver = "Game Over"
 	message_finalRound = "Final Round: " + (currentLevel + 1)
 	}
-	
+
 	else if (language == "spa") {
 	sprite_titleScreen = love.graphics.newImage("sprites/title.png")
 	message_pressA = "Oprima A."
@@ -257,7 +136,7 @@ def Translate() {
 	message_gameOver = "Acabó el Juego"
 	message_finalRound = "Última Ronda: " + (currentLevel + 1)
 	}
-	
+
 	else if (language == "epo") {
 	sprite_titleScreen = love.graphics.newImage("sprites/title.png")
 	message_pressA = "Premu A."
@@ -267,7 +146,7 @@ def Translate() {
 	message_gameOver = "Finis la Ludo"
 	message_finalRound = "Fina Raŭndo: " + (currentLevel + 1)
 	}
-	
+
 }
 
 
@@ -283,7 +162,7 @@ def TitleScreen() {
 def TitleRun() {
 	currentMusic = love.sound.newSoundData(MUSIC_TITLE)
 	currentMusic.play()
-	
+
 	if ( love.joystick[0].isDown("A") ) {
 		titlePhase = false
 		intermissionPhase = true
@@ -302,7 +181,7 @@ def IntermissionScreen() {
 def IntermissionRun() {
 	currentMusic = false
 	currentMusic.play()
-	
+
 	if ( love.joystick[0].isDown("A") ) {
 		intermissionPhase = false
 		setupPhase = true
@@ -322,7 +201,7 @@ def SetupGame() {
 
 
 def Average(a, b) {
-	return (a + b) / 2 
+	return (a + b) / 2
 }
 
 
@@ -337,24 +216,24 @@ def DungeonStructure() {
 def LayOutDungeon() {
 	var horizontal = ( love.math.random(1, currentDungeonLength) ) + 1
 	var vertical = ( love.math.random(1, currentDungeonLength) ) + 1
-	
+
 	if (horizontal % 2 == 1) {
 		if (horizontal == currentDungeonLength) {
 			horizontal = currentDungeonLength - 1
 			}
 		else {
-			horizontal++
+			horizontal = horizontal + 1
 		}
-	}	
+	}
 	if (vertical % 2 == 1) {
 		if (vertical == currentDungeonLength) {
 			vertical = currentDungeonLength - 1
 			}
 		else {
-			vertical++
+			vertical = vertical + 1
 		}
 	}
-	
+
 	WalkDungeon(horizontal, vertical)
 	DemolishDungeon(currentDungeonLength, currentDungeonLength)
 }
@@ -373,7 +252,7 @@ def Shuffle(queue) {
 def WalkDungeonWalk(width, height) {
 	dungeon[height][width] = FLOOR_CELL
 	var directions = [1, 2, 3, 4]
-	
+
 	Shuffle(directions)
 	for (var index : directions) {
 		var horizontal = width + corners[index][0]
@@ -387,15 +266,15 @@ def WalkDungeonWalk(width, height) {
 
 def DemolishDungeon(width, height) {
 	var demolitionForce = 0
-	
+
 	for (var vertical = 1; vertical < height - 2; ++vertical) {
 		for (var horizontal = 1; horizontal < width - 2; ++horizontal) {
 			demolitionForce = love.math.random(0.0, 1.0)
-			if demolitionForce >= WALL_STRENGTH {
+			if (demolitionForce >= WALL_STRENGTH) {
 				dungeon[vertical][horizontal] = FLOOR_CELL
 			}
 		}
-	}		
+	}
 }
 
 
@@ -426,7 +305,7 @@ def CollectFloorCells() {
 
 def CollectOpponentSetupCells() {
 	var topHalfOfDungeon = currentDungeonLength / 2
-	
+
 	for (var index = 0; index < allFloorLocations.length() - 2; ++index) {
 		if (allFloorLocations[index][1] > topHalfOfDungeon || allFloorLocations[index][2] > topHalfOfDungeon) {
 			opponentSetupFloorLocations.push_back( allFloorLocations[index] )
@@ -434,6 +313,50 @@ def CollectOpponentSetupCells() {
 	}
 }
 
+class Player {
+	var activeSprite
+	var location
+	var orientation
+	var isHurt
+	var horizontalMovement
+	var verticalMovement
+
+	def Player() {
+		this.activeSprite = SPRITE_DRAGON_FLY1_DOWN
+		this.location = [1, 1]
+		this.orientation = "south"
+		this.isHurt = false
+		this.horizontalMovement = 0
+		this.verticalMovement = 0
+	}
+}
+
+class Opponent {
+	var emotion
+	var activeSprite
+	var position
+	var currentTile
+	var orientation
+	var crossOfSight
+	var target
+	var path
+	var isPatrolling
+	var isHunting
+	var horizontalMovement
+	var verticalMovement
+	var pauseCounter
+
+	def Opponent() {
+		this.position = []
+		this.currentTile = []
+		this.crossOfSight = []
+		this.target = []
+		this.path = []
+		this.isPatrolling = false
+		this.isHunting = false
+		this.pauseCounter = 3
+	}
+}
 
 def PopulateDungeon() {
 	global dragon = Player()
@@ -442,7 +365,7 @@ def PopulateDungeon() {
 	opponentList[0].activeSprite = SPRITE_KNIGHT_WALK1
 	opponentList[0].position = PlaceKnight()
 	opponentList[0].orientation = "north"
-	
+
 	for (opponent = 1; opponent < currentDungeonLength / 3 + 1; ++opponent) {
 		THIS_OPPONENT = Opponent()
 		THIS_OPPONENT.emotion = GenerateEmotion()
@@ -463,11 +386,11 @@ def PlaceKnight() {
 
 def PlaceSubordinate() {
 	var roll = love.math.random(0, opponentSetupFloorLocations.length() - 1)
-	
+
 	var basin = opponentSetupFloorLocations[roll]
 	opponentSetupFloorLocations[roll] = opponentSetupFloorLocations[opponentSetupFloorLocations.length() - 1]
 	opponentSetupFloorLocations[opponentSetupFloorLocations.length() - 1] = basin
-	
+
 	var position = opponentSetupFloorLocations.pop_back()
 	position[HORIZONTAL_DIMENSION] = position[HORIZONTAL_DIMENSION] * 8
 	position[VERTICAL_DIMENSION] = position[VERTICAL_DIMENSION] * 8
@@ -477,7 +400,7 @@ def PlaceSubordinate() {
 
 def GenerateEmotion() {
 	var roll = love.math.random(0, 5)
-	
+
 	if (roll == 0) {
 		return "joy"
 	}
@@ -485,7 +408,7 @@ def GenerateEmotion() {
 		return "sadness"
 	}
 	else if (roll == 0) {
-		fearCount++
+		fearCount = fearCount + 1
 		return "fear"
 	}
 	else if (roll == 0) {
@@ -494,31 +417,29 @@ def GenerateEmotion() {
 	else if (roll == 0) {
 		return "anger"
 	}
-	else {
-		surpriseCount++
-		return "surprise"
-	}
+	surpriseCount = surpriseCount + 1
+	return "surprise"
 }
 
 
-def InitializeSubordinateSprite(opponent) {
-	if opponent.emotion == "joy" {
-		opponent.activeSprite = SPRITE_JOY_WALK1
+def InitializeSubordinateSprite() {
+	if (this.emotion == "joy") {
+		this.activeSprite = SPRITE_JOY_WALK1
 	}
-	else if opponent.emotion == "sadness" {
-		opponent.activeSprite = SPRITE_SADNESS_WALK1
+	else if (this.emotion == "sadness") {
+		this.activeSprite = SPRITE_SADNESS_WALK1
 	}
-	else if opponent.emotion == "fear" {
-		opponent.activeSprite = SPRITE_FEAR_WALK1
+	else if (this.emotion == "fear") {
+		this.activeSprite = SPRITE_FEAR_WALK1
 	}
-	else if opponent.emotion == "disgust" {
-		opponent.activeSprite = SPRITE_DISGUST_WALK1
+	else if (this.emotion == "disgust") {
+		this.activeSprite = SPRITE_DISGUST_WALK1
 	}
-	else if opponent.emotion == "anger" {
-		opponent.activeSprite = SPRITE_ANGER_WALK1
+	else if (this.emotion == "anger") {
+		this.activeSprite = SPRITE_ANGER_WALK1
 	}
-	else if opponent.emotion == "surprise" {
-		opponent.activeSprite = SPRITE_SURPRISE_WALK1
+	else if (this.emotion == "surprise") {
+		this.activeSprite = SPRITE_SURPRISE_WALK1
 	}
 }
 
@@ -570,7 +491,7 @@ def SetCollisionWorld() {
 	for (var iterator = 0; iterator < dungeon.length(); ++iterator) {
 		collisionWorld[iterator] = dungeon[iterator]
 	}
-	
+
 	for (var vertical = 0; vertical < collisionWorld.length(); ++vertical) {
 		for (var horizontal = 0; horizontal < collisionWorld[vertical].length(); ++horizontal) {
 			for (currentOpponent : opponentList) {
@@ -591,7 +512,7 @@ def SetOrientation() {
 		else if (currentOpponent.horizontalMovement > 0) {
 			currentOpponent.orientation = "east"
 		}
-		
+
 		if (currentOpponent.verticalMovement < 0) {
 			currentOpponent.orientation = "north"
 		}
@@ -605,7 +526,7 @@ def SetOrientation() {
 def CountDownDynamite() {
 	for (hazard : hazardList) {
 		if (THIS_HAZARD.type == "dynamite") {
-			THIS_HAZARD.explosionCount--
+			THIS_HAZARD.explosionCount = THIS.HAZARD.explosionCount - 1
 		}
 	}
 }
@@ -637,10 +558,10 @@ def ClearDynamite() {
 
 def EraseHazard(hazard) {
 	if (THIS_HAZARD.type == "arrow") {
-		arrowCount--
+		arrowCount = arrowCount - 1
 	}
 	else if (THIS_HAZARD.type == "dynamite") {
-		dynamiteCount--
+		dynamiteCount = dynamiteCount - 1
 	}
 	else if (THIS_HAZARD.type == "fire") {
 		isFireballThere = false
@@ -658,8 +579,8 @@ def EraseSafeCell(cell) {
 
 def CollectSafeCells() {
 	safeFloorLocations = allFloorLocations
-	
-	for (hazard : hazardList) { 
+
+	for (hazard : hazardList) {
 		for (cell : safeFloorLocations) {
 			if ( safeFloorLocations[cell] == THIS_HAZARD.currentTile ) {
 				EraseSafeCell(cell)
@@ -688,7 +609,7 @@ def CollectSafeCells() {
 						}
 					}
 				}
-	
+
 				else if ( THIS_HAZARD.type == "dynamite" ) {
 					if ( safeFloorLocations[cell] == [ THIS_HAZARD.currentTile[HORIZONTAL_DIMENSION] - 1, THIS_HAZARD.currentTile[VERTICAL_DIMENSION] ]) {
 						EraseSafeCell(cell)
@@ -725,7 +646,7 @@ def CollectSafeCells() {
 def SetCrossOfSight() {
 	for (currentOpponent : opponentList) {
 		currentOpponent.crossOfSight = []
-		
+
 		if (currentOpponent.orientation == "north") {
 			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 ] == FLOOR_CELL) {
 				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
@@ -736,7 +657,7 @@ def SetCrossOfSight() {
 			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL - look, currentOpponent.TILE_HORIZONTAL ] == FLOOR_CELL; --checkedCell) {
 				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL - look, currentOpponent.TILE_HORIZONTAL )
 			}
-			
+
 		else if (currentOpponent.orientation == "south") {
 			if (collisionWorld[ currentOpponent.TILE_VERTICAL + 1, currentOpponent.TILE_HORIZONTAL - 1 ] == FLOOR_CELL) {
 				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
@@ -747,7 +668,7 @@ def SetCrossOfSight() {
 			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL + look, currentOpponent.TILE_HORIZONTAL ] == FLOOR_CELL; --checkedCell) {
 				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL + look, currentOpponent.TILE_HORIZONTAL )
 			}
-			
+
 		else if (currentOpponent.orientation == "west") {
 			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 ] == FLOOR_CELL) {
 				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
@@ -758,7 +679,7 @@ def SetCrossOfSight() {
 			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL - look ] == FLOOR_CELL; --checkedCell) {
 				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL - look )
 			}
-			
+
 		else if (currentOpponent.orientation == "east") {
 			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
 				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
@@ -827,15 +748,15 @@ def ControlDragon() {
 		if ( love.joystick[0].isDown("up") == false && love.joystick[0].isDown("down") == false ) {
 			dragon.horizontalMovement = 0
 		}
-		
+
 		if ( love.joystick[0].isDown("A") ) {
 			if (isFireballThere == false) {
 				isFireballThere = true
-				
+
 				var fire = Hazard()
 				fire.type = "fire"
 				fire.orientation = dragon.orientation
-				
+
 				if (fire.orientation == "west") {
 					fire.activeSprite = SPRITE_FIREBALL_LEFT
 					fire.position = [ (dragon.POSITION_HORIZONTAL - 8), (dragon.POSITION_VERTICAL) ]
@@ -860,7 +781,7 @@ def ControlDragon() {
 					fire.horizontalMovement = 0
 					fire.verticalMovement = 0.4
 				}
-				
+
 				hazardList.push_back(fire)
 				var effect = love.sound.newSoundData(EFFECT_FIRE_BREATHE)
 				effect.play()
@@ -872,7 +793,7 @@ def ControlDragon() {
 
 def ReturnToYourPlaces() {
 	dragon.position = [8, 8]
-	
+
 	for (opponent : opponentList) {
 		if (THIS_OPPONENT.emotion == "knight") {
 			THIS_OPPONENT.position = PlaceKnight()
@@ -881,7 +802,7 @@ def ReturnToYourPlaces() {
 			THIS_OPPONENT.position = PlaceSubordinate()
 		}
 	}
-	
+
 	hazardList = []
 }
 
@@ -921,7 +842,7 @@ def SetCurrentDragonSprite() {
 			}
 		}
 	}
-	
+
 	if ( love.joystick[0].isDown("A") ) {
 		if (dragon.activeSprite == SPRITE_DRAGON_FLY1_LEFT || dragon.activeSprite == SPRITE_DRAGON_FLY2_LEFT) {
 			dragon.activeSprite = SPRITE_DRAGON_FIRE_LEFT
@@ -1001,7 +922,7 @@ def SetCurrentOpponentSprite() {
 				}
 			}
 		}
-		
+
 		else if (panicPhase == true) {
 			if (THIS_OPPONENT.horizontalMovement != 0 && THIS_OPPONENT.verticalMovement != 0) {
 				if (THIS_OPPONENT.emotion = "knight") {
@@ -1100,11 +1021,11 @@ def DrawEnvironment() {
 
 def DrawActors() {
 	love.graphics.draw(dragon.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
-	
+
 	for (opponent : opponentList) {
 		love.graphics.draw(THIS_OPPONENT.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
 	}
-	
+
 	for (hazard : hazardList) {
 		love.graphics.draw(THIS_HAZARD.activeSprite, position[HORIZONTAL_DIMENSION], position[VERTICAL_DIMENSION]
 	}
@@ -1115,7 +1036,7 @@ def BreadthFirst(startCell, endCell) {
 	var frontier = [startCell]
 	var checkingCell = []
 	var visitedCells = []
-	
+
 
 	while ( frontier.length() > 0 ) {
 		checkingCell = frontier.pop_back()
@@ -1168,7 +1089,7 @@ def PatrolSystem() {
 					if ( knightStep <= THIS_OPPONENT.path.length() ) {
 						THIS_OPPONENT.target = THIS_OPPONENT[knightStep]
 						SetOpponentVelocity(THIS_OPPONENT, 0.2)
-						knightStep++
+						knightStep = knightStep + 1
 					}
 					else {
 						var hold = THIS_OPPONENT.path[ THIS_OPPONENT.path.length() ]
@@ -1238,7 +1159,7 @@ def PatrolSystem() {
 												if ( [checkVertical, checkHorizontal - 1] == allFloorLocations[check] ) {
 													for (check : allFloorLocations) {
 														if ( [checkVertical, checkHorizontal + 1] == allFloorLocations[check] ) {
-															for (check : allFloorLocations) { 
+															for (check : allFloorLocations) {
 																if ( [checkVertical - 1, checkHorizontal - 1] == allFloorLocations[check] ) {
 																	for (check : allFloorLocations) {
 																		if ( [checkVertical - 1, checkHorizontal + 1] == allFloorLocations[check] ) {
@@ -1347,7 +1268,7 @@ def PatrolSystem() {
 					THIS_OPPONENT.target = pop_back(THIS_OPPONENT.path)
 					SetOpponentVelocity(THIS_OPPONENT, 0.1)
 				}
-			} 
+			}
 		}
 	}
 }
@@ -1399,14 +1320,14 @@ def HuntSystem() {
 			else if (THIS_OPPONENT.emotion == "joy" || THIS_OPPONENT.emotion == "surprise") {
 				if (THIS_OPPONENT.path.length() < 1) {
 					if (THIS_OPPONENT.emotion == "surprise" && THIS_OPPONENT.pauseCounter > 0) {
-						THIS_OPPONENT.pauseCounter--
+						THIS_OPPONENT.pauseCounter = THIS_OPPONENT.pauseCounter - 1
 					}
 
 					THIS_OPPONENT.path = BreadthFirst(THIS_OPPONENT.currentTile, dragon.currentTile)
 				}
 				else {
 					if (THIS_OPPONENT.emotion == "surprise" && THIS_OPPONENT.pauseCounter < 0) {
-						THIS_OPPONENT.pauseCounter--
+						THIS_OPPONENT.pauseCounter = THIS_OPPONENT.pauseCounter - 1
 					}
 
 					THIS_OPPONENT.target = THIS_OPPONENT.path.pop_back()
@@ -1433,7 +1354,7 @@ def HuntSystem() {
 						newArrow.verticalMovement = -0.4
 
 						hazardList.push_back (newArrow)
-						arrowCount++
+						arrowCount = arrowCount + 1
 					}
 					else if (THIS_OPPONENT.orientation == "south") {
 						var newArrow = ArrowFire
@@ -1447,7 +1368,7 @@ def HuntSystem() {
 						newArrow.verticalMovement = 0.4
 
 						hazardList.push_back (newArrow)
-						arrowCount++
+						arrowCount = arrowCount + 1
 					}
 					else if (THIS_OPPONENT.orientation == "west") {
 						var newArrow = ArrowFire
@@ -1461,7 +1382,7 @@ def HuntSystem() {
 						newArrow.verticalMovement = 0
 
 						hazardList.push_back (newArrow)
-						arrowCount++
+						arrowCount = arrowCount + 1
 					}
 					else if (THIS_OPPONENT.orientation == "east") {
 						var newArrow = ArrowFire
@@ -1475,7 +1396,7 @@ def HuntSystem() {
 						newArrow.verticalMovement = 0
 
 						hazardList.push_back (newArrow)
-						arrowCount++
+						arrowCount = arrowCount + 1
 					}
 				}
 			}
@@ -1537,7 +1458,7 @@ def FightProtocol() {
 		if (THIS_OPPONENT.emotion == "sadness") {
 			if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL + 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL + 1]) {
 				var closeToDragon = true
-			}	
+			}
 		}
 		if (THIS_OPPONENT.emotion == "disgust") {
 			if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 2][THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 2][THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL - 2] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL + 2]) {
@@ -1557,40 +1478,40 @@ def AttackDragon(opponent) {
 		var effect = love.sound.newSoundData(EFFECT_SLICE)
 		effect.play()
 	}
-	
+
 	else if (opponent.emotion == "joy") {
 		opponent.sprite = SPRITE_JOY_ATTACK
 		var effect = love.sound.newSoundData(EFFECT_BUMP)
 		effect.play()
 	}
-	
+
 	else if (opponent.emotion == "sadness") {
 		opponent.sprite = SPRITE_SADNESS_ATTACK
 		var effect = love.sound.newSoundData(EFFECT_SLICE)
 		effect.play()
 	}
-	
+
 	else if (opponent.emotion == "fear") {
 		opponent.sprite = SPRITE_FEAR_ATTACK
 		var effect = love.sound.newSoundData(EFFECT_PIERCE)
 		effect.play()
 	}
-	
+
 	else if (opponent.emotion == "anger") {
 		opponent.sprite = SPRITE_ANGER_ATTACK
 		var effect = love.sound.newSoundData(EFFECT_SLICE)
 		effect.play()
 	}
-	
+
 	else if (opponent.emotion == "surprise") {
 		opponent.sprite = SPRITE_SURPRISE_ATTACK
 		var effect = love.sound.newSoundData(EFFECT_EXPLODE)
 		effect.play()
 	}
-	
+
 	else if (opponent.emotion == "disgust") {
 		var lance
-		if (dragon.POSITION_VERTICAL < opponent.POSITION_VERTICAL {	
+		if (dragon.POSITION_VERTICAL < opponent.POSITION_VERTICAL {
 			THIS_OPPONENT.sprite = SPRITE_DISGUST_ATTACK_VERTICAL
 			lance = SPRITE_LANCE_UP
 			love.graphics.draw(lance, opponent.POSITION_HORIZONTAL, opponent.POSITION_VERTICAL - SQUARE_SIZE)
@@ -1610,7 +1531,7 @@ def AttackDragon(opponent) {
 			lance = SPRITE_LANCE_RIGHT
 			love.graphics.draw(lance, opponent.POSITION_HORIZONTAL + SQUARE_SIZE, opponent.POSITION_VERTICAL)
 		}
-		
+
 		var effect = love.sound.newSoundData(EFFECT_PIERCE)
 		effect.play()
 	}
@@ -1619,28 +1540,28 @@ def AttackDragon(opponent) {
 }
 
 
-def CollideDragonWithWall() {	
+def CollideDragonWithWall() {
 	var dragonVertical = dragon.TILE_VERTICAL
 	var dragonHorizontal = dragon.TILE_HORIZONTAL
-	
+
 	if (dungeon[dragonVertical][dragonHorizontal - 1] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical][dragonHorizontal - 1]) == true && dragon.horizontalMovement < 0) {
 		dragon.horizontalMovement = 0
 		var effect = love.sound.newSoundData(EFFECT_BUMP)
 		effect.play()
 	}
-	
+
 	if (dungeon[dragonVertical][dragonHorizontal + 1] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical][dragonHorizontal + 1]) == true && dragon.horizontalMovement > 0) {
 		dragon.horizontalMovement = 0
 		var effect = love.sound.newSoundData(EFFECT_BUMP)
 		effect.play()
 	}
-	
+
 	if (dungeon[dragonVertical - 1][dragonHorizontal] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical - 1][dragonHorizontal]) == true && dragon.verticalMovement < 0) {
 		dragon.verticalMovement = 0
 		var effect = love.sound.newSoundData(EFFECT_BUMP)
 		effect.play()
 	}
-	
+
 	if (dungeon[dragonVertical + 1][dragonHorizontal] == WALL_CELL && didIHitAWall(dragon, dungeon[dragonVertical + 1][dragonHorizontal]) == true && dragon.verticalMovement > 0) {
 		dragon.verticalMovement = 0
 		var effect = love.sound.newSoundData(EFFECT_BUMP)
@@ -1660,20 +1581,20 @@ def StopOpponent(opponent) {
 def CollideOpponentWithWall() {
 	var opponentHorizontal
 	var opponentVertical
-	
+
 	for (opponent : opponentList) {
 		opponentVertical = THIS_OPPONENT.TILE_VERTICAL
 		opponentHorizontal = THIS_OPPONENT.TILE_HORIZONTAL
-		
+
 		if (dungeon[opponentVertical][opponentHorizontal - 1] == WALL_CELL && didIHitAWall(THIS_OPPONENT, dungeon[opponentVertical][opponentHorizontal - 1]) == true && THIS_OPPONENT.horizontalMovement < 0) {
 			StopOpponent( THIS_OPPONENT )
-		}	
+		}
 		if (dungeon[opponentVertical][opponentHorizontal + 1] == WALL_CELL && didIHitAWall(THIS_OPPONENT, dungeon[opponentVertical][opponentHorizontal + 1]) == true && THIS_OPPONENT.horizontalMovement > 0) {
 			StopOpponent( THIS_OPPONENT )
-		}	
+		}
 		if (dungeon[opponentVertical - 1][opponentHorizontal] == WALL_CELL && didIHitAWall(THIS_OPPONENT, dungeon[opponentVertical - 1][opponentHorizontal]) == true && THIS_OPPONENT.verticalMovement < 0) {
 			StopOpponent( THIS_OPPONENT )
-		}	
+		}
 		if (dungeon[opponentVertical + 1][opponentHorizontal] == WALL_CELL && didIHitAWall(THIS_OPPONENT, dungeon[opponentVertical + 1][opponentHorizontal]) == true && THIS_OPPONENT.verticalMovement > 0) {
 			StopOpponent( THIS_OPPONENT )
 		}
@@ -1705,21 +1626,21 @@ def CollideOpponentWithOpponent() {
 def CollideArrowFireWithWall() {
 	var hazardHorizontal
 	var hazardVertical
-	
+
 	for (hazard : hazardList) {
 		hazardVertical = THIS_HAZARD.TILE_VERTICAL
 		hazardHorizontal = THIS_HAZARD.TILE_HORIZONTAL
-		
+
 		if (THIS_HAZARD.type != "dynamite") {
 			if (dungeon[hazardVertical][hazardHorizontal - 1] == WALL_CELL && didIHitAWall(THIS_HAZARD, dungeon[hazardVertical][hazardHorizontal - 1]) == true && THIS_HAZARD.horizontalMovement < 0) {
 				EraseHazard(hazard)
-			}	
+			}
 			if (dungeon[hazardVertical][hazardHorizontal + 1] == WALL_CELL && didIHitAWall(THIS_HAZARD, dungeon[hazardVertical][hazardHorizontal + 1]) == true && THIS_HAZARD.horizontalMovement > 0) {
 				EraseHazard(hazard)
-			}	
+			}
 			if (dungeon[hazardVertical - 1][hazardHorizontal] == WALL_CELL && didIHitAWall(THIS_HAZARD, dungeon[hazardVertical - 1][hazardHorizontal]) == true && THIS_HAZARD.verticalMovement < 0) {
 				EraseHazard(hazard)
-			}	
+			}
 			if (dungeon[hazardVertical + 1][hazardHorizontal] == WALL_CELL && didIHitAWall(THIS_HAZARD, dungeon[hazardVertical + 1][hazardHorizontal]) == true && THIS_HAZARD.verticalMovement > 0) {
 				EraseHazard(hazard)
 			}
@@ -1746,13 +1667,13 @@ def CollideArrowFireWithHazard() {
 							else if (hazardList[second].type == "fire") {
 								var effect = love.sound.newSoundData(EFFECT_FIRE_HIT)
 							}
-						
+
 							hazardList[first] = hazardList[hazardList.length() - 1]
 							hazardList[second] = hazardList[hazardList.length()]
 							//Get rid of 2 hazards by popping twice.
 							hazardList.pop_back()
 							hazardList.pop_back()
-							
+
 							effect.play()
 							break
 						}
@@ -1796,11 +1717,11 @@ def CollideHazardWithOpponent() {
 					if (THIS_HAZARD.type != "dynamite") {
 						EraseHazard(hazard)
 					}
-					
+
 					var effect = love.sound.newSoundData(EFFECT_BLOCKED_FIRE)
 					effect.play()
 				}
-				
+
 				else {
 					if (THIS_HAZARD.type == "dynamite") {
 						if (THIS_HAZARD.explosionCount < 1) {
@@ -1814,7 +1735,7 @@ def CollideHazardWithOpponent() {
 						else if (THIS_HAZARD.type == "fire") {
 							var effect = love.sound.newSoundData(EFFECT_BUMP)
 						}
-						
+
 						effect.play()
 						EraseHazard(hazard)
 						HurtOpponent(THIS_OPPONENT)
@@ -1837,18 +1758,18 @@ def CollideDragonWithTreasure() {
 def CollideDragonWithDoor() {
 	if ( DidIHitAWall(dragon, dungeon[0][2]) == true && gotTreasure == true) {
 		StopEveryone()
-		
+
 		currentMusic = false
 		currentMusic.play()
-		
+
 		for (position = 1; position < 18; ++position) {
 			dragon.POSITION_VERTICAL--
 		}
-		
+
 		currentMusic = love.sound.newSoundData(MUSIC_SUCCESS)
 		currentMusic.play()
-		
-		currentLevel++
+
+		currentLevel = currentLevel + 1
 		if (currentLevel - previousLevel = 2) {
 			(previousLevel = currentLevel - 1)
 		}
@@ -1857,7 +1778,7 @@ def CollideDragonWithDoor() {
 		}
 
 		Cleanup()
-		
+
 		intermissionPhase = true
 	}
 }
@@ -1880,11 +1801,11 @@ def CollisionSystem() {
 def StopEveryone() {
 	dragon.horizontalMovement = 0
 	dragon.verticalMovement = 0
-	
+
 	for (opponent : opponentList) {
 		StopOpponent( THIS_OPPONENT )
 	}
-	
+
 	for (hazard : hazardList) {
 		if (THIS_HAZARD.type == "dynamite") {
 			if (THIS_HAZARD.explosionCount < 1) {
@@ -1928,7 +1849,7 @@ def FailDragon() {
 	panicPhase = false
 	currentMusic = false
 	currentMusic.play()
-	
+
 	if (dragon.orientation == "north") {
 		dragon.activeSprite = SPRITE_DRAGON_EMBARRASSED_UP
 	}
@@ -1973,7 +1894,7 @@ def LostGame() {
 	love.graphics.print(message_pressA, 50, 96)
 	currentMusic = love.sound.newSoundData(MUSIC_GAMEOVER)
 	currentMusic.play()
-	
+
 	if ( love.joystick[0].isDown("A") ) {
 		love.graphics.clear()
 		titlePhase = true
@@ -1986,6 +1907,7 @@ def LostGame() {
 /* basic ChaiLove stuff */
 
 def load() {
+	love.filesystem.load("assets")
 	MUSIC_TITLE.setLooping(true)
 	MUSIC_GAMEPLAY_NOINTRO.setLooping(true)
 	MUSIC_PANIC.setLooping(true)
@@ -1995,7 +1917,7 @@ def load() {
 
 def draw() {
 	love.graphics.print("The code still works!", 100, 100)
-	
+
 	/*
 	if (titlePhase == true) {
 		TitleScreen()
@@ -2010,7 +1932,7 @@ def draw() {
 		DrawDungeon()
 		DrawEnvironment()
 		DrawActors()
-	}	
+	}
 	*/
 }
 
@@ -2027,6 +1949,6 @@ def update(dt) {
 	}
 	else if (normalPhase == true or panicPhase == true) {
 		RunGameplay()
-	}	
+	}
 	*/
 }
