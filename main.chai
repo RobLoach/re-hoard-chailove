@@ -81,6 +81,52 @@ global message_finalRound
 /* data structures */
 
 //classes
+class Player {
+	var activeSprite
+	var currentTile
+	var orientation
+	var isHurt
+	var horizontalMovement
+	var verticalMovement
+
+	def Player() {
+		this.activeSprite = SPRITE_DRAGON_FLY1_DOWN
+		this.currentTile = [1, 1]
+		this.orientation = "south"
+		this.isHurt = false
+		this.horizontalMovement = 0
+		this.verticalMovement = 0
+	}
+}
+
+
+class Opponent {
+	var emotion
+	var activeSprite
+	var position
+	var currentTile
+	var orientation
+	var crossOfSight
+	var target
+	var path
+	var isPatrolling
+	var isHunting
+	var horizontalMovement
+	var verticalMovement
+	var pauseCounter
+
+	def Opponent() {
+		this.position = []
+		this.currentTile = []
+		this.crossOfSight = []
+		this.target = []
+		this.path = []
+		this.isPatrolling = false
+		this.isHunting = false
+		this.pauseCounter = 3
+	}
+}
+
 
 class ArrowFire {
 	var type
@@ -96,6 +142,7 @@ class ArrowFire {
 		this.currentTile = []
 	}
 }
+
 
 class Dynamite {
 	var type
@@ -313,50 +360,6 @@ def CollectOpponentSetupCells() {
 	}
 }
 
-class Player {
-	var activeSprite
-	var currentTile
-	var orientation
-	var isHurt
-	var horizontalMovement
-	var verticalMovement
-
-	def Player() {
-		this.activeSprite = SPRITE_DRAGON_FLY1_DOWN
-		this.currentTile = [1, 1]
-		this.orientation = "south"
-		this.isHurt = false
-		this.horizontalMovement = 0
-		this.verticalMovement = 0
-	}
-}
-
-class Opponent {
-	var emotion
-	var activeSprite
-	var position
-	var currentTile
-	var orientation
-	var crossOfSight
-	var target
-	var path
-	var isPatrolling
-	var isHunting
-	var horizontalMovement
-	var verticalMovement
-	var pauseCounter
-
-	def Opponent() {
-		this.position = []
-		this.currentTile = []
-		this.crossOfSight = []
-		this.target = []
-		this.path = []
-		this.isPatrolling = false
-		this.isHunting = false
-		this.pauseCounter = 3
-	}
-}
 
 def PopulateDungeon() {
 	global dragon = Player()
