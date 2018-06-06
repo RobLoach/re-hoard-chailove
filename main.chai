@@ -486,11 +486,7 @@ def TileSystem() {
 
 
 def SetCollisionWorld() {
-	collisionWorld = []
-
-	for (var iterator = 0; iterator < dungeon.length(); ++iterator) {
-		collisionWorld[iterator] = dungeon[iterator]
-	}
+	collisionWorld = dungeon
 
 	for (var vertical = 0; vertical < collisionWorld.length(); ++vertical) {
 		for (var horizontal = 0; horizontal < collisionWorld[vertical].length(); ++horizontal) {
@@ -649,6 +645,7 @@ def SetCrossOfSight() {
 
 		if (currentOpponent.orientation == "north") {
 			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 ] == FLOOR_CELL) {
+			//collisionWorld[ currentOpponent.TILE_VERTICAL - 1 throws an "incomplete array access" error.
 				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
 			}
 			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
