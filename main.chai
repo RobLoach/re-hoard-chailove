@@ -1142,28 +1142,28 @@ def PatrolSystem() {
 
 			else if (THIS_OPPONENT.emotion == "disgust") {
 				if (THIS_OPPONENT.path.length() < 1) {
-					for (check : safeFloorLocations) {
-						if ( THIS_OPPONENT.location != safeFloorLocations[check] ) {
-							var checkVertical = safeFloorLocations[check][0]
-							var checkHorizontal = safeFloorLocations[check][1]
+					for (check0 : safeFloorLocations) {
+						if ( THIS_OPPONENT.location != safeFloorLocations[check0] ) {
+							var checkVertical = safeFloorLocations[check0][0]
+							var checkHorizontal = safeFloorLocations[check0][1]
 
-							for (check : allFloorLocations) {
-								if ( [checkVertical - 1, checkHorizontal] == allFloorLocations[check] ) {
-									for (check : allFloorLocations) {
-										if ( [checkVertical + 1, checkHorizontal] == allFloorLocations[check] ) {
-											for (check : allFloorLocations) {
-												if ( [checkVertical, checkHorizontal - 1] == allFloorLocations[check] ) {
-													for (check : allFloorLocations) {
-														if ( [checkVertical, checkHorizontal + 1] == allFloorLocations[check] ) {
-															for (check : allFloorLocations) {
-																if ( [checkVertical - 1, checkHorizontal - 1] == allFloorLocations[check] ) {
-																	for (check : allFloorLocations) {
-																		if ( [checkVertical - 1, checkHorizontal + 1] == allFloorLocations[check] ) {
-																			for (check : allFloorLocations) {
-																				if ( [checkVertical + 1, checkHorizontal - 1] == allFloorLocations[check] ) {
-																					for (check : allFloorLocations) {
-																						if ( [checkVertical + 1, checkHorizontal + 1] == allFloorLocations[check] ) {
-																							THIS_OPPONENT.path = BreadthFirst( THIS_OPPONENT.currentTile, allFloorLocations[check] )
+							for (check1 : allFloorLocations) {
+								if ( [checkVertical - 1, checkHorizontal] == allFloorLocations[check1] ) {
+									for (check2 : allFloorLocations) {
+										if ( [checkVertical + 1, checkHorizontal] == allFloorLocations[check2] ) {
+											for (check3 : allFloorLocations) {
+												if ( [checkVertical, checkHorizontal - 1] == allFloorLocations[check3] ) {
+													for (check4 : allFloorLocations) {
+														if ( [checkVertical, checkHorizontal + 1] == allFloorLocations[check4] ) {
+															for (check5 : allFloorLocations) {
+																if ( [checkVertical - 1, checkHorizontal - 1] == allFloorLocations[check5] ) {
+																	for (check6 : allFloorLocations) {
+																		if ( [checkVertical - 1, checkHorizontal + 1] == allFloorLocations[check6] ) {
+																			for (check7 : allFloorLocations) {
+																				if ( [checkVertical + 1, checkHorizontal - 1] == allFloorLocations[check7] ) {
+																					for (check8 : allFloorLocations) {
+																						if ( [checkVertical + 1, checkHorizontal + 1] == allFloorLocations[check8] ) {
+																							THIS_OPPONENT.path = BreadthFirst( THIS_OPPONENT.currentTile, allFloorLocations[check8] )
 																							break
 																						}
 																					}
