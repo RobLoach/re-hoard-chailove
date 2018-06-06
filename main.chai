@@ -643,51 +643,51 @@ def CollectSafeCells() {
 
 
 def SetCrossOfSight() {
-	for (currentOpponent : opponentList) {
-		currentOpponent.crossOfSight = []
+	for (opponent : opponentList) {
+		THIS_OPPONENT.crossOfSight = []
 
-		if (currentOpponent.orientation == "north") {
-			if (collisionWorld[currentOpponent.TILE_VERTICAL - 1][currentOpponent.TILE_HORIZONTAL - 1] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1] )
+		if (THIS_OPPONENT.orientation == "north") {
+			if (collisionWorld[THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL - 1] == FLOOR_CELL) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL - 1] )
 			}
-			if (collisionWorld[currentOpponent.TILE_VERTICAL - 1][currentOpponent.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1] )
+			if (collisionWorld[THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL + 1] )
 			}
-			for (look = 0; collisionWorld[currentOpponent.TILE_VERTICAL - look][currentOpponent.TILE_HORIZONTAL] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - look, currentOpponent.TILE_HORIZONTAL] )
-			}
-
-		else if (currentOpponent.orientation == "south") {
-			if (collisionWorld[currentOpponent.TILE_VERTICAL + 1][currentOpponent.TILE_HORIZONTAL - 1] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1] )
-			}
-			if (collisionWorld[currentOpponent.TILE_VERTICAL + 1][currentOpponent.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1] )
-			}
-			for (look = 0; collisionWorld[currentOpponent.TILE_VERTICAL + look][currentOpponent.TILE_HORIZONTAL] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL + look, currentOpponent.TILE_HORIZONTAL] )
+			for (look = 0; collisionWorld[THIS_OPPONENT.TILE_VERTICAL - look][THIS_OPPONENT.TILE_HORIZONTAL] == FLOOR_CELL; --checkedCell) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL - look, THIS_OPPONENT.TILE_HORIZONTAL] )
 			}
 
-		else if (currentOpponent.orientation == "west") {
-			if (collisionWorld[currentOpponent.TILE_VERTICAL - 1][currentOpponent.TILE_HORIZONTAL - 1] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1] )
+		else if (THIS_OPPONENT.orientation == "south") {
+			if (collisionWorld[THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL - 1] == FLOOR_CELL) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL - 1] )
 			}
-			if (collisionWorld[currentOpponent.TILE_VERTICAL + 1][currentOpponent.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1] )
+			if (collisionWorld[THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL + 1] )
 			}
-			for (look = 0; collisionWorld[currentOpponent.TILE_VERTICAL][currentOpponent.TILE_HORIZONTAL - look] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL - look] )
+			for (look = 0; collisionWorld[THIS_OPPONENT.TILE_VERTICAL + look][THIS_OPPONENT.TILE_HORIZONTAL] == FLOOR_CELL; --checkedCell) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL + look, THIS_OPPONENT.TILE_HORIZONTAL] )
 			}
 
-		else if (currentOpponent.orientation == "east") {
-			if (collisionWorld[currentOpponent.TILE_VERTICAL - 1][currentOpponent.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1] )
+		else if (THIS_OPPONENT.orientation == "west") {
+			if (collisionWorld[THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL - 1] == FLOOR_CELL) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL - 1] )
 			}
-			if (collisionWorld[currentOpponent.TILE_VERTICAL + 1][currentOpponent.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1] )
+			if (collisionWorld[THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL + 1] )
 			}
-			for (look = 0; collisionWorld[currentOpponent.TILE_VERTICAL][currentOpponent.TILE_HORIZONTAL + look] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL + look] )
+			for (look = 0; collisionWorld[THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL - look] == FLOOR_CELL; --checkedCell) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL - look] )
+			}
+
+		else if (THIS_OPPONENT.orientation == "east") {
+			if (collisionWorld[THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL - 1] )
+			}
+			if (collisionWorld[THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL + 1] )
+			}
+			for (look = 0; collisionWorld[THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL + look] == FLOOR_CELL; --checkedCell) {
+				THIS_OPPONENT.crossOfSight.push_back( [THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL + look] )
 			}
 		}
 	}
