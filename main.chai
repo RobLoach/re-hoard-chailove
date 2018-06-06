@@ -315,7 +315,7 @@ def CollectOpponentSetupCells() {
 
 class Player {
 	var activeSprite
-	var location
+	var currentTile
 	var orientation
 	var isHurt
 	var horizontalMovement
@@ -323,7 +323,7 @@ class Player {
 
 	def Player() {
 		this.activeSprite = SPRITE_DRAGON_FLY1_DOWN
-		this.location = [1, 1]
+		this.currentTile = [1, 1]
 		this.orientation = "south"
 		this.isHurt = false
 		this.horizontalMovement = 0
@@ -470,7 +470,7 @@ def SetCurrentTile(actor) {
 	var tile = []
 	tile[VERTICAL_DIMENSION] = actor.position[VERTICAL_DIMENSION] / 8
 	tile[HORIZONTAL_DIMENSION] = actor.position[HORIZONTAL_DIMENSION] / 8
-	return tile
+	actor.currentTile = tile
 }
 
 
@@ -644,48 +644,47 @@ def SetCrossOfSight() {
 		currentOpponent.crossOfSight = []
 
 		if (currentOpponent.orientation == "north") {
-			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 ] == FLOOR_CELL) {
-			//collisionWorld[ currentOpponent.TILE_VERTICAL - 1 throws an "incomplete array access" error.
-				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
+			if (collisionWorld[currentOpponent.TILE_VERTICAL - 1][currentOpponent.TILE_HORIZONTAL - 1] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1] )
 			}
-			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 )
+			if (collisionWorld[currentOpponent.TILE_VERTICAL - 1][currentOpponent.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1] )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL - look, currentOpponent.TILE_HORIZONTAL ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL - look, currentOpponent.TILE_HORIZONTAL )
+			for (look = 0; collisionWorld[currentOpponent.TILE_VERTICAL - look][currentOpponent.TILE_HORIZONTAL] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - look, currentOpponent.TILE_HORIZONTAL] )
 			}
 
 		else if (currentOpponent.orientation == "south") {
-			if (collisionWorld[ currentOpponent.TILE_VERTICAL + 1, currentOpponent.TILE_HORIZONTAL - 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
+			if (collisionWorld[currentOpponent.TILE_VERTICAL + 1][currentOpponent.TILE_HORIZONTAL - 1] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1] )
 			}
-			if (collisionWorld[ currentOpponent.TILE_VERTICAL + 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 )
+			if (collisionWorld[currentOpponent.TILE_VERTICAL + 1][currentOpponent.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1] )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL + look, currentOpponent.TILE_HORIZONTAL ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL + look, currentOpponent.TILE_HORIZONTAL )
+			for (look = 0; collisionWorld[currentOpponent.TILE_VERTICAL + look][currentOpponent.TILE_HORIZONTAL] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL + look, currentOpponent.TILE_HORIZONTAL] )
 			}
 
 		else if (currentOpponent.orientation == "west") {
-			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
+			if (collisionWorld[currentOpponent.TILE_VERTICAL - 1][currentOpponent.TILE_HORIZONTAL - 1] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1] )
 			}
-			if (collisionWorld[ currentOpponent.TILE_VERTICAL + 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 )
+			if (collisionWorld[currentOpponent.TILE_VERTICAL + 1][currentOpponent.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1] )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL - look ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL - look )
+			for (look = 0; collisionWorld[currentOpponent.TILE_VERTICAL][currentOpponent.TILE_HORIZONTAL - look] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL - look] )
 			}
 
 		else if (currentOpponent.orientation == "east") {
-			if (collisionWorld[ currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1 )
+			if (collisionWorld[currentOpponent.TILE_VERTICAL - 1][currentOpponent.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL - 1] )
 			}
-			if (collisionWorld[ currentOpponent.TILE_VERTICAL + 1, currentOpponent.TILE_HORIZONTAL + 1 ] == FLOOR_CELL) {
-				currentOpponent.crossOfSight.push_back( currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1 )
+			if (collisionWorld[currentOpponent.TILE_VERTICAL + 1][currentOpponent.TILE_HORIZONTAL + 1] == FLOOR_CELL) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL - 1, currentOpponent.TILE_HORIZONTAL + 1] )
 			}
-			for (look = 0; collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL + look ] == FLOOR_CELL; --checkedCell) {
-				currentOpponent.crossOfSight.push_back( collisionWorld[ currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL + look )
+			for (look = 0; collisionWorld[currentOpponent.TILE_VERTICAL][currentOpponent.TILE_HORIZONTAL + look] == FLOOR_CELL; --checkedCell) {
+				currentOpponent.crossOfSight.push_back( [currentOpponent.TILE_VERTICAL, currentOpponent.TILE_HORIZONTAL + look] )
 			}
 		}
 	}
@@ -1115,21 +1114,21 @@ def PatrolSystem() {
 			else if (THIS_OPPONENT.emotion == "fear") {
 				if (THIS_OPPONENT.path.length() < 1) {
 					THIS_OPPONENT.path.push_back(THIS_OPPONENT.position)
-					for (currentTile : safeFloorLocations) {
-						if ( [ THIS.OPPONENT.location[0], THIS_OPPONENT.location[1] - 1 ] == safeFloorLocations[currentTile] ) {
-							THIS_OPPONENT.path.push_back(safeFloorLocations[currentTile])
+					for (check : safeFloorLocations) {
+						if ( [ THIS.OPPONENT.location[0], THIS_OPPONENT.location[1] - 1 ] == safeFloorLocations[check] ) {
+							THIS_OPPONENT.path.push_back(safeFloorLocations[check])
 							break
 						}
-						if ( [ THIS.OPPONENT.location[0], THIS_OPPONENT.location[1] + 1 ] == safeFloorLocations[currentTile] ) {
-							THIS_OPPONENT.path.push_back(safeFloorLocations[currentTile])
+						if ( [ THIS.OPPONENT.location[0], THIS_OPPONENT.location[1] + 1 ] == safeFloorLocations[check] ) {
+							THIS_OPPONENT.path.push_back(safeFloorLocations[check])
 							break
 						}
-						if ( [ THIS.OPPONENT.location[0] - 1, THIS_OPPONENT.location[1] ] == safeFloorLocations[currentTile] ) {
-							THIS_OPPONENT.path.push_back(safeFloorLocations[currentTile])
+						if ( [ THIS.OPPONENT.location[0] - 1, THIS_OPPONENT.location[1] ] == safeFloorLocations[check] ) {
+							THIS_OPPONENT.path.push_back(safeFloorLocations[check])
 							break
 						}
-						if ( [ THIS.OPPONENT.location[0] + 1, THIS_OPPONENT.location[1] ] == safeFloorLocations[currentTile] ) {
-							THIS_OPPONENT.path.push_back(safeFloorLocations[currentTile])
+						if ( [ THIS.OPPONENT.location[0] + 1, THIS_OPPONENT.location[1] ] == safeFloorLocations[check] ) {
+							THIS_OPPONENT.path.push_back(safeFloorLocations[check])
 							break
 						}
 					}
@@ -1143,10 +1142,10 @@ def PatrolSystem() {
 
 			else if (THIS_OPPONENT.emotion == "disgust") {
 				if (THIS_OPPONENT.path.length() < 1) {
-					for (currentTile : safeFloorLocations) {
-						if ( THIS_OPPONENT.location != safeFloorLocations[currentTile] ) {
-							var checkVertical = safeFloorLocations[currentTile][0]
-							var checkHorizontal = safeFloorLocations[currentTile][1]
+					for (check : safeFloorLocations) {
+						if ( THIS_OPPONENT.location != safeFloorLocations[check] ) {
+							var checkVertical = safeFloorLocations[check][0]
+							var checkHorizontal = safeFloorLocations[check][1]
 
 							for (check : allFloorLocations) {
 								if ( [checkVertical - 1, checkHorizontal] == allFloorLocations[check] ) {
@@ -1216,8 +1215,8 @@ def PatrolSystem() {
 
 					if (dynamiteCount < surpriseCount) {
 						if (THIS_OPPONENT.orientation == "north") {
-							for (currentTile : safeFloorLocations) {
-								if ( [ THIS_OPPONENT.TILE_VERTICAL + 1, THIS_OPPONENT.TILE_HORIZONTAL] == safeFloorLocations[currentTile] ) {
+							for (check : safeFloorLocations) {
+								if ( [ THIS_OPPONENT.TILE_VERTICAL + 1, THIS_OPPONENT.TILE_HORIZONTAL] == safeFloorLocations[check] ) {
 									var newDynamite = Dynamite
 									newDynamite.position = [THIS_OPPONENT.POSITION_VERTICAL + SQUARE_SIZE, THIS_OPPONENT.POSITION_HORIZONTAL]
 									newDynamite.currentTile = [THIS_OPPONENT.TILE_VERTICAL + 1, THIS_OPPONENT.TILE_HORIZONTAL]
@@ -1227,8 +1226,8 @@ def PatrolSystem() {
 							}
 						}
 						else if (THIS_OPPONENT.orientation == "south") {
-							for (currentTile : safeFloorLocations) {
-								if ( [ THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL] == safeFloorLocations[currentTile] ) {
+							for (check : safeFloorLocations) {
+								if ( [ THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL] == safeFloorLocations[check] ) {
 									var newDynamite = Dynamite
 									newDynamite.position = [THIS_OPPONENT.POSITION_VERTICAL - SQUARE_SIZE, THIS_OPPONENT.POSITION_HORIZONTAL]
 									newDynamite.currentTile = [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL]
@@ -1238,8 +1237,8 @@ def PatrolSystem() {
 							}
 						}
 						else if (THIS_OPPONENT.orientation == "west") {
-							for (currentTile : safeFloorLocations) {
-								if ( [ THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL + 1] == safeFloorLocations[currentTile] ) {
+							for (check : safeFloorLocations) {
+								if ( [ THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL + 1] == safeFloorLocations[check] ) {
 									var newDynamite = Dynamite
 									newDynamite.position = [THIS_OPPONENT.POSITION_VERTICAL, THIS_OPPONENT.POSITION_HORIZONTAL + SQUARE_SIZE]
 									newDynamite.currentTile = [THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL + 1]
@@ -1249,8 +1248,8 @@ def PatrolSystem() {
 							}
 						}
 						else if (THIS_OPPONENT.orientation == "east") {
-							for (currentTile : safeFloorLocations) {
-								if ( [ THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL - 1] == safeFloorLocations[currentTile] ) {
+							for (check : safeFloorLocations) {
+								if ( [ THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL - 1] == safeFloorLocations[check] ) {
 									var newDynamite = Dynamite
 									newDynamite.position = [THIS_OPPONENT.POSITION_VERTICAL, THIS_OPPONENT.POSITION_HORIZONTAL - SQUARE_SIZE]
 									newDynamite.currentTile = [THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL - 1]
@@ -1449,16 +1448,16 @@ def FightProtocol() {
 	for (opponents: opponentList) {
 		var closeToDragon = false
 
-		if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL + 1]) {
+		if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1, THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL + 1]) {
 			var closeToDragon = true
 		}
 		if (THIS_OPPONENT.emotion == "sadness") {
-			if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1][THIS_OPPONENT.TILE_HORIZONTAL + 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1][THIS_OPPONENT.TILE_HORIZONTAL + 1]) {
+			if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1, THIS_OPPONENT.TILE_HORIZONTAL - 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 1, THIS_OPPONENT.TILE_HORIZONTAL + 1] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 1, THIS_OPPONENT.TILE_HORIZONTAL + 1]) {
 				var closeToDragon = true
 			}
 		}
 		if (THIS_OPPONENT.emotion == "disgust") {
-			if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 2][THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 2][THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL - 2] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL][THIS_OPPONENT.TILE_HORIZONTAL + 2]) {
+			if (dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL - 2, THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL + 2, THIS_OPPONENT.TILE_HORIZONTAL] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL - 2] || dragon.currentTile == [THIS_OPPONENT.TILE_VERTICAL, THIS_OPPONENT.TILE_HORIZONTAL + 2]) {
 			var closeToDragon = true
 		}
 
