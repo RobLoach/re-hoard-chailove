@@ -493,8 +493,8 @@ def SetCollisionWorld() {
 
 	for (var vertical = 0; vertical < collisionWorld.length(); ++vertical) {
 		for (var horizontal = 0; horizontal < collisionWorld[vertical].length(); ++horizontal) {
-			for (currentOpponent : opponentList) {
-				if ( currrentOpponent.location == collisionWorld[vertical][horizontal] ) {
+			for (opponent : opponentList) {
+				if ( THIS_OPPONENT.location == collisionWorld[vertical][horizontal] ) {
 					collisionWorld[vertical][horizontal] = WALL_CELL
 				}
 			}
@@ -504,19 +504,19 @@ def SetCollisionWorld() {
 
 
 def SetOrientation() {
-	for (currentOpponent : opponentList) {
-		if (currentOpponent.horizontalMovement < 0) {
-			currentOpponent.orientation = "west"
+	for (opponent : opponentList) {
+		if (THIS_OPPONENT.horizontalMovement < 0) {
+			THIS_OPPONENT.orientation = "west"
 		}
-		else if (currentOpponent.horizontalMovement > 0) {
-			currentOpponent.orientation = "east"
+		else if (THIS_OPPONENT.horizontalMovement > 0) {
+			THIS_OPPONENT.orientation = "east"
 		}
 
-		if (currentOpponent.verticalMovement < 0) {
-			currentOpponent.orientation = "north"
+		if (THIS_OPPONENT.verticalMovement < 0) {
+			THIS_OPPONENT.orientation = "north"
 		}
-		else if (currentOpponent.verticalMovement > 0) {
-			currentOpponent.orientation = "south"
+		else if (THIS_OPPONENT.verticalMovement > 0) {
+			THIS_OPPONENT.orientation = "south"
 		}
 	}
 }
