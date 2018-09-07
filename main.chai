@@ -62,7 +62,7 @@ global dynamiteCount = 0
 
 
 //translatable variables
-global language == "eng"
+global language = "eng"
 global sprite_titleScreen
 global message_copyright = "Tinglar 2017‒2018"
 global message_pressA
